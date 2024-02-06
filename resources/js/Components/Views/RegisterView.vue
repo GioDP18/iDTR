@@ -12,62 +12,64 @@ function toggleConfirmPassword() {
 }
 </script>
 <template>
-    <div>
-        <div style="display:flex; position:relative; background-color: #1269db;">
-            <div class="register-container">
-                <div class="register-form">
-                    <form class="form" @submit.prevent="register" style="position:relative;">
-                        <p class="form-title">Sign up to your account</p>
-                        <div class="input-container">
-                            <input v-model="firstname" type="text" placeholder="Enter Firstname">
-                        </div>
-                        <div class="input-container">
-                            <input v-model="lastname" type="text" placeholder="Enter Lastname">
-                        </div>
-                        <div class="input-container">
-                            <input v-model="username" type="text" placeholder="Enter Username">
-                            <span>
-                                <i class="fa-solid fa-user"></i>
-                            </span>
-                        </div>
-                        <div class="input-container">
-                            <input v-model="email" type="email" placeholder="Enter Email">
-                            <span>
-                                <i class="fa-solid fa-envelope"></i>
-                            </span>
-                        </div>
-                        <div class="input-container">
-                            <input v-model="password" :type="showPassword ? 'text' : 'password'"
-                                placeholder="Enter Password">
-                            <span style="cursor:pointer;" @click="togglePassword">
-                                <i :class="['fa-solid', showPassword ? 'fa-eye-slash' : 'fa-eye']"></i>
-                            </span>
-                        </div>
-                        <div class="input-container">
-                            <input v-model="password_confirmation" :type="showConfirmPassword ? 'text' : 'password'"
-                                placeholder="Confirm Password">
-                            <span style="cursor:pointer;" @click="toggleConfirmPassword">
-                                <i :class="['fa-solid', showConfirmPassword ? 'fa-eye-slash' : 'fa-eye']"></i>
-                            </span>
-                        </div>
-                        <button class="submit" type="submit">
-                            Sign up
-                        </button>
-                        <p class="signup-link">
-                            Already have an account?
-                            <RouterLink to="/">Sign in</RouterLink>
-                        </p>
-                    </form>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-5 d-flex align-items-center justify-content-center"
+                style="background-color: white; height: 100vh;">
+                <div class="register-container">
+                    <div class="register-form">
+                        <form class="form" @submit.prevent="register" style="position:relative;">
+                            <p class="form-title">Sign up to your account</p>
+                            <div class="input-container">
+                                <input v-model="firstname" type="text" placeholder="Enter Firstname">
+                            </div>
+                            <div class="input-container">
+                                <input v-model="lastname" type="text" placeholder="Enter Lastname">
+                            </div>
+                            <div class="input-container">
+                                <input v-model="username" type="text" placeholder="Enter Username">
+                                <span>
+                                    <i class="fa-solid fa-user"></i>
+                                </span>
+                            </div>
+                            <div class="input-container">
+                                <input v-model="email" type="email" placeholder="Enter Email">
+                                <span>
+                                    <i class="fa-solid fa-envelope"></i>
+                                </span>
+                            </div>
+                            <div class="input-container">
+                                <input v-model="password" :type="showPassword ? 'text' : 'password'"
+                                    placeholder="Enter Password">
+                                <span style="cursor:pointer;" @click="togglePassword">
+                                    <i :class="['fa-solid', showPassword ? 'fa-eye-slash' : 'fa-eye']"></i>
+                                </span>
+                            </div>
+                            <div class="input-container">
+                                <input v-model="password_confirmation" :type="showConfirmPassword ? 'text' : 'password'"
+                                    placeholder="Confirm Password">
+                                <span style="cursor:pointer;" @click="toggleConfirmPassword">
+                                    <i :class="['fa-solid', showConfirmPassword ? 'fa-eye-slash' : 'fa-eye']"></i>
+                                </span>
+                            </div>
+                            <button class="submit" type="submit">
+                                Sign up
+                            </button>
+                            <p class="signup-link">
+                                Already have an account?
+                                <RouterLink to="/">Sign in</RouterLink>
+                            </p>
+                        </form>
+                    </div>
                 </div>
             </div>
-            <div style="position:absolute; top:25%; right:10%; width:40%">
-                <div class="" style="width:100%; text-align:center;">
+            <div class="col-sm-7 d-flex align-items-center justify-content-center"
+                style="background-color: #1269db; height: 100vh; padding:8em">
+                <div class="logo-container align-items-center text-center">
                     <img src="../../../img/logo-transparent.png" alt="" style="width:12rem; height:10rem;">
-                </div>
-                <div class="text-center mt-4">
-                    <h5 class="text-light">Unlocking productivity, one clock-in at a time. iDTR:
-                        Where dedication meets efficiency, shaping a seamless journey through time records
-                        and unlocking the door to professional growth.</h5>
+                    <h5 class="text-light mt-4">Unlocking productivity, one clock-in at a time. iDTR: Where dedication meets
+                        efficiency, shaping a seamless journey through time records and unlocking the door to professional
+                        growth.</h5>
                 </div>
             </div>
         </div>
@@ -82,7 +84,6 @@ function toggleConfirmPassword() {
 }
 
 .register-container {
-    width: 100%;
     display: flex;
     justify-content: start;
     box-shadow: 4px #000;
@@ -90,7 +91,6 @@ function toggleConfirmPassword() {
 
 .register-form {
     background-color: white;
-    width: 40%;
     height: 100vh;
     display: flex;
     justify-content: center;
