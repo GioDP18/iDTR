@@ -19,7 +19,7 @@ function toggleConfirmPassword() {
                 <div class="register-container">
                     <div class="register-form">
                         <form class="form" @submit.prevent="register" style="position:relative;">
-                            <p class="form-title">Sign up to your account</p>
+                            <p class="form-title">Register your Account</p>
                             <div class="input-container mt-4">
                                 <input v-model="firstname" type="text" placeholder="Firstname" class="form-control" />
                             </div>
