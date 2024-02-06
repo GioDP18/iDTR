@@ -20,39 +20,39 @@ function toggleConfirmPassword() {
                     <div class="register-form">
                         <form class="form" @submit.prevent="register" style="position:relative;">
                             <p class="form-title">Sign up to your account</p>
-                            <div class="input-container">
-                                <input v-model="firstname" type="text" placeholder="Enter Firstname">
+                            <div class="input-container mt-4">
+                                <input v-model="firstname" type="text" placeholder="Firstname" class="form-control" />
                             </div>
-                            <div class="input-container">
-                                <input v-model="lastname" type="text" placeholder="Enter Lastname">
+                            <div class="input-container mt-3">
+                                <input v-model="lastname" type="text" placeholder="Lastname" class="form-control">
                             </div>
-                            <div class="input-container">
-                                <input v-model="username" type="text" placeholder="Enter Username">
+                            <div class="input-container mt-3">
+                                <input v-model="username" type="text" placeholder="Username" class="form-control">
                                 <span>
                                     <i class="fa-solid fa-user"></i>
                                 </span>
                             </div>
-                            <div class="input-container">
-                                <input v-model="email" type="email" placeholder="Enter Email">
+                            <div class="input-container mt-3">
+                                <input v-model="email" type="email" placeholder="name@example.com" class="form-control">
                                 <span>
                                     <i class="fa-solid fa-envelope"></i>
                                 </span>
                             </div>
-                            <div class="input-container">
+                            <div class="input-container mt-3">
                                 <input v-model="password" :type="showPassword ? 'text' : 'password'"
-                                    placeholder="Enter Password">
+                                    placeholder="*********" class="form-control">
                                 <span style="cursor:pointer;" @click="togglePassword">
                                     <i :class="['fa-solid', showPassword ? 'fa-eye-slash' : 'fa-eye']"></i>
                                 </span>
                             </div>
-                            <div class="input-container">
+                            <div class="input-container mt-3">
                                 <input v-model="password_confirmation" :type="showConfirmPassword ? 'text' : 'password'"
-                                    placeholder="Confirm Password">
+                                    placeholder="Confirm Password" class="form-control">
                                 <span style="cursor:pointer;" @click="toggleConfirmPassword">
                                     <i :class="['fa-solid', showConfirmPassword ? 'fa-eye-slash' : 'fa-eye']"></i>
                                 </span>
                             </div>
-                            <button class="submit" type="submit">
+                            <button class="submit mt-4" type="submit">
                                 Sign up
                             </button>
                             <p class="signup-link">
@@ -128,13 +128,12 @@ function toggleConfirmPassword() {
 
 .input-container input {
     background-color: #fff;
-    padding: 1rem;
+    padding: 8px;
     padding-right: 3rem;
     font-size: 0.875rem;
     line-height: 1.25rem;
     width: 300px;
     border-radius: 0.5rem;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
 
 .input-container span {
