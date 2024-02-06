@@ -13,7 +13,13 @@ class AuthServiceImp implements AuthService
 {
     public function __construct(){
     }
-
+    
+    /**
+     * Perform the login authentication
+     *
+     * @param AuthRequest $request
+     * @return createNewToken
+     */
     public function login(AuthRequest $request){
         $validator = Validator::make($request->all(), [
             'username' => 'required|string',
@@ -28,6 +34,12 @@ class AuthServiceImp implements AuthService
         return $this->createNewToken($token);
     }
 
+    /**
+     * handle the token creation
+     *
+     * @param [type] $token
+     * @return Http\Response\JasonResponse
+     */
     protected function createNewToken($token){
         return response()->json([
             'access_token' => $token,
@@ -37,14 +49,29 @@ class AuthServiceImp implements AuthService
         ]);
     }
 
+    /**
+     * Get the authenticated user information
+     *
+     * @return Http\Response\JasonResponse
+     */
     public function userProfile() {
         return response()->json(auth()->user());
     }
 
+    /**
+     * handle creation of new access token
+     *
+     * @return createNewToken
+     */
     public function refresh() {
         return $this->createNewToken(auth()->refresh());
     }
 
+    /**
+     * handle logout the authenticated user
+     *
+     * @return Http\Response\JasonResponse
+     */
     public function logout() {
         auth()->logout();
         return response()->json(['message' => 'User successfully signed out']);
