@@ -14,16 +14,6 @@ function toggleConfirmPassword() {
 <template>
     <div>
         <div style="display:flex; position:relative; background-color: #1269db;">
-            <div style="position:absolute; top:25%; left:10%; width:40%">
-                <div class="" style="width:100%; text-align:center;">
-                    <img src="../../../img/logo-transparent.png" alt="" style="width:12rem; height:10rem;">
-                </div>
-                <div class="text-center mt-4">
-                    <h5 class="text-light">Unlocking productivity, one clock-in at a time. iDTR:
-                        Where dedication meets efficiency, shaping a seamless journey through time records
-                        and unlocking the door to professional growth.</h5>
-                </div>
-            </div>
             <div class="login-container">
                 <div class="login-form">
                     <form class="form" @submit.prevent="login" style="position:relative;">
@@ -70,6 +60,16 @@ function toggleConfirmPassword() {
                     </form>
                 </div>
             </div>
+            <div style="position:absolute; top:25%; right:10%; width:40%">
+                <div class="" style="width:100%; text-align:center;">
+                    <img src="../../../img/logo-transparent.png" alt="" style="width:12rem; height:10rem;">
+                </div>
+                <div class="text-center mt-4">
+                    <h5 class="text-light">Unlocking productivity, one clock-in at a time. iDTR:
+                        Where dedication meets efficiency, shaping a seamless journey through time records
+                        and unlocking the door to professional growth.</h5>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -84,7 +84,7 @@ function toggleConfirmPassword() {
 .login-container {
     width: 100%;
     display: flex;
-    justify-content: end;
+    justify-content: start;
     box-shadow: 4px #000;
 }
 
