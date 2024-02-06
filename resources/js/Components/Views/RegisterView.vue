@@ -14,9 +14,9 @@ function toggleConfirmPassword() {
 <template>
     <div>
         <div style="display:flex; position:relative; background-color: #1269db;">
-            <div class="login-container">
-                <div class="login-form">
-                    <form class="form" @submit.prevent="login" style="position:relative;">
+            <div class="register-container">
+                <div class="register-form">
+                    <form class="form" @submit.prevent="register" style="position:relative;">
                         <p class="form-title">Sign up to your account</p>
                         <div class="input-container">
                             <input v-model="firstname" type="text" placeholder="Enter Firstname">
@@ -81,14 +81,14 @@ function toggleConfirmPassword() {
     box-sizing: border-box;
 }
 
-.login-container {
+.register-container {
     width: 100%;
     display: flex;
     justify-content: start;
     box-shadow: 4px #000;
 }
 
-.login-form {
+.register-form {
     background-color: white;
     width: 40%;
     height: 100vh;
