@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue';
+import { Field, Form, ErrorMessage } from 'vee-validate';
 
 const showPassword = ref(false);
 
@@ -9,6 +10,20 @@ function togglePassword() {
 
 function login() {
     //Login function
+}
+
+function requiredUsername(value) {
+  if (value && value.trim()) {
+    return true;
+  }
+  return 'Please enter your username.';
+}
+
+function requiredPassword(value) {
+  if (value && value.trim()) {
+    return true;
+  }
+  return 'Please enter your password.';
 }
 
 </script>
@@ -27,7 +42,7 @@ function login() {
         </div>
         <div class="login-container">
             <div class="login-form">
-                <form class="form" @submit.prevent="login" method="POST">
+                <Form class="form" @submit.prevent="login" method="POST">
                     <p class="form-title">Sign in to your account</p>
                     <div class="social-icons">
                         <RouterLink to="/"><i class="fa-brands fa-google-plus-g"></i></RouterLink>
@@ -39,18 +54,20 @@ function login() {
                         <div class="line"></div>
                     </div>
                     <div class="input-container">
-                        <input type="text" name="username" placeholder="Enter Username" required>
+                        <Field type="text" name="username" :rules="requiredUsername" placeholder="Enter Username" />
                         <span>
                             <i class="fa-solid fa-user"></i>
                         </span>
                     </div>
+                    <ErrorMessage class="error-message" name="username" />
                     <div class="input-container">
-                        <input name="password" v-model="password" :type="showPassword ? 'text' : 'password'"
-                            placeholder="Enter Password" required>
+                        <Field name="password" :rules="requiredPassword" v-model="password" :type="showPassword ? 'text' : 'password'"
+                            placeholder="Enter Password" />
                         <span id="password" @click="togglePassword">
                             <i :class="['fa-solid', showPassword ? 'fa-eye-slash' : 'fa-eye']"></i>
                         </span>
                     </div>
+                    <ErrorMessage class="error-message" name="password" />
                     <button class="submit" type="submit" name="login">
                         Sign in
                     </button>
@@ -59,7 +76,7 @@ function login() {
                         No account?
                         <RouterLink to="/register">Sign up</RouterLink>
                     </p>
-                </form>
+                </Form>
             </div>
         </div>
     </div>

@@ -7,6 +7,6 @@ export default createStore({
   mutations: {
     setLoading(state, value) {
       state.loading = value;
-    }
+    },
   }
 });
