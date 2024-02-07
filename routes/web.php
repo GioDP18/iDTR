@@ -16,3 +16,5 @@ use Illuminate\Support\Facades\Route;
 Route::get('/{match}', function () {
     return view('welcome');
 })->where('match', '.*');
+
+
