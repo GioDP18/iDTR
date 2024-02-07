@@ -31,9 +31,13 @@ function login() {
                     <p class="form-title">Sign in to your account</p>
                     <div class="social-icons">
                         <RouterLink to="/"><i class="fa-brands fa-google-plus-g"></i></RouterLink>
-                        <RouterLink to="/"><i class="fa-brands fa-facebook-f"></i></RouterLink>
+                        <RouterLink to="/"><i class="fa-brands fa-github"></i></RouterLink>
                     </div>
-                    <span>or use your username and password</span>
+                    <div class="seperator">
+                        <div class="line"></div>
+                        <p>or</p>
+                        <div class="line"></div>
+                    </div>
                     <div class="input-container">
                         <input type="text" name="username" placeholder="Enter Username" required>
                         <span>
@@ -41,7 +45,7 @@ function login() {
                         </span>
                     </div>
                     <div class="input-container">
-                        <input name="password" id="password" v-model="password" :type="showPassword ? 'text' : 'password'"
+                        <input name="password" v-model="password" :type="showPassword ? 'text' : 'password'"
                             placeholder="Enter Password" required>
                         <span id="password" @click="togglePassword">
                             <i :class="['fa-solid', showPassword ? 'fa-eye-slash' : 'fa-eye']"></i>
@@ -50,7 +54,7 @@ function login() {
                     <button class="submit" type="submit" name="login">
                         Sign in
                     </button>
-
+                    <RouterLink to="/" class="forgot-pass">Forgot Password?</RouterLink>
                     <p class="signup-link">
                         No account?
                         <RouterLink to="/register">Sign up</RouterLink>
@@ -61,6 +65,4 @@ function login() {
     </div>
 </template>
   
-<style scoped>
-
-</style>
+<style scoped></style>
