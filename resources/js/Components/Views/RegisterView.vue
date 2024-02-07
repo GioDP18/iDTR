@@ -1,14 +1,52 @@
 <script setup>
 import { ref } from 'vue';
+import { Form, Field, ErrorMessage } from 'vee-validate';
 
 const showPassword = ref(false);
 const showConfirmPassword = ref(false);
+const password = ref('');
 
 function togglePassword() {
     showPassword.value = !showPassword.value;
 }
+
 function toggleConfirmPassword() {
     showConfirmPassword.value = !showConfirmPassword.value;
+}
+
+function validateEmail(value) {
+    if (!value) {
+        return 'This field is required';
+    }
+    const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+    if (!regex.test(value)) {
+        return 'Please provide a valid email';
+    }
+    return true;
+}
+
+function validateName(value) {
+    if (!value) {
+        return 'This field is required';
+    }
+    return true;
+}
+
+function validatePassword(value) {
+    if (!value) {
+        return 'This field is required';
+    }
+    return true;
+}
+
+function validateConfirmPassword(value) {
+    if (!value) {
+        return 'This field is required';
+    }
+    if (value !== password.value) {
+        return 'This password does not match';
+    }
+    return true;
 }
 </script>
 <template>
@@ -18,55 +56,64 @@ function toggleConfirmPassword() {
                 style="background-color: white; height: 100vh;">
                 <div class="register-container">
                     <div class="register-form">
-                        <form class="form" @submit.prevent="register" style="position:relative;">
+                        <Form class="form" @submit="handleRegister" style="position:relative;">
                             <p class="form-title">Register your Account</p>
-                            <div class="input-container mt-4">
-                                <input v-model="firstname" type="text" placeholder="Firstname" class="form-control" />
+                            <div class="input-group flex-nowrap mt-4">
+                                <Field name="firstname" :rules="validateName" type="text" class="form-control"
+                                    placeholder="Fistname" />
                             </div>
-                            <div class="input-container mt-3">
-                                <input v-model="lastname" type="text" placeholder="Lastname" class="form-control">
+                            <ErrorMessage class="error-message" name="firstname" />
+                            <div class="input-group flex-nowrap mt-3">
+                                <Field name="lastname" :rules="validateName" type="text" class="form-control"
+                                    placeholder="Lastname" />
                             </div>
-                            <div class="input-container mt-3">
-                                <input v-model="username" type="text" placeholder="Username" class="form-control">
-                                <span>
+                            <ErrorMessage class="error-message" name="lastname" />
+                            <div class="input-group flex-nowrap mt-3">
+                                <Field name="username" :rules="validateName" type="text" class="form-control"
+                                    placeholder="Username" />
+                                <span class="input-group-text">
                                     <i class="fa-solid fa-user"></i>
                                 </span>
                             </div>
-                            <div class="input-container mt-3">
-                                <input v-model="email" type="email" placeholder="name@example.com" class="form-control">
-                                <span>
+                            <ErrorMessage class="error-message" name="username" />
+                            <div class="input-group flex-nowrap mt-3">
+                                <Field name="email" :rules="validateEmail" type="email" class="form-control"
+                                    placeholder="name@example.com" />
+                                <span class="input-group-text">
                                     <i class="fa-solid fa-envelope"></i>
                                 </span>
                             </div>
-                            <div class="input-container mt-3">
-                                <input v-model="password" :type="showPassword ? 'text' : 'password'"
-                                    placeholder="*********" class="form-control">
-                                <span style="cursor:pointer;" @click="togglePassword">
+                            <ErrorMessage class="error-message" name="email" />
+                            <div class="input-group flex-nowrap mt-3">
+                                <Field name="password" v-model="password" :rules="validatePassword" :type="showPassword ? 'text' : 'password'" placeholder="Password" class="form-control" />
+                                <span class="input-group-text" style="cursor:pointer;" @click="togglePassword">
                                     <i :class="['fa-solid', showPassword ? 'fa-eye-slash' : 'fa-eye']"></i>
                                 </span>
                             </div>
-                            <div class="input-container mt-3">
-                                <input v-model="password_confirmation" :type="showConfirmPassword ? 'text' : 'password'"
-                                    placeholder="Confirm Password" class="form-control">
-                                <span style="cursor:pointer;" @click="toggleConfirmPassword">
+                            <ErrorMessage class="error-message" name="password" />
+                            <div class="input-group flex-nowrap mt-3">
+                                <Field name="password_confirmation" :rules="validateConfirmPassword" :type="showConfirmPassword ? 'text' : 'password'"
+                                    placeholder="Confirm Password" class="form-control" />
+                                <span class="input-group-text" style="cursor:pointer;" @click="toggleConfirmPassword">
                                     <i :class="['fa-solid', showConfirmPassword ? 'fa-eye-slash' : 'fa-eye']"></i>
                                 </span>
                             </div>
-                            <button class="submit mt-4" type="submit">
+                            <ErrorMessage class="error-message" name="password_confirmation" />
+                            <button class="submit mt-4">
                                 Sign up
                             </button>
                             <p class="signup-link">
                                 Already have an account?
                                 <RouterLink to="/">Sign in</RouterLink>
                             </p>
-                        </form>
+                        </Form>
                     </div>
                 </div>
             </div>
             <div class="col-sm-7 d-flex align-items-center justify-content-center"
                 style="background-color: #1269db; height: 100vh; padding:8em">
                 <div class="logo-container align-items-center text-center">
-                    <img src="../../../img/logo-transparent.png" alt="" style="width:12rem; height:10rem;">
+                    <img src="../../../../public/img/logo-transparent.png" alt="" style="width:12rem; height:10rem;">
                     <h5 class="text-light mt-4">Unlocking productivity, one clock-in at a time. iDTR: Where dedication meets
                         efficiency, shaping a seamless journey through time records and unlocking the door to professional
                         growth.</h5>
@@ -82,6 +129,28 @@ function toggleConfirmPassword() {
     padding: 0;
     box-sizing: border-box;
 }
+
+input {
+    font-size: 0.875rem;
+    padding-left: 10px;
+    padding: 8px;
+}
+
+span {
+    padding: 8px;
+}
+
+span i {
+    color: #9CA3AF;
+    width: 1rem;
+    height: 1rem;
+}
+
+.error-message {
+    color: red;
+    font-size: 0.75rem;
+}
+
 
 .register-container {
     display: flex;
@@ -115,18 +184,7 @@ function toggleConfirmPassword() {
     color: #000;
 }
 
-.input-container {
-    position: relative;
-}
-
-.input-container input,
-.form button {
-    outline: none;
-    border: 1px solid #e5e7eb;
-    margin: 8px 0;
-}
-
-.input-container input {
+.input-group input {
     background-color: #fff;
     padding: 8px;
     padding-right: 3rem;
@@ -134,23 +192,6 @@ function toggleConfirmPassword() {
     line-height: 1.25rem;
     width: 300px;
     border-radius: 0.5rem;
-}
-
-.input-container span {
-    display: grid;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    place-content: center;
-}
-
-.input-container span i {
-    color: #9CA3AF;
-    width: 1rem;
-    height: 1rem;
 }
 
 .submit {
@@ -170,6 +211,7 @@ function toggleConfirmPassword() {
 }
 
 .signup-link {
+    margin-top: 5px;
     color: #6B7280;
     font-size: 0.875rem;
     line-height: 1.25rem;
