@@ -17,7 +17,7 @@ function login() {
     <div class="main-container">
         <div class="content">
             <div class="logo-transparent">
-                <img src="../../../../public/storage/logo/logo-transparent.png" alt="">
+                <img src="../../../../public/images/logo-transparent.png" alt="">
             </div>
             <div class="text-center mt-4">
                 <h5 class="text-light">Unlocking productivity, one clock-in at a time. iDTR:
@@ -33,7 +33,7 @@ function login() {
                         <RouterLink to="/"><i class="fa-brands fa-google-plus-g"></i></RouterLink>
                         <RouterLink to="/"><i class="fa-brands fa-github"></i></RouterLink>
                     </div>
-                    <div class="seperator">
+                    <div class="separator">
                         <div class="line"></div>
                         <p>or</p>
                         <div class="line"></div>
