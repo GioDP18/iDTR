@@ -225,15 +225,11 @@
 
     .social-icons {
         margin: 20px 0;
-        /* Adjust as needed */
     }
 
     .social-icons a {
         margin: 0 5px;
-        /* Adjust as needed */
         width: 30px;
-        /* Adjust as needed */
         height: 30px;
-        /* Adjust as needed */
     }
 }
