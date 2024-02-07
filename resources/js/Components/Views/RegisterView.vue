@@ -36,6 +36,12 @@ function validatePassword(value) {
     if (!value) {
         return 'This field is required';
     }
+    const strongRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/;
+    if (strongRegex.test(value)) {
+        return true;
+    } else {
+        return 'Password is too weak';
+    }
     return true;
 }
 
