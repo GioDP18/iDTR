@@ -42,9 +42,9 @@
                         <div class="collapses" id="timeLog">
                             <ul class="nav nav-collapse">
                                 <li active-class="active">
-                                    <a href="timeLog_am.php">
+                                    <RouterLink to="/user/timelog-am">
                                         <span class="sub-item">AM</span>
-                                    </a>
+                                    </RouterLink>
                                 </li>
                                 <li active-class="active">
                                     <a href="timeLog_pm.php">
