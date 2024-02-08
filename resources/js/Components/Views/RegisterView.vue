@@ -1,4 +1,5 @@
 <script setup>
+import axios from 'axios';
 import { ref } from 'vue';
 import { Form, Field, ErrorMessage } from 'vee-validate';
 import { useRouter } from 'vue-router';
@@ -72,12 +73,7 @@ function validateConfirmPassword(value) {
 
 const handleRegister = async () => {
   try {
-    const response = await fetch('/api/auth/register', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
+    await axios.post('/api/auth/register', {
         firstname: firstname.value,
         middlename: middlename.value,
         lastname: lastname.value,
@@ -87,17 +83,12 @@ const handleRegister = async () => {
         email: email.value,
         password: password.value,
         password_confirmation: password_confirmation.value,
-      }),
-    });
-
-    // Handle response
-    const data = await response.json();
-    console.log(response)
-    if (response.ok) {
+    })
+    .then((response) => {
+        console.log(response);
         router.push('/user/dashboard');
-    } else {
-      alert(data.message);
-    }
+    })
+
   } catch (error) {
     console.error('Error during registration:', error);
   }
