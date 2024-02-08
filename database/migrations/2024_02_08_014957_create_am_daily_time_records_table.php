@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('am_daily_time_records', function (Blueprint $table) {
             $table->id();
-            $table->string('username');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->tinyInteger('user_level')->default(0);
-            $table->rememberToken();
+            $table->foreignId('interns_id')->constrained();
+            $table->time('arrival_am');
+            $table->time('departure_am');
+            $table->time('late_am');
+            $table->time('hours_worked_am');
+            $table->date('date');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('am_daily_time_records');
     }
 };
