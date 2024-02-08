@@ -8,6 +8,7 @@ use Validator;
 use Illuminate\Http\Request;
 use App\Http\Requests\AuthRequest;
 use App\Http\Services\AuthService;
+use App\Models\Intern;
 
 class AuthServiceImp implements AuthService
 {
@@ -32,6 +33,56 @@ class AuthServiceImp implements AuthService
             return response()->json(['error' => 'Unauthorized'], 401);
         }
         return $this->createNewToken($token);
+    }
+
+    /**
+     * Register a User.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function register(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'firstname' => 'required|min:3',
+            'middlename' => 'required|min:3',
+            'lastname' => 'required|min:3',
+            'gender' =>'required',
+            'birthdate' =>'required',
+            'email' => 'required|string|email|max:100|unique:users',
+            'username' => 'required|string|between:2,100',
+            'password' => 'required|string|confirmed|min:6',
+        ]);
+        if($validator->fails()){
+            return response()->json($validator->errors()->toJson(), 400);
+        }
+        if($validator){
+            $user = User::create([
+                'username' => $request->password,
+                'email' => $request->email,
+                'password' => bcrypt($request->password)
+            ]);
+            if($user){
+                Intern::create([
+                    'users_id' => $user->id,
+                    'firstname' => $request->firstname,
+                    'middlename' => $request->middlename,
+                    'lastname' => $request->lastname,
+                    'gender' => $request->gender,
+                    'birthdate' => $request->birthdate,
+                    'email' => $request->email,
+                ]);
+            }
+        }
+        
+
+        if($user){
+            
+        }
+                
+        return response()->json([
+            'message' => 'User successfully registered',
+            'newId' => $user->id,
+            'user' => $user
+        ], 201);
     }
 
     /**
