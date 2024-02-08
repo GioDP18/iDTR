@@ -63,17 +63,23 @@ function validateConfirmPassword(value) {
                 <div class="register-container">
                     <div class="register-form">
                         <Form class="form" @submit="handleRegister" style="position:relative;">
-                            <p class="form-title">Register your Account</p>
-                            <div class="input-group flex-nowrap mt-4">
-                                <Field name="firstname" :rules="validateName" type="text" class="form-control"
-                                    placeholder="Fistname" />
+                            <p class="form-title">Register your account</p>
+                            <div class="row gap-2">
+                                <div class="col">
+                                    <div class="mt-4">
+                                        <Field name="firstname" :rules="validateName" type="text" class="form-control"
+                                            placeholder="Fistname" />
+                                    </div>
+                                    <ErrorMessage class="error-message" name="firstname" />
+                                </div>
+                                <div class="col">
+                                    <div class=" mt-4">
+                                        <Field name="middlename" :rules="validateName" type="text" class="form-control"
+                                            placeholder="Middlename" />
+                                    </div>
+                                    <ErrorMessage class="error-message" name="middlename" />
+                                </div>
                             </div>
-                            <ErrorMessage class="error-message" name="firstname" />
-                            <div class="input-group flex-nowrap mt-4">
-                                <Field name="middlename" :rules="validateName" type="text" class="form-control"
-                                    placeholder="Middlename" />
-                            </div>
-                            <ErrorMessage class="error-message" name="middlename" />
                             <div class="input-group flex-nowrap mt-3">
                                 <Field name="lastname" :rules="validateName" type="text" class="form-control"
                                     placeholder="Lastname" />
@@ -87,16 +93,18 @@ function validateConfirmPassword(value) {
                                 </span>
                             </div>
                             <ErrorMessage class="error-message" name="username" />
-                            <div class="mt-3 d-flex justify-content-around">
+                            <div class="mt-3 d-flex justify-content-between">
+                                <label for="" style="color: gray; margin-left: 4px">Gender:</label>
                                 <div class="form-check form-check-inline">
                                     <Field class="form-check-input" :rules="validateName" type="radio" name="gender"
                                         id="inlineRadio1" value="male" />
-                                    <label class="form-check-label" for="inlineRadio1">Male</label>
+                                    <label class="form-check-label" for="inlineRadio1" style="margin-left: 4px">Male</label>
                                 </div>
                                 <div class="form-check form-check-inline">
                                     <Field class="form-check-input" :rules="validateName" type="radio" name="gender"
                                         id="inlineRadio2" value="female" />
-                                    <label class="form-check-label" for="inlineRadio2">Female</label>
+                                    <label class="form-check-label" for="inlineRadio2"
+                                        style="margin-left: 4px; margin-right: 4px">Female</label>
                                 </div>
                             </div>
                             <ErrorMessage class="error-message" name="gender" />
@@ -134,7 +142,7 @@ function validateConfirmPassword(value) {
                                 </span>
                             </div>
                             <ErrorMessage class="error-message" name="password_confirmation" />
-                            <button class="submit mt-4">
+                            <button class="submit" type="submit" name="register">
                                 Sign up
                             </button>
                             <p class="signup-link">
@@ -159,12 +167,6 @@ function validateConfirmPassword(value) {
 </template>
 
 <style scoped>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 input {
     font-size: 0.875rem;
     padding-left: 10px;
@@ -181,24 +183,21 @@ span i {
     height: 1rem;
 }
 
-  /* For modern browsers */
-  input[type="date"]::-webkit-calendar-picker-indicator {
+input[type="date"]::-webkit-calendar-picker-indicator {
     display: none;
-  }
+}
 
-  /* For Firefox */
-  input[type="date"] {
-    appearance: none;
-    -moz-appearance: none;
-    -webkit-appearance: none;
-  }
+label {
+    font-size: 0.875rem;
+    display: flex;
+    flex-direction: row;
+}
+
 
 .error-message {
     color: red;
     font-size: 0.75rem;
 }
-
-
 .register-container {
     display: flex;
     justify-content: start;
@@ -214,22 +213,6 @@ span i {
     padding: 1rem;
 }
 
-.form {
-    background-color: #fff;
-    display: block;
-    padding: 1rem;
-    max-width: 350px;
-    border-radius: 0.5rem;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-}
-
-.form-title {
-    font-size: 1.25rem;
-    line-height: 1.75rem;
-    font-weight: 600;
-    text-align: center;
-    color: #000;
-}
 
 .input-group input {
     background-color: #fff;
@@ -239,33 +222,5 @@ span i {
     line-height: 1.25rem;
     width: 300px;
     border-radius: 0.5rem;
-}
-
-.submit {
-    display: block;
-    padding-top: 0.75rem;
-    padding-bottom: 0.75rem;
-    padding-left: 1.25rem;
-    padding-right: 1.25rem;
-    background-color: #1269DB;
-    color: #ffffff;
-    font-size: 0.875rem;
-    line-height: 1.25rem;
-    font-weight: 500;
-    width: 100%;
-    border-radius: 0.5rem;
-    text-transform: uppercase;
-}
-
-.signup-link {
-    margin-top: 5px;
-    color: #6B7280;
-    font-size: 0.875rem;
-    line-height: 1.25rem;
-    text-align: center;
-}
-
-.signup-link a {
-    text-decoration: underline;
 }
 </style>
