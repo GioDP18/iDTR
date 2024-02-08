@@ -24,12 +24,12 @@ const data = [
                         <div class="d-flex" style="gap:7px;">
                             <div>
                                 <button class="log bg-success" @click="handleTimeIn">
-                                    <span><i><font-awesome-icon :icon="['fas', 'clock']" /></i> Time-In</span>
+                                    <span><font-awesome-icon :icon="['fas', 'clock']" /> Time-In</span>
                                 </button>
                             </div>
                             <div>
                                 <button class="log bg-danger" @click="handleTimeOut">
-                                    <span><i><font-awesome-icon :icon="['fas', 'clock']" /></i> Time-Out</span>
+                                    <span><font-awesome-icon :icon="['fas', 'clock']" /> Time-Out</span>
                                 </button>
                             </div>
                         </div>

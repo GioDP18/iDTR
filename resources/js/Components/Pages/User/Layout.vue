@@ -7,7 +7,7 @@
 
 <template>
     <div class="main-header">
-        <!-- <LogoHeader /> -->
+        <LogoHeader />
         <NavHeader />
     </div>
     
