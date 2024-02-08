@@ -11,11 +11,7 @@ const routes = [
         path : '/',
         component : LoginView,
     },
-    {
-        path: '/register',
-        component: RegisterView,
-    },
-    
+
 
     {
         path : '/user',
@@ -25,13 +21,8 @@ const routes = [
                 path : 'dashboard',
                 component : UserDashboard,
             },
-            {
-                path : '/timelog-am',
-                component : UserTimeLogAM
-            }
         ]
     },
-        
     {
         path : '/:pathMatch(.*)*',
         component : notFound
