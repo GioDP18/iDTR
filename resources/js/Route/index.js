@@ -5,6 +5,8 @@ import RegisterView from '../Components/Views/RegisterView.vue';
 import UserView from '../Components/Views/UserView.vue';
 import UserDashboard from '../Components/Pages/User/Dashboard.vue';
 import UserTimeLogAm from '../Components/Pages/User/TimeLogAM.vue';
+import TimeLogPM from '../Components/Pages/User/TimeLogPM.vue';
+
 
 
 const routes = [
@@ -23,13 +25,17 @@ const routes = [
         component : UserView,
         children: [
             {
-                path : 'dashboard',
+                path : '/dashboard',
                 component : UserDashboard,
             },
             {
                 path : 'timelog-am',
                 component : UserTimeLogAm,
             }
+        }
+                path : '/timelogpm',
+                component : TimeLogPM,
+            },
         ]
     },
         
