@@ -28,7 +28,6 @@ function requiredPassword(value) {
 
 </script>
 
-</script>
 <template>
     <div class="main-container">
         <div class="text-content">

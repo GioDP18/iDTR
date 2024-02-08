@@ -1,7 +1,6 @@
 <script setup>
 
 </script>
-
 <template>
     <div class="main-panel">
 			<div class="content">

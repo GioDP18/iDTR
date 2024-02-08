@@ -1,10 +1,8 @@
 <script setup>
-
 </script>
 
 <template>
     <div class="logo-header" data-background-color="blue">
-
         <a href="#" class="logo text-light">
             Supsofttech
         </a>
