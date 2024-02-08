@@ -42,7 +42,7 @@ function requiredPassword(value) {
         </div>
         <div class="login-container">
             <div class="login-form">
-                <Form class="form" @submit.prevent="login" method="POST">
+                <Form class="form" @submit="login">
                     <p class="form-title">Sign in to your account</p>
                     <div class="social-icons">
                         <RouterLink to="/"><i class="fa-brands fa-google-plus-g"></i></RouterLink>

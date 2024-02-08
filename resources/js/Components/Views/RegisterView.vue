@@ -167,6 +167,16 @@ function validateConfirmPassword(value) {
 </template>
 
 <style scoped>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#app {
+    background-color: #1269db;
+}
+
 input {
     font-size: 0.875rem;
     padding-left: 10px;
@@ -192,8 +202,6 @@ label {
     display: flex;
     flex-direction: row;
 }
-
-
 .error-message {
     color: red;
     font-size: 0.75rem;
@@ -213,7 +221,6 @@ label {
     padding: 1rem;
 }
 
-
 .input-group input {
     background-color: #fff;
     padding: 8px;
@@ -222,5 +229,71 @@ label {
     line-height: 1.25rem;
     width: 300px;
     border-radius: 0.5rem;
+}
+
+
+.form {
+    position: relative;
+    background-color: #fff;
+    display: block;
+    padding: 1rem;
+    max-width: 350px;
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    text-align: center;
+}
+
+
+.form-title {
+    margin-top: 10px;
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    font-weight: 600;
+    text-align: center;
+    color: #000;
+}
+
+
+.form button {
+    outline: none;
+    border: 1px solid #e5e7eb;
+    margin: 8px 0;
+}
+
+.error-message {
+    color: red;
+    font-size: 0.75rem;
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    margin-left: 5%;
+}
+
+.submit {
+    display: block;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    background-color: #1269DB;
+    color: #ffffff;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 500;
+    width: 100%;
+    border-radius: 0.5rem;
+    text-transform: uppercase;
+}
+
+.signup-link {
+    color: #6B7280;
+    font-size: 14px;
+    line-height: 1.25rem;
+    text-align: center;
+    padding-top: 10px;
+}
+
+.signup-link>a {
+    text-decoration: underline;
 }
 </style>
