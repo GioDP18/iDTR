@@ -31,7 +31,7 @@ function requiredPassword(value) {
 </script>
 <template>
     <div class="main-container">
-        <div class="content">
+        <div class="text-content">
             <div class="logo-transparent">
                 <img src="../../../../public/images/logo-transparent.png" alt="">
             </div>
