@@ -4,10 +4,6 @@
     box-sizing: border-box;
 }
 
-#app {
-    background-color: #1269db;
-}
-
 .main-container {
     display: flex;
     position: relative;
