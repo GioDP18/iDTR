@@ -66,6 +66,7 @@ class AuthServiceImp implements AuthService
             ]);
             if($user){
                 Intern::create([
+                    'id' => $user->id,
                     'users_id' => $user->id,
                     'firstname' => $request->firstname,
                     'middlename' => $request->middlename,
