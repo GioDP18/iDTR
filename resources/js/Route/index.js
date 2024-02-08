@@ -3,6 +3,7 @@ import notFound from '../Components/404.vue';
 import LoginView from '../Components/Views/LoginView.vue';
 import UserView from '../Components/Views/UserView.vue';
 import UserDashboard from '../Components/Pages/User/Dashboard.vue';
+import TimeLogPM from '../Components/Pages/User/TimeLogPM.vue';
 
 
 const routes = [
@@ -17,8 +18,12 @@ const routes = [
         component : UserView,
         children: [
             {
-                path : 'dashboard',
+                path : '/dashboard',
                 component : UserDashboard,
+            },
+            {
+                path : '/timelogpm',
+                component : TimeLogPM,
             },
         ]
     },

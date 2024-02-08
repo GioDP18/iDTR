@@ -47,9 +47,9 @@
                                     </a>
                                 </li>
                                 <li active-class="active">
-                                    <a href="timeLog_pm.php">
+                                    <RouterLink to="/timelogpm">
                                         <span class="sub-item">PM</span>
-                                    </a>
+                                    </RouterLink>
                                 </li>
                                 <li active-class="active">
                                     <a href="overtime.php">
@@ -71,6 +71,4 @@
     </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
