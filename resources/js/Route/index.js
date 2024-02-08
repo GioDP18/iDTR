@@ -12,6 +12,10 @@ const routes = [
         component : LoginView,
     },
     {
+        path : '/register',
+        component : RegisterView,
+    },
+    {
         path : '/user',
         component : UserView,
         children: [
