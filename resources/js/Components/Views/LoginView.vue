@@ -3,13 +3,16 @@ import { ref } from 'vue';
 import { Field, Form, ErrorMessage } from 'vee-validate';
 
 const showPassword = ref(false);
+const password = ref('');
+const username = ref('');
 
 function togglePassword() {
     showPassword.value = !showPassword.value;
 }
 
 function login() {
-    //Login function
+    //Make a login function
+    
 }
 
 function requiredUsername(value) {
@@ -54,7 +57,7 @@ function requiredPassword(value) {
                         <div class="line"></div>
                     </div>
                     <div class="input-container">
-                        <Field type="text" name="username" :rules="requiredUsername" placeholder="Enter Username" />
+                        <Field type="text" name="username" :rules="requiredUsername" v-model="username" placeholder="Enter Username" />
                         <span>
                             <i class="fa-solid fa-user"></i>
                         </span>
