@@ -21,6 +21,10 @@ const routes = [
                 path : 'dashboard',
                 component : UserDashboard,
             },
+            {
+                path : '/timelog-am',
+                component : UserTimeLogAM,
+            },
         ]
     },
     {
