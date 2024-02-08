@@ -18,12 +18,6 @@ const routes = [
                 path : 'dashboard',
                 component : UserDashboard,
             },
-        ]
-    },
-    {
-        path : '/user',
-        component : UserView,
-        children: [
             {
                 path : 'timelog-am',
                 component : UserTimeLogAM,
