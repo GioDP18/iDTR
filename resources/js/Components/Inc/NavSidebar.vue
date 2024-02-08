@@ -1,8 +1,9 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 
 const timeLogExpanded = ref(false);
 const showSidebar = ref(true);
+const activeTime = ref("");
 
 function toggleSidebar() {
     showSidebar.value = !showSidebar.value;
@@ -11,6 +12,20 @@ function toggleSidebar() {
 const toggleTimeLog = () => {
     timeLogExpanded.value = !timeLogExpanded.value;
 };
+
+const updateActiveTime = () => {
+    const now = new Date();
+    let hours = now.getHours();
+    const minutes = now.getMinutes().toString().padStart(2, "0");
+    const meridiem = hours >= 12 ? "PM" : "AM";
+    hours = hours % 12 || 12;
+    activeTime.value = `${hours}:${minutes} ${meridiem}`;
+};
+
+onMounted(() => {
+    updateActiveTime();
+    setInterval(updateActiveTime, 1000);
+});
 
 </script>
 
@@ -31,7 +46,9 @@ const toggleTimeLog = () => {
                 <div class="container-fluid">
                     <div class="collapse" id="search-nav">
                         <div class="text-light">
-                            <h2 id="realTimeClock"></h2>
+                            <div class="text-light">
+                                <h2 id="realTimeClock">{{ activeTime }}</h2>
+                            </div>
                         </div>
                     </div>
                     <ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
@@ -149,4 +166,8 @@ const toggleTimeLog = () => {
     </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+a {
+    text-decoration: none;
+}
+</style>
