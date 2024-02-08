@@ -13,6 +13,7 @@ const routes = [
         path: '/register',
         component: RegisterView,
     },
+    
     {
         path : '/:pathMatch(.*)*',
         component : notFound
