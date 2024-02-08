@@ -56,7 +56,7 @@ class AuthServiceImp implements AuthService
         }
         if($validator){
             $user = User::create([
-                'username' => $request->password,
+                'username' => $request->username,
                 'email' => $request->email,
                 'password' => bcrypt($request->password)
             ]);
