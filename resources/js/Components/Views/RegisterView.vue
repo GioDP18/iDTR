@@ -181,6 +181,18 @@ span i {
     height: 1rem;
 }
 
+  /* For modern browsers */
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    display: none;
+  }
+
+  /* For Firefox */
+  input[type="date"] {
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+  }
+
 .error-message {
     color: red;
     font-size: 0.75rem;
