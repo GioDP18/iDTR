@@ -173,10 +173,6 @@ function validateConfirmPassword(value) {
     box-sizing: border-box;
 }
 
-#app {
-    background-color: #1269db;
-}
-
 input {
     font-size: 0.875rem;
     padding-left: 10px;
@@ -197,11 +193,13 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     display: none;
 }
 
-label {
-    font-size: 0.875rem;
-    display: flex;
-    flex-direction: row;
-}
+  /* For Firefox */
+  input[type="date"] {
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+  }
+
 .error-message {
     color: red;
     font-size: 0.75rem;
@@ -233,19 +231,15 @@ label {
 
 
 .form {
-    position: relative;
     background-color: #fff;
     display: block;
     padding: 1rem;
     max-width: 350px;
     border-radius: 0.5rem;
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-    text-align: center;
 }
 
-
 .form-title {
-    margin-top: 10px;
     font-size: 1.25rem;
     line-height: 1.75rem;
     font-weight: 600;
@@ -286,14 +280,14 @@ label {
 }
 
 .signup-link {
+    margin-top: 5px;
     color: #6B7280;
-    font-size: 14px;
+    font-size: 0.875rem;
     line-height: 1.25rem;
     text-align: center;
-    padding-top: 10px;
 }
 
-.signup-link>a {
+.signup-link a {
     text-decoration: underline;
 }
 </style>
