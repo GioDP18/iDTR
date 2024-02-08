@@ -76,12 +76,6 @@ class AuthServiceImp implements AuthService
                 ]);
             }
         }
-        
-        // return response()->json([
-        //     'message' => 'User successfully registered',
-        //     'newId' => $user->id,
-        //     'user' => $user
-        // ], 201);
         if (! $token = auth()->attempt($redirectLogin->validated())) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
