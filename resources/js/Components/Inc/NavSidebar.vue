@@ -33,9 +33,9 @@ onMounted(() => {
     <div id="body-pd">
         <div class="main-header">
             <div class="logo-header" data-background-color="blue" v-show="showSidebar">
-                <a href="#" class="logo text-light">
-                    Supsofttech
-                </a>
+                <RouterLink to="/user/dashboard" class="logo text-light" style="font-weight: bold; font-size: 20px;">
+                    SupSoftTech
+                </RouterLink>
             </div>
             <nav class="navbar navbar-header navbar-expand-lg" data-background-color="blue2">
                 <div class="nav-toggle">
