@@ -69,6 +69,11 @@ function validateConfirmPassword(value) {
                                     placeholder="Fistname" />
                             </div>
                             <ErrorMessage class="error-message" name="firstname" />
+                            <div class="input-group flex-nowrap mt-4">
+                                <Field name="middlename" :rules="validateName" type="text" class="form-control"
+                                    placeholder="Middlename" />
+                            </div>
+                            <ErrorMessage class="error-message" name="middlename" />
                             <div class="input-group flex-nowrap mt-3">
                                 <Field name="lastname" :rules="validateName" type="text" class="form-control"
                                     placeholder="Lastname" />
@@ -82,6 +87,27 @@ function validateConfirmPassword(value) {
                                 </span>
                             </div>
                             <ErrorMessage class="error-message" name="username" />
+                            <div class="mt-3 d-flex justify-content-around">
+                                <div class="form-check form-check-inline">
+                                    <Field class="form-check-input" :rules="validateName" type="radio" name="gender"
+                                        id="inlineRadio1" value="male" />
+                                    <label class="form-check-label" for="inlineRadio1">Male</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <Field class="form-check-input" :rules="validateName" type="radio" name="gender"
+                                        id="inlineRadio2" value="female" />
+                                    <label class="form-check-label" for="inlineRadio2">Female</label>
+                                </div>
+                            </div>
+                            <ErrorMessage class="error-message" name="gender" />
+                            <div class="input-group flex-nowrap mt-3">
+                                <Field name="birthdate" :rules="validateName" type="date" class="form-control"
+                                    placeholder="" />
+                                <span class="input-group-text">
+                                    <i class="fa-solid fa-calendar"></i>
+                                </span>
+                            </div>
+                            <ErrorMessage class="error-message" name="birthdate" />
                             <div class="input-group flex-nowrap mt-3">
                                 <Field name="email" :rules="validateEmail" type="email" class="form-control"
                                     placeholder="name@example.com" />
@@ -91,15 +117,18 @@ function validateConfirmPassword(value) {
                             </div>
                             <ErrorMessage class="error-message" name="email" />
                             <div class="input-group flex-nowrap mt-3">
-                                <Field name="password" v-model="password" :rules="validatePassword" :type="showPassword ? 'text' : 'password'" placeholder="Password" class="form-control" />
+                                <Field name="password" v-model="password" :rules="validatePassword"
+                                    :type="showPassword ? 'text' : 'password'" placeholder="Password"
+                                    class="form-control" />
                                 <span class="input-group-text" style="cursor:pointer;" @click="togglePassword">
                                     <i :class="['fa-solid', showPassword ? 'fa-eye-slash' : 'fa-eye']"></i>
                                 </span>
                             </div>
                             <ErrorMessage class="error-message" name="password" />
                             <div class="input-group flex-nowrap mt-3">
-                                <Field name="password_confirmation" :rules="validateConfirmPassword" :type="showConfirmPassword ? 'text' : 'password'"
-                                    placeholder="Confirm Password" class="form-control" />
+                                <Field name="password_confirmation" :rules="validateConfirmPassword"
+                                    :type="showConfirmPassword ? 'text' : 'password'" placeholder="Confirm Password"
+                                    class="form-control" />
                                 <span class="input-group-text" style="cursor:pointer;" @click="toggleConfirmPassword">
                                     <i :class="['fa-solid', showConfirmPassword ? 'fa-eye-slash' : 'fa-eye']"></i>
                                 </span>
