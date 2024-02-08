@@ -17,8 +17,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-<<<<<<< Updated upstream
-=======
 
 Route::group([
     'middleware' => 'api',
@@ -31,4 +29,3 @@ Route::group([
     Route::get('/user-profile', [AuthController::class, 'userProfile']);    
     Route::post('/time-in-am', []);
 });
->>>>>>> Stashed changes
