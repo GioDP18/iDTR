@@ -4,6 +4,8 @@ import LoginView from '../Components/Views/LoginView.vue';
 import RegisterView from '../Components/Views/RegisterView.vue';
 import UserView from '../Components/Views/UserView.vue';
 import UserDashboard from '../Components/Pages/User/Dashboard.vue';
+import UserTimeLogAM from '../Components/Pages/User/TimeLogAM.vue';
+import UserTimeLogPM from '../Components/Pages/User/TimeLogPM.vue';
 
 
 const routes = [
@@ -25,6 +27,14 @@ const routes = [
                 path : 'dashboard',
                 component : UserDashboard,
             },
+            {
+                path : 'timeLog-am',
+                component : UserTimeLogAM,
+            },
+            {
+                path : 'timeLog-pm',
+                component : UserTimeLogPM,
+            }
         ]
     },
         

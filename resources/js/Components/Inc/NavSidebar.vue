@@ -42,28 +42,28 @@
                         <div class="collapses" id="timeLog">
                             <ul class="nav nav-collapse">
                                 <li active-class="active">
-                                    <a href="timeLog_am.php">
+                                    <RouterLink to="/user/timeLog-am">
                                         <span class="sub-item">AM</span>
-                                    </a>
+                                    </RouterLink>
                                 </li>
                                 <li active-class="active">
-                                    <a href="timeLog_pm.php">
+                                    <RouterLink to="/user/timeLog-pm">
                                         <span class="sub-item">PM</span>
-                                    </a>
+                                    </RouterLink>
                                 </li>
                                 <li active-class="active">
-                                    <a href="overtime.php">
-                                        <span class="sub-item">Overtime</span>
-                                    </a>
+                                    <RouterLink to="/user/tbreakTime">
+                                        <span class="sub-item">Break Time</span>
+                                    </RouterLink>
                                 </li>
                             </ul>
                         </div>
                     </li>
                     <li class="nav-item" active-class="active">
-                        <a href="reports.php">
+                        <RouterLink to="/user/reports">
                             <i><font-awesome-icon :icon="['fas', 'pen-to-square']" /></i>
                             <p>Reports</p>
-                        </a>
+                        </RouterLink>
                     </li>
                 </ul>
             </div>
