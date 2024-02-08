@@ -86,6 +86,9 @@ const handleRegister = async () => {
     })
     .then((response) => {
         console.log(response);
+        console.log('MY TOKEN: ' + response.data.access_token);
+        localStorage.setItem('token', response.data.access_token);
+        localStorage.setItem('valid', true);
         router.push('/user/dashboard');
     })
 

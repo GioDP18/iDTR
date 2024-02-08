@@ -51,6 +51,10 @@ class AuthServiceImp implements AuthService
             'username' => 'required|string|between:2,100',
             'password' => 'required|string|confirmed|min:6',
         ]);
+        $redirectLogin = Validator::make($request->all(), [
+            'username' => 'required|string',
+            'password' => 'required|string|min:6',
+        ]);
         if($validator->fails()){
             return response()->json($validator->errors()->toJson(), 400);
         }
@@ -73,11 +77,15 @@ class AuthServiceImp implements AuthService
             }
         }
         
-        return response()->json([
-            'message' => 'User successfully registered',
-            'newId' => $user->id,
-            'user' => $user
-        ], 201);
+        // return response()->json([
+        //     'message' => 'User successfully registered',
+        //     'newId' => $user->id,
+        //     'user' => $user
+        // ], 201);
+        if (! $token = auth()->attempt($redirectLogin->validated())) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+        return $this->createNewToken($token);
     }
 
     /**
