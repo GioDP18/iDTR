@@ -1,5 +1,5 @@
 <script setup>
-
+	
 </script>
 
 <template>
@@ -49,7 +49,7 @@
 					</div>
 					<div class="row d-flex mt-3" style="flex-direction:column;">
 						<div>
-							<h2 class="fw-bold">Status:</h2>
+							<h2 class="fw-bold">Status: </h2>
 						</div>
 						<div class="d-flex" style="align-items:center; margin-left:4.5rem;">
 							<!-- <p style="width:2rem; height:1rem; background-color:#ef2121;"></p> -->

@@ -20,9 +20,9 @@ return new class extends Migration
             $table->string('gender');
             $table->string('birthdate');
             $table->string('email');
-            $table->integer('status');
-            $table->integer('overtime_status');
-            $table->string('avatar');
+            $table->integer('status')->nullable();
+            $table->integer('overtime_status')->nullable();
+            $table->string('avatar')->nullable();
             $table->timestamps();
         });
     }
