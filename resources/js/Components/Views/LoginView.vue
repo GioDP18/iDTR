@@ -2,6 +2,9 @@
 import axios from 'axios';
 import { ref } from 'vue';
 import { Field, Form, ErrorMessage } from 'vee-validate';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 
 const showPassword = ref(false);
 const username = ref('');
@@ -11,48 +14,8 @@ function togglePassword() {
     showPassword.value = !showPassword.value;
 }
 
-const handleLogin = async() => {
-    try {
-        const response = await fetch('/api/auth/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                username: username.value,
-                password: password.value,
-                
-            }),
-        });
 
-    // Handle response
-    const data = await response.json();
-    console.log(response)
-    if (response.ok) {
-        router.push('/user/dashboard');
-    } else {
-      alert(data.message);
-    }
-  } catch (error) {
-    console.error('Error during login:', error);
-  }
-}
-
-function requiredUsername(value) {
-  if (value && value.trim()) {
-    return true;
-  }
-  return 'Please enter your username.';
-}
-
-function requiredPassword(value) {
-  if (value && value.trim()) {
-    return true;
-  }
-  return 'Please enter your password.';
-}
-
-const handleLogin = async () => {
+const login = async () => {
     try {
     await axios.post('/api/auth/login', {
         username: username.value,
@@ -87,7 +50,7 @@ const handleLogin = async () => {
         </div>
         <div class="login-container">
             <div class="login-form">
-                <Form class="form" @submit.prevent="login" method="POST">
+                <form class="form" @submit.prevent="login" method="POST">
                     <p class="form-title">Sign in to your account</p>
                     <div class="social-icons">
                         <RouterLink to="/"><i class="fa-brands fa-google-plus-g"></i></RouterLink>
@@ -99,7 +62,7 @@ const handleLogin = async () => {
                         <div class="line"></div>
                     </div>
                     <div class="input-container">
-                        <Field type="text" name="username" :rules="requiredUsername" placeholder="Enter Username" />
+                        <Field type="text" name="username" v-model="username" :rules="requiredUsername" placeholder="Enter Username" />
                         <span>
                             <i class="fa-solid fa-user"></i>
                         </span>

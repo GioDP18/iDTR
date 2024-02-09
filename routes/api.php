@@ -26,11 +26,12 @@ Route::group([
     Route::post('/register', [AuthController::class, 'register']);
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/refresh', [AuthController::class, 'refresh']);
-
     Route::get('/user-profile', [AuthController::class, 'userProfile']);   
-    Route::post('/time-in-am', []);
+
+    // API Endpoints for PM Time Records
     Route::post('/time-in-pm', [PmDailyTimeRecordController::class, 'timeInPM']);
     Route::post('/time-out-pm', [PmDailyTimeRecordController::class, 'timeOutPM']);
+    Route::post('/get-time-record-pm', [PmDailyTimeRecordController::class, 'getTimePM']);
 
     // API Endpoints for AM Time Records
     Route::post('/time-in-am', [AmDailyTimeRecordController::class, 'timeInAM']);

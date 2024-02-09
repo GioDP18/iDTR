@@ -10,61 +10,30 @@ class PmDailyTimeRecordController extends Controller
 {
 
     public function __construct(public PmDailyTimeRecordService $pmDailyTimeRecordService) {
-        
     }
     /**
      * Display a listing of the resource.
      */
-    public function timeInPM()
+    public function timeInPM(Request $request)
     {
-        
+        return $this->pmDailyTimeRecordService->timeInPM($request);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function timeOutPM()
+    public function timeOutPM(Request $request)
     {
-        //
+        return $this->pmDailyTimeRecordService->timeOutPM($request);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function getTimePM(Request $request)
     {
-        //
+        return $this->pmDailyTimeRecordService->getTimePM($request);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(PmDailyTimeRecord $pmDailyTimeRecord)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(PmDailyTimeRecord $pmDailyTimeRecord)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, PmDailyTimeRecord $pmDailyTimeRecord)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(PmDailyTimeRecord $pmDailyTimeRecord)
-    {
-        //
-    }
 }

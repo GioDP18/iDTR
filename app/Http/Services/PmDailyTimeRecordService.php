@@ -17,6 +17,20 @@ interface PmDailyTimeRecordService {
      */
     public function timeInPM(Request $request);
 
-    /** */
-    public function timeOutPM($id);
+    /**
+     * Undocumented function
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function timeOutPM(Request $request);
+
+    /**
+     * Undocumented function
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function getTimePM(Request $request);
+    
 }
