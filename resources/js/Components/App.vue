@@ -14,8 +14,17 @@
 </template>
 
 <style scoped>
-@import "bourbon";
 
+#content {
+  margin: 0 auto;
+  padding-bottom: 50px;
+  width: 80%;
+  max-width: 978px;
+}
+
+h1 {
+  font-size: 40px;
+}
 
 #loader-wrapper {
   position: fixed;
@@ -25,12 +34,11 @@
   height: 100%;
   z-index: 10;
   overflow: hidden;
-
-  .no-js & {
-    display: none;
-  }
 }
 
+#loader-wrapper .no-js {
+  display: none;
+}
 
 #loader {
   display: block;
@@ -42,52 +50,54 @@
   margin: -75px 0 0 -75px;
   border-radius: 50%;
   border: 3px solid transparent;
-  border-top-color: #16a085;
+  border-top-color: #008cff;
   animation: spin 1.7s linear infinite;
   z-index: 11;
+}
 
-  &:before {
-    content: "";
-    position: absolute;
-    top: 5px;
-    left: 5px;
-    right: 5px;
-    bottom: 5px;
-    border-radius: 50%;
-    border: 3px solid transparent;
-    border-top-color: #e74c3c;
-    animation: spin-reverse .6s linear infinite;
+#loader:before {
+  content: "";
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  right: 5px;
+  bottom: 5px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  border-top-color: #e74c3c;
+  animation: spin-reverse .6s linear infinite;
+}
+
+#loader:after {
+  content: "";
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  border-top-color: #00ff40;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
   }
 
-  &:after {
-    content: "";
-    position: absolute;
-    top: 15px;
-    left: 15px;
-    right: 15px;
-    bottom: 15px;
-    border-radius: 50%;
-    border: 3px solid transparent;
-    border-top-color: #f9c922;
-    animation: spin 1s linear infinite;
+  100% {
+    transform: rotate(360deg);
   }
 }
 
-@include keyframes(spin) {
+@keyframes spin-reverse {
   0% {
-    @include transform(rotate(0deg));
+    transform: rotate(0deg);
   }
-  100% {
-    @include transform(rotate(360deg));
-  }
-}
 
-@include keyframes(spin-reverse) {
-  0% {
-    @include transform(rotate(0deg));
-  }
   100% {
-    @include transform(rotate(-360deg));
+    transform: rotate(-360deg);
   }
 }
 
@@ -96,7 +106,7 @@
   top: 0;
   width: 51%;
   height: 100%;
-  background: transparent;
+  background: #222;
   z-index: 10;
 }
 
@@ -108,6 +118,7 @@
   right: 0;
 }
 
+/* Loaded styles */
 
 .loaded #loader-wrapper .loader-section.section-left {
   transform: translateX(-100%);
@@ -129,4 +140,5 @@
   transform: translateY(-100%);
   transition: all 0.3s 1s ease-out;
 }
+    
 </style>
