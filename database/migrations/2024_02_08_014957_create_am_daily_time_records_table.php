@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('am_daily_time_records', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('interns_id')->constrained();
+            $table->foreignId('users_id')->constrained();
             $table->time('arrival_am');
-            $table->time('departure_am');
-            $table->time('late_am');
-            $table->time('hours_worked_am');
+            $table->time('departure_am')->nullable();
+            $table->time('late_am')->nullable();
+            $table->time('hours_worked_am')->nullable();
             $table->date('date');
             $table->timestamps();
         });

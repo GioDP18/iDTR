@@ -21,6 +21,14 @@ interface AuthService {
     public function login(AuthRequest $request);
 
     /**
+     * Service for User Registration
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function register(Request $request);
+
+    /**
      *  service for Get the authenticated user information
      *
      * @return void

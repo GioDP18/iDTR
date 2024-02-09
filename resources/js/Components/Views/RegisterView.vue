@@ -1,5 +1,4 @@
-``<script setup>
-import axios from 'axios';
+<script setup>
 import { ref } from 'vue';
 import { Form, Field, ErrorMessage } from 'vee-validate';
 import { useRouter } from 'vue-router';
@@ -69,34 +68,6 @@ function validateConfirmPassword(value) {
     }
     return true;
 }
-
-
-const handleRegister = async () => {
-  try {
-    await axios.post('/api/auth/register', {
-        firstname: firstname.value,
-        middlename: middlename.value,
-        lastname: lastname.value,
-        gender: gender.value,
-        birthdate: birthdate.value,
-        username: username.value,
-        email: email.value,
-        password: password.value,
-        password_confirmation: password_confirmation.value,
-    })
-    .then((response) => {
-        console.log(response);
-        console.log('MY TOKEN: ' + response.data.access_token);
-        localStorage.setItem('token', response.data.access_token);
-        localStorage.setItem('valid', true);
-        localStorage.setItem('userID', response.data.user.id);
-        router.push('/user/dashboard');
-    })
-
-  } catch (error) {
-    console.error('Error during registration:', error);
-  }
-};
 </script>
 <template>
     <div class="container-fluid">
@@ -105,25 +76,31 @@ const handleRegister = async () => {
                 style="background-color: white; height: 100vh;">
                 <div class="register-container">
                     <div class="register-form">
-                        <form class="form" @submit.prevent="handleRegister" style="position:relative;">
-                            <p class="form-title">Register your Account</p>
-                            <div class="input-group flex-nowrap mt-4">
-                                <Field v-model="firstname" name="firstname" :rules="validateName" type="text" class="form-control"
-                                    placeholder="Fistname" />
+                        <Form class="form" @submit="handleRegister" style="position:relative;">
+                            <p class="form-title">Register your account</p>
+                            <div class="row gap-2">
+                                <div class="col">
+                                    <div class="mt-4">
+                                        <Field name="firstname" :rules="validateName" type="text" class="form-control"
+                                            placeholder="Fistname" />
+                                    </div>
+                                    <ErrorMessage class="error-message" name="firstname" />
+                                </div>
+                                <div class="col">
+                                    <div class=" mt-4">
+                                        <Field name="middlename" :rules="validateName" type="text" class="form-control"
+                                            placeholder="Middlename" />
+                                    </div>
+                                    <ErrorMessage class="error-message" name="middlename" />
+                                </div>
                             </div>
-                            <ErrorMessage class="error-message" name="firstname" />
-                            <div class="input-group flex-nowrap mt-4">
-                                <Field v-model="middlename" name="middlename" :rules="validateName" type="text" class="form-control"
-                                    placeholder="Middlename" />
-                            </div>
-                            <ErrorMessage class="error-message" name="middlename" />
                             <div class="input-group flex-nowrap mt-3">
-                                <Field v-model="lastname" name="lastname" :rules="validateName" type="text" class="form-control"
+                                <Field name="lastname" :rules="validateName" type="text" class="form-control"
                                     placeholder="Lastname" />
                             </div>
                             <ErrorMessage class="error-message" name="lastname" />
                             <div class="input-group flex-nowrap mt-3">
-                                <Field v-model="username" name="username" :rules="validateName" type="text" class="form-control"
+                                <Field name="username" :rules="validateName" type="text" class="form-control"
                                     placeholder="Username" />
                                 <span class="input-group-text">
                                     <i class="fa-solid fa-user"></i>
@@ -132,19 +109,20 @@ const handleRegister = async () => {
                             <ErrorMessage class="error-message" name="username" />
                             <div class="mt-3 d-flex justify-content-around">
                                 <div class="form-check form-check-inline">
-                                    <Field v-model="gender" class="form-check-input" :rules="validateName" type="radio" name="gender"
+                                    <Field class="form-check-input" :rules="validateName" type="radio" name="gender"
                                         id="inlineRadio1" value="male" />
-                                    <label class="form-check-label" for="inlineRadio1">Male</label>
+                                    <label class="form-check-label" for="inlineRadio1" style="margin-left: 4px">Male</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <Field v-model="gender" class="form-check-input" :rules="validateName" type="radio" name="gender"
+                                    <Field class="form-check-input" :rules="validateName" type="radio" name="gender"
                                         id="inlineRadio2" value="female" />
-                                    <label class="form-check-label" for="inlineRadio2">Female</label>
+                                    <label class="form-check-label" for="inlineRadio2"
+                                        style="margin-left: 4px; margin-right: 4px">Female</label>
                                 </div>
                             </div>
                             <ErrorMessage class="error-message" name="gender" />
                             <div class="input-group flex-nowrap mt-3">
-                                <Field v-model="birthdate" name="birthdate" :rules="validateName" type="date" class="form-control"
+                                <Field name="birthdate" :rules="validateName" type="date" class="form-control"
                                     placeholder="" />
                                 <span class="input-group-text">
                                     <i class="fa-solid fa-calendar"></i>
@@ -160,7 +138,7 @@ const handleRegister = async () => {
                             </div>
                             <ErrorMessage class="error-message" name="email" />
                             <div class="input-group flex-nowrap mt-3">
-                                <Field v-model="password" name="password"  :rules="validatePassword"
+                                <Field name="password" v-model="password" :rules="validatePassword"
                                     :type="showPassword ? 'text' : 'password'" placeholder="Password"
                                     class="form-control" />
                                 <span class="input-group-text" style="cursor:pointer;" @click="togglePassword">
@@ -169,7 +147,7 @@ const handleRegister = async () => {
                             </div>
                             <ErrorMessage class="error-message" name="password" />
                             <div class="input-group flex-nowrap mt-3">
-                                <Field v-model="password_confirmation" name="password_confirmation" :rules="validateConfirmPassword"
+                                <Field name="password_confirmation" :rules="validateConfirmPassword"
                                     :type="showConfirmPassword ? 'text' : 'password'" placeholder="Confirm Password"
                                     class="form-control" />
                                 <span class="input-group-text" style="cursor:pointer;" @click="toggleConfirmPassword">
@@ -224,8 +202,7 @@ span i {
     height: 1rem;
 }
 
-  /* For modern browsers */
-  input[type="date"]::-webkit-calendar-picker-indicator {
+input[type="date"]::-webkit-calendar-picker-indicator {
     display: none;
   }
 

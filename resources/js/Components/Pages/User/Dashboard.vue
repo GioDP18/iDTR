@@ -1,26 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue';
 
-const activeTime = ref("");
-const currentDate = ref("");
-
-const updateDateTime = () => {
-	const now = new Date();
-
-	let hours = now.getHours();
-	const minutes = now.getMinutes().toString().padStart(2, "0");
-	const meridiem = hours >= 12 ? "PM" : "AM";
-	hours = hours % 12 || 12;
-	activeTime.value = `${hours}:${minutes} ${meridiem}`;
-
-	const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-	currentDate.value = now.toLocaleDateString(undefined, options);
-};
-
-onMounted(() => {
-	updateDateTime();
-	setInterval(updateDateTime, 1000);
-});
 </script>
 
 <template>
@@ -95,34 +74,22 @@ onMounted(() => {
 							</div>
 						</div>
 					</div>
-					<div class="div-69">
-						<div class="div-70">Status</div>
-						<div class="div-71">Activity Logs</div>
-					</div>
-					<div class="div-72">
-						<div class="div-73">
-							<div class="activity-card">
-								<div class="div-74">
-									<div class="d-flex" style="align-items:center; margin-left:4.5rem;">
-										<!-- <p style="width:2rem; height:1rem; background-color:#ef2121;"></p> -->
-										<p style="width:2rem; height:1rem; background-color:#00ba00;"></p>
-									</div>
-								</div>
-							</div>
-							<div class="activity-card">
-								<div class="div-74"></div>
-							</div>
+					<div class="row d-flex mt-3" style="flex-direction:column;">
+						<div>
+							<h2 class="fw-bold">Status:</h2>
+						</div>
+						<div class="d-flex" style="align-items:center; margin-left:4.5rem;">
+							<!-- <p style="width:2rem; height:1rem; background-color:#ef2121;"></p> -->
+							<p style="width:2rem; height:1rem; background-color:#00ba00;"></p>
 						</div>
 					</div>
-
 				</div>
 			</div>
+			<footer class="footer">
+				<div class="container-fluid">			
+				</div>
+			</footer>
 		</div>
-		<footer class="footer">
-			<div class="container-fluid">
-			</div>
-		</footer>
-	</div>
 </template>
 
 <style scoped>

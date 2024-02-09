@@ -1,14 +1,118 @@
 <script setup>
-import DataTable from 'datatables.net-vue3';
-import DataTablesCore from 'datatables.net-bs5';
+import store from '../../../State/index.js'
+import axios from 'axios';
+import 'datatables.net-vue3';
+import 'datatables.net-bs5';
+import { ref, onMounted } from 'vue';
+import moment from 'moment';
 
-DataTable.use(DataTablesCore);
+const timeRecord = ref([]);
+const userID = localStorage.getItem('userID');
 
-const data = [
-    ["January 1, 2001", "12:33 PM", "5:33 PM", "5:33 PM", "5:33 PM"],
-    ["January 1, 2001", "12:33 PM", "5:33 PM", "5:33 PM", "5:33 PM"],
-    ["January 1, 2001", "12:33 PM", "5:33 PM", "5:33 PM", "5:33 PM"],
-];
+onMounted(async () => {
+    await getTimeDataAM();
+    initializeDataTables();
+});
+
+const getTimeDataAM = async () => {
+    try {
+        const response = await axios.post('http://127.0.0.1:8000/api/auth/get-time-record-am', {
+            userID: userID
+        });
+        timeRecord.value = response.data.recordAM;
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+const handleTimeInAM = async () => {
+    store.commit('setLoading', true)
+    try {
+        await axios.post('/api/auth/time-in-am', {
+            userID: userID
+        })
+        .then((response) => {
+            // console.log(response);
+            if(response.data.success){
+                swal({
+                    icon: "success",
+                    text: response.data.message,
+                });
+            }
+            else{
+                swal({
+                    icon: "error",
+                    title: "Oops...",
+                    text: response.data.message,
+                });
+            }
+        })
+        .finally(() => {
+            store.commit('setLoading', false)
+        })
+        await getTimeDataAM();
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+const handleTimeOutAM = async () => {
+    store.commit('setLoading', true)
+    try {
+        await axios.post('/api/auth/time-out-am', {
+            userID: userID
+        })
+        .then((response) => {
+            // console.log(response);
+            if(response.data.success){
+                swal({
+                    icon: "success",
+                    text: response.data.message,
+                });
+            }
+            else{
+                swal({
+                    icon: "error",
+                    title: "Oops...",
+                    text: response.data.message,
+                });
+            }
+        })
+        .finally(() => {
+            store.commit('setLoading', false)
+        })
+        await getTimeDataAM();
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+const formatTime = (timeString) => {
+  try {
+    const formattedTime = moment(timeString, 'HH:mm:ss').format('hh:mm A');
+    return formattedTime;
+  } catch (error) {
+    console.error(error);
+    return 'Invalid Time';
+  }
+};
+
+const formatDate = (dateString) => {
+  try {
+    const formattedDate = moment(dateString).format('MMM D, YYYY');
+    return formattedDate;
+  } catch (error) {
+    console.error(error);
+    return 'Invalid Date';
+  }
+};
+
+const initializeDataTables = () => {
+    $(document).ready(function () {
+        $('#dailyTimeLog').DataTable();
+    });
+}
+
 </script>
 
 <template>
@@ -22,12 +126,12 @@ const data = [
                         </div>
                         <div class="d-flex" style="gap:7px;">
                             <div>
-                                <button class="log bg-success" @click="handleTimeIn">
+                                <button class="log bg-success" @click="handleTimeInAM">
                                     <span><i><font-awesome-icon :icon="['fas', 'clock']" /></i> Time-In</span>
                                 </button>
                             </div>
                             <div>
-                                <button class="log bg-danger" @click="handleTimeOut">
+                                <button class="log bg-danger" @click="handleTimeOutAM">
                                     <span><i><font-awesome-icon :icon="['fas', 'clock']" /></i> Time-Out</span>
                                 </button>
                             </div>
@@ -35,11 +139,12 @@ const data = [
                     </div>
                 </div>
             </div>
+
             <div class="page-inner mt--5">
                 <div class="card bg-light">
                     <div class="card-body">
                         <div class="table-responsive">
-                            <DataTable :data="data" id="dailyTimeLog" class="table table-striped table-hover" width="100%;">
+                            <table id="dailyTimeLog" class="table table-striped table-hover" width="100%;">
                                 <thead>
                                     <tr>
                                         <th>Date</th>
@@ -49,12 +154,16 @@ const data = [
                                         <th>Number of Hours Worked</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td class="text-center" colspan="6">No Time Log.</td>
+                                <tbody >
+                                    <tr v-for="record in timeRecord" :key="record.id">
+                                        <th>{{ formatDate(record.date) }}</th>
+                                        <th>{{ formatTime(record.arrival_am) }}</th>
+                                        <th>{{ record.departure_am ? formatTime(record.departure_am) : '' }}</th>
+                                        <th>{{ record.late_am }}</th>
+                                        <th>{{ record.hours_worked_am }}</th>
                                     </tr>
                                 </tbody>
-                            </DataTable>
+                            </table>
                         </div>
                     </div>
                 </div>

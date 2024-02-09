@@ -27,6 +27,16 @@ class AuthController extends Controller
     }
 
     /**
+     * Handle registration request
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function register(Request $request){
+        return $this->authService->register($request);
+    }
+
+    /**
      * handle user profile request
      *
      * @return void

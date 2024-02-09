@@ -4,16 +4,18 @@ namespace App\Providers;
 
 // services
 use App\Http\Services\AuthService;
+use App\Http\Services\AmDailyTimeRecordService;
 
 // implementations
-use App\Http\Implementations\AuthServiceImp;
-
+use App\Http\Implementations\AuthServiceImpl;
+use App\Http\Implementations\AmDailyTimeRecordServiceImpl;
 use Illuminate\Support\ServiceProvider;
 class AppServiceProvider extends ServiceProvider
 {
 
     public $bindings = [
-        AuthService::class => AuthServiceImp::class,
+        AuthService::class => AuthServiceImpl::class,
+        AmDailyTimeRecordService::class => AmDailyTimeRecordServiceImpl::class,
     ];
     
     /**
