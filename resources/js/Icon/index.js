@@ -7,7 +7,9 @@ import {
     faClock, 
     faHourglassEnd, 
     faHourglassStart, 
-    faPenToSquare
+    faPenToSquare,
+    faGreaterThan,
+    faLessThan
 } from '@fortawesome/free-solid-svg-icons'
 
 /* add icons to the library */
@@ -17,5 +19,7 @@ library.add(
     faPenToSquare,
     faBars,
     faHourglassStart,
-    faHourglassEnd
+    faHourglassEnd,
+    faGreaterThan,
+    faLessThan
 )
