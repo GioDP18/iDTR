@@ -1,5 +1,5 @@
 <script setup>
-    import LogoHeader from '../../Inc/LogoHeader.vue';
+    // import LogoHeader from '../../Inc/LogoHeader.vue';
     import NavHeader from '../../Inc/NavHeader.vue';
     import NavSidebar from '../../Inc/NavSidebar.vue';
 
@@ -7,7 +7,7 @@
 
 <template>
     <div class="main-header">
-        <LogoHeader />
+        <!-- <LogoHeader /> -->
         <NavHeader />
     </div>
     
