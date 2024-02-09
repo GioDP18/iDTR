@@ -3,12 +3,12 @@
 namespace App\Http\Implementations;
 
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 use Validator;
 use Illuminate\Http\Request;
 use App\Http\Requests\AuthRequest;
 use App\Http\Services\AuthService;
 use App\Models\Intern;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthServiceImp implements AuthService
 {
@@ -21,18 +21,23 @@ class AuthServiceImp implements AuthService
      * @param AuthRequest $request
      * @return createNewToken
      */
-    public function login(AuthRequest $request){
-        $validator = Validator::make($request->all(), [
-            'username' => 'required|string',
+    public function login(Request $request){
+        
+        $request->validate([
+            'username' => 'required|exists:users',
             'password' => 'required|string|min:6',
         ]);
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
+        
+        
+        $token = JWTAuth::attempt([
+            "username" => $request->username,
+            "password" => $request->password
+        ]);
+        if(!empty($token)){
+
+            return $this->createNewToken($token);
         }
-        if (! $token = auth()->attempt($validator->validated())) {
-            return response()->json(['error' => 'Unauthorized'], 401);
-        }
-        return $this->createNewToken($token);
+        return response()->json(["error" => 'invalid details'], 401);
     }
 
     /**

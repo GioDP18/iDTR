@@ -1,6 +1,12 @@
 <script setup>
 import { ref } from 'vue';
 import { Field, Form, ErrorMessage } from 'vee-validate';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+
+const username = ref('');
+const password = ref('');
 
 const showPassword = ref(false);
 
@@ -8,8 +14,31 @@ function togglePassword() {
     showPassword.value = !showPassword.value;
 }
 
-function login() {
-    //Login function
+const handleLogin = async() => {
+    try {
+        const response = await fetch('/api/auth/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                username: username.value,
+                password: password.value,
+                
+            }),
+        });
+
+    // Handle response
+    const data = await response.json();
+    console.log(response)
+    if (response.ok) {
+        router.push('/user/dashboard');
+    } else {
+      alert(data.message);
+    }
+  } catch (error) {
+    console.error('Error during login:', error);
+  }
 }
 
 function requiredUsername(value) {
@@ -42,7 +71,7 @@ function requiredPassword(value) {
         </div>
         <div class="login-container">
             <div class="login-form">
-                <Form class="form" @submit.prevent="login" method="POST">
+                <form class="form" @submit.prevent="handleLogin">
                     <p class="form-title">Sign in to your account</p>
                     <div class="social-icons">
                         <RouterLink to="/"><i class="fa-brands fa-google-plus-g"></i></RouterLink>
@@ -54,7 +83,7 @@ function requiredPassword(value) {
                         <div class="line"></div>
                     </div>
                     <div class="input-container">
-                        <Field type="text" name="username" :rules="requiredUsername" placeholder="Enter Username" />
+                        <Field type="text" name="username" :rules="requiredUsername" v-model="username" placeholder="Enter Username" />
                         <span>
                             <i class="fa-solid fa-user"></i>
                         </span>
@@ -76,7 +105,7 @@ function requiredPassword(value) {
                         No account?
                         <RouterLink to="/register">Sign up</RouterLink>
                     </p>
-                </Form>
+                </form>
             </div>
         </div>
     </div>
