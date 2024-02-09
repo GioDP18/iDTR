@@ -10,9 +10,9 @@
         <!-- <LogoHeader /> -->
         <NavHeader />
     </div>
-    
+
     <NavSidebar />
-    
+
 </template>
 
 <style scoped>
