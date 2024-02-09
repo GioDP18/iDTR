@@ -53,10 +53,9 @@ class AmDailyTimeRecordServiceImpl implements AmDailyTimeRecordService
     }
 
     public function timeOutAM(Request $request){
-        $get = AmDailyTimeRecord::where('date', date('Y-m-d'))->where('users_id', $request->userID)->limit(1)->get();
+        $get = AmDailyTimeRecord::where('date', date('Y-m-d'))->where('users_id', $request->userID)->first();
 
         $current_time = strtotime(date('H:i:s'));
-        echo $get->arrival_am;
         $arrival_am = strtotime($get->arrival_am);
         $departure_am = date('H:i:s');
 
