@@ -10,7 +10,7 @@ use App\Http\Requests\AuthRequest;
 use App\Http\Services\AuthService;
 use App\Models\Intern;
 
-class AuthServiceImp implements AuthService
+class AuthServiceImpl implements AuthService
 {
     public function __construct(){
     }
@@ -66,6 +66,7 @@ class AuthServiceImp implements AuthService
             ]);
             if($user){
                 Intern::create([
+                    'id' => $user->id,
                     'users_id' => $user->id,
                     'firstname' => $request->firstname,
                     'middlename' => $request->middlename,
