@@ -17,7 +17,7 @@ class AmDailyTimeRecordFactory extends Factory
     public function definition(): array
     {
         return [
-            'interns_id' => 1,
+            'users_id' => 1,
             'arrival_am' => $this->faker->date('H:i:s'),
             'departure_am' => $this->faker->date('H:i:s'),
             'late_am' => $this->faker->date('H:i:s'),

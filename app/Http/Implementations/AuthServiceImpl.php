@@ -10,7 +10,7 @@ use App\Http\Requests\AuthRequest;
 use App\Http\Services\AuthService;
 use App\Models\Intern;
 
-class AuthServiceImp implements AuthService
+class AuthServiceImpl implements AuthService
 {
     public function __construct(){
     }

@@ -10,7 +10,7 @@ class AmDailyTimeRecord extends Model
     use HasFactory;
 
     protected $fillable = [
-        'interns_id',
+        'users_id',
         'arrival_am',
         'departure_am',
         'late_am',
