@@ -5,9 +5,9 @@ const timeLogExpanded = ref(false);
 const showSidebar = ref(true);
 const activeTime = ref("");
 
-function toggleSidebar() {
+const toggleSidebar = () => {
     showSidebar.value = !showSidebar.value;
-}
+};
 
 const toggleTimeLog = () => {
     timeLogExpanded.value = !timeLogExpanded.value;
@@ -38,7 +38,7 @@ onMounted(() => {
                 </RouterLink>
             </div>
             <nav class="navbar navbar-header navbar-expand-lg" data-background-color="blue2">
-                <div class="nav-toggle">
+                <div class="navheadbar">
                     <button class="btn btn-toggle toggle-sidebar" @click="toggleSidebar">
                         <i><font-awesome-icon :icon="['fas', 'bars']" /></i>
                     </button>
@@ -72,10 +72,10 @@ onMounted(() => {
                                                     alt="image profile" class="avatar-img rounded"></div>
                                             <div class="u-text">
                                                 <h4>
-                                                    Gio O. Dela Pena
+                                                    <span v-if="showSidebar">Gio O. Dela Pena</span>
                                                 </h4>
                                                 <p class="text-muted">
-                                                    giolagariza@gmail.com
+                                                    <span v-if="showSidebar">giolagariza@gmail.com</span>
                                                 </p><a href="profile.html" class="btn btn-xs btn-secondary btn-sm">View
                                                     Profile</a>
                                             </div>
@@ -96,17 +96,17 @@ onMounted(() => {
                 </div>
             </nav>
         </div>
-        <div class="sidebar sidebar-style-2" v-show="showSidebar">
+        <div class="sidebar sidebar-style-2" :class="{ 'minimized': !showSidebar }">
             <div class="sidebar-wrapper scrollbar scrollbar-inner"
                 :style="{ overflow: timeLogExpanded ? 'hidden' : 'auto' }">
-                <div class="user">
+                <div class="user" v-show="showSidebar || !showSidebar">
                     <div class="avatar-sm float-left mr-2">
                         <img :src="'../storage/images/profile.jpg'" alt="..." class="avatar-img rounded-circle">
                     </div>
                     <div class="info">
                         <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
                             <span>
-                                Gio O. Dela Pena
+                                <span v-if="showSidebar">Gio O. Dela Pena</span>
                                 <span class="user-level">Intern</span>
                             </span>
                         </a>
@@ -114,37 +114,38 @@ onMounted(() => {
                     </div>
                 </div>
                 <ul class="nav nav-primary">
-                    <li class="nav-item active" active-class="active">
+                    <li class="nav-item" :class="{ 'active': $route.path === '/user/dashboard' }">
                         <RouterLink to="/user/dashboard" class="collapsed" aria-expanded="false">
                             <i><font-awesome-icon :icon="['fas', 'chart-line']" /></i>
-                            <p> Dashboard</p>
+                            <p><span v-if="showSidebar">Dashboard</span></p>
                         </RouterLink>
                     </li>
-                    <li class="nav-section">
+                    
+                    <li class="nav-section" v-show="showSidebar">
                         <span class="sidebar-mini-icon">
                             <i class="fa fa-ellipsis-h"></i>
                         </span>
                         <h4 class="text-section">Monitoring</h4>
                     </li>
-                    <li class="nav-item">
-                        <a data-toggle="collapse" class="collapsed" aria-expanded="false">
+                    <li class="nav-item" :class="{ 'active': $route.path.startsWith('/user/timeLog') }">
+                        <a href="#" data-toggle="collapse" @click="toggleTimeLog" :aria-expanded="timeLogExpanded">
                             <i><font-awesome-icon :icon="['fas', 'clock']" /></i>
-                            <p>Time Log</p>
+                            <p><span v-if="showSidebar">Time Log</span></p>
                             <span class="caret"></span>
                         </a>
-                        <div class="collapses" id="timeLog">
+                        <div class="collapse" :class="{ 'show': timeLogExpanded }" id="timeLog">
                             <ul class="nav nav-collapse">
-                                <li active-class="active">
+                                <li :class="{ 'active': $route.path === '/user/timeLog-am' }">
                                     <RouterLink to="/user/timeLog-am">
                                         <span class="sub-item">AM</span>
                                     </RouterLink>
                                 </li>
-                                <li active-class="active">
+                                <li :class="{ 'active': $route.path === '/user/timeLog-pm' }">
                                     <RouterLink to="/user/timeLog-pm">
                                         <span class="sub-item">PM</span>
                                     </RouterLink>
                                 </li>
-                                <li active-class="active">
+                                <li :class="{ 'active': $route.path === '/user/tbreakTime' }">
                                     <RouterLink to="/user/tbreakTime">
                                         <span class="sub-item">Break Time</span>
                                     </RouterLink>
@@ -152,10 +153,10 @@ onMounted(() => {
                             </ul>
                         </div>
                     </li>
-                    <li class="nav-item" active-class="active">
+                    <li class="nav-item" :class="{ 'active': $route.path === '/user/reports' }">
                         <RouterLink to="/user/reports">
                             <i><font-awesome-icon :icon="['fas', 'pen-to-square']" /></i>
-                            <p>Reports</p>
+                            <p><span v-if="showSidebar">Reports</span></p>
                         </RouterLink>
                     </li>
                 </ul>
@@ -165,7 +166,63 @@ onMounted(() => {
 </template>
 
 <style scoped>
-a {
-    text-decoration: none;
+
+.navheadbar {
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+}
+.navheadbar .btn-toggle {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    margin-right: 10px;
+}
+.minimized {
+    width: 80px; 
+}
+
+.minimized .sidebar-wrapper {
+    width: 80px;
+}
+
+.minimized .avatar-sm,
+.minimized .nav-item RouterLink i {
+    display: block;
+}
+
+.minimized .user {
+    padding-bottom: 57px;
+    margin-left: 5px;
+}
+
+.minimized .info,
+.minimized .nav-item RouterLink p {
+    display: none;
+}
+
+.minimized .nav-item .caret {
+    display: none;
+}
+
+.minimized .nav-item i {
+    margin-left: 5px;
+}
+
+.minimized .nav-collapse {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.minimized .collapse .nav li a {
+    width: 55px;
+}
+
+.minimized .collapse .nav li span {
+    width: 40px;
+    margin-left: -5px;
+    font-size: 12px;
 }
 </style>
