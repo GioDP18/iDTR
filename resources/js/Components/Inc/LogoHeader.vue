@@ -4,8 +4,7 @@
 
 <template>
     <div class="logo-header" data-background-color="blue">
-
-        <a href="#" class="logo text-light">
+        <a href="#" class="logo text-light" style="font-weight: bold; font-size: 20px;">
             Supsofttech
         </a>
         <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse"
@@ -24,5 +23,7 @@
 </template>
 
 <style scoped>
-
+a {
+    text-decoration: none;
+}
 </style>

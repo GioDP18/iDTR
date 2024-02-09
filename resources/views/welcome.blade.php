@@ -43,6 +43,7 @@
         @vite('resources/js/CustomJS/plugin/jqvmap/jquery.vmap.min.js')
         @vite('resources/js/CustomJS/plugin/jqvmap/maps/jquery.vmap.world.js')
         @vite('resources/js/CustomJS/plugin/sweetalert/sweetalert.min.js')
+        @vite('resources/js/CustomJS/atlantis.js')
         @vite('resources/js/CustomJS/atlantis.min.js')
     </body>
 </html>

@@ -1,10 +1,25 @@
-<script setup>
+``<script setup>
+import axios from 'axios';
 import { ref } from 'vue';
 import { Form, Field, ErrorMessage } from 'vee-validate';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
+
+// Initializing reactive states
 const showPassword = ref(false);
 const showConfirmPassword = ref(false);
+// Formm
+const firstname = ref('');
+const middlename = ref('');
+const lastname = ref('');
+const gender = ref('');
+const birthdate = ref('');
+const username = ref('');
+const email = ref('');
 const password = ref('');
+const password_confirmation = ref('');
+
 
 function togglePassword() {
     showPassword.value = !showPassword.value;
@@ -54,6 +69,34 @@ function validateConfirmPassword(value) {
     }
     return true;
 }
+
+
+const handleRegister = async () => {
+  try {
+    await axios.post('/api/auth/register', {
+        firstname: firstname.value,
+        middlename: middlename.value,
+        lastname: lastname.value,
+        gender: gender.value,
+        birthdate: birthdate.value,
+        username: username.value,
+        email: email.value,
+        password: password.value,
+        password_confirmation: password_confirmation.value,
+    })
+    .then((response) => {
+        console.log(response);
+        console.log('MY TOKEN: ' + response.data.access_token);
+        localStorage.setItem('token', response.data.access_token);
+        localStorage.setItem('valid', true);
+        localStorage.setItem('userID', response.data.user.id);
+        router.push('/user/dashboard');
+    })
+
+  } catch (error) {
+    console.error('Error during registration:', error);
+  }
+};
 </script>
 <template>
     <div class="container-fluid">
@@ -62,54 +105,46 @@ function validateConfirmPassword(value) {
                 style="background-color: white; height: 100vh;">
                 <div class="register-container">
                     <div class="register-form">
-                        <Form class="form" @submit="handleRegister" style="position:relative;">
-                            <p class="form-title">Register your account</p>
-                            <div class="row gap-2">
-                                <div class="col">
-                                    <div class="mt-4">
-                                        <Field name="firstname" :rules="validateName" type="text" class="form-control"
-                                            placeholder="Fistname" />
-                                    </div>
-                                    <ErrorMessage class="error-message" name="firstname" />
-                                </div>
-                                <div class="col">
-                                    <div class=" mt-4">
-                                        <Field name="middlename" :rules="validateName" type="text" class="form-control"
-                                            placeholder="Middlename" />
-                                    </div>
-                                    <ErrorMessage class="error-message" name="middlename" />
-                                </div>
+                        <form class="form" @submit.prevent="handleRegister" style="position:relative;">
+                            <p class="form-title">Register your Account</p>
+                            <div class="input-group flex-nowrap mt-4">
+                                <Field v-model="firstname" name="firstname" :rules="validateName" type="text" class="form-control"
+                                    placeholder="Fistname" />
                             </div>
+                            <ErrorMessage class="error-message" name="firstname" />
+                            <div class="input-group flex-nowrap mt-4">
+                                <Field v-model="middlename" name="middlename" :rules="validateName" type="text" class="form-control"
+                                    placeholder="Middlename" />
+                            </div>
+                            <ErrorMessage class="error-message" name="middlename" />
                             <div class="input-group flex-nowrap mt-3">
-                                <Field name="lastname" :rules="validateName" type="text" class="form-control"
+                                <Field v-model="lastname" name="lastname" :rules="validateName" type="text" class="form-control"
                                     placeholder="Lastname" />
                             </div>
                             <ErrorMessage class="error-message" name="lastname" />
                             <div class="input-group flex-nowrap mt-3">
-                                <Field name="username" :rules="validateName" type="text" class="form-control"
+                                <Field v-model="username" name="username" :rules="validateName" type="text" class="form-control"
                                     placeholder="Username" />
                                 <span class="input-group-text">
                                     <i class="fa-solid fa-user"></i>
                                 </span>
                             </div>
                             <ErrorMessage class="error-message" name="username" />
-                            <div class="mt-3 d-flex justify-content-between">
-                                <label for="" style="color: gray; margin-left: 4px">Gender:</label>
+                            <div class="mt-3 d-flex justify-content-around">
                                 <div class="form-check form-check-inline">
-                                    <Field class="form-check-input" :rules="validateName" type="radio" name="gender"
+                                    <Field v-model="gender" class="form-check-input" :rules="validateName" type="radio" name="gender"
                                         id="inlineRadio1" value="male" />
-                                    <label class="form-check-label" for="inlineRadio1" style="margin-left: 4px">Male</label>
+                                    <label class="form-check-label" for="inlineRadio1">Male</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <Field class="form-check-input" :rules="validateName" type="radio" name="gender"
+                                    <Field v-model="gender" class="form-check-input" :rules="validateName" type="radio" name="gender"
                                         id="inlineRadio2" value="female" />
-                                    <label class="form-check-label" for="inlineRadio2"
-                                        style="margin-left: 4px; margin-right: 4px">Female</label>
+                                    <label class="form-check-label" for="inlineRadio2">Female</label>
                                 </div>
                             </div>
                             <ErrorMessage class="error-message" name="gender" />
                             <div class="input-group flex-nowrap mt-3">
-                                <Field name="birthdate" :rules="validateName" type="date" class="form-control"
+                                <Field v-model="birthdate" name="birthdate" :rules="validateName" type="date" class="form-control"
                                     placeholder="" />
                                 <span class="input-group-text">
                                     <i class="fa-solid fa-calendar"></i>
@@ -117,7 +152,7 @@ function validateConfirmPassword(value) {
                             </div>
                             <ErrorMessage class="error-message" name="birthdate" />
                             <div class="input-group flex-nowrap mt-3">
-                                <Field name="email" :rules="validateEmail" type="email" class="form-control"
+                                <Field v-model="email" name="email" :rules="validateEmail" type="email" class="form-control"
                                     placeholder="name@example.com" />
                                 <span class="input-group-text">
                                     <i class="fa-solid fa-envelope"></i>
@@ -125,7 +160,7 @@ function validateConfirmPassword(value) {
                             </div>
                             <ErrorMessage class="error-message" name="email" />
                             <div class="input-group flex-nowrap mt-3">
-                                <Field name="password" v-model="password" :rules="validatePassword"
+                                <Field v-model="password" name="password"  :rules="validatePassword"
                                     :type="showPassword ? 'text' : 'password'" placeholder="Password"
                                     class="form-control" />
                                 <span class="input-group-text" style="cursor:pointer;" @click="togglePassword">
@@ -134,7 +169,7 @@ function validateConfirmPassword(value) {
                             </div>
                             <ErrorMessage class="error-message" name="password" />
                             <div class="input-group flex-nowrap mt-3">
-                                <Field name="password_confirmation" :rules="validateConfirmPassword"
+                                <Field v-model="password_confirmation" name="password_confirmation" :rules="validateConfirmPassword"
                                     :type="showConfirmPassword ? 'text' : 'password'" placeholder="Confirm Password"
                                     class="form-control" />
                                 <span class="input-group-text" style="cursor:pointer;" @click="toggleConfirmPassword">
@@ -142,14 +177,14 @@ function validateConfirmPassword(value) {
                                 </span>
                             </div>
                             <ErrorMessage class="error-message" name="password_confirmation" />
-                            <button class="submit" type="submit" name="register">
+                            <button class="submit mt-4">
                                 Sign up
                             </button>
                             <p class="signup-link">
                                 Already have an account?
                                 <RouterLink to="/">Sign in</RouterLink>
                             </p>
-                        </Form>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -189,9 +224,10 @@ span i {
     height: 1rem;
 }
 
-input[type="date"]::-webkit-calendar-picker-indicator {
+  /* For modern browsers */
+  input[type="date"]::-webkit-calendar-picker-indicator {
     display: none;
-}
+  }
 
   /* For Firefox */
   input[type="date"] {
@@ -204,6 +240,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     color: red;
     font-size: 0.75rem;
 }
+
+
 .register-container {
     display: flex;
     justify-content: start;
@@ -218,17 +256,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     align-items: center;
     padding: 1rem;
 }
-
-.input-group input {
-    background-color: #fff;
-    padding: 8px;
-    padding-right: 3rem;
-    font-size: 0.875rem;
-    line-height: 1.25rem;
-    width: 300px;
-    border-radius: 0.5rem;
-}
-
 
 .form {
     background-color: #fff;
@@ -247,20 +274,14 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     color: #000;
 }
 
-
-.form button {
-    outline: none;
-    border: 1px solid #e5e7eb;
-    margin: 8px 0;
-}
-
-.error-message {
-    color: red;
-    font-size: 0.75rem;
-    display: flex;
-    justify-content: start;
-    align-items: start;
-    margin-left: 5%;
+.input-group input {
+    background-color: #fff;
+    padding: 8px;
+    padding-right: 3rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    width: 300px;
+    border-radius: 0.5rem;
 }
 
 .submit {

@@ -47,7 +47,7 @@ onMounted(() => {
                     <div class="collapse" id="search-nav">
                         <div class="text-light">
                             <div class="text-light">
-                                <h2 id="realTimeClock">{{ activeTime }}</h2>
+                                <h2 id="realTimeClock"></h2>
                             </div>
                         </div>
                     </div>
@@ -169,5 +169,8 @@ onMounted(() => {
 <style scoped>
 a {
     text-decoration: none;
+}
+#body-pd {
+  transition: padding-left 0.3s;
 }
 </style>
