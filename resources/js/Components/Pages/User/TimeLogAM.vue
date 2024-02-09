@@ -18,7 +18,6 @@ const getTimeDataAM = async () => {
         const response = await axios.post('http://127.0.0.1:8000/api/auth/get-time-record-am', {
             userID: userID
         });
-        // timeRecord.value = response.data.recordAM;
         timeRecord.value = response.data.recordAM;
     } catch (error) {
         console.error(error);
@@ -29,8 +28,23 @@ const handleTimeInAM = async () => {
     try {
         await axios.post('/api/auth/time-in-am', {
             userID: userID
-        });
-        alert('Success!');
+        })
+        .then((response) => {
+            // console.log(response);
+            if(response.data.success){
+                swal({
+                    icon: "success",
+                    text: response.data.message,
+                });
+            }
+            else{
+                swal({
+                    icon: "error",
+                    title: "Oops...",
+                    text: response.data.message,
+                });
+            }
+        })
         await getTimeDataAM();
     } catch (error) {
         console.error(error);
@@ -41,8 +55,23 @@ const handleTimeOutAM = async () => {
     try {
         await axios.post('/api/auth/time-out-am', {
             userID: userID
-        });
-        alert('Success!');
+        })
+        .then((response) => {
+            // console.log(response);
+            if(response.data.success){
+                swal({
+                    icon: "success",
+                    text: response.data.message,
+                });
+            }
+            else{
+                swal({
+                    icon: "error",
+                    title: "Oops...",
+                    text: response.data.message,
+                });
+            }
+        })
         await getTimeDataAM();
     } catch (error) {
         console.error(error);

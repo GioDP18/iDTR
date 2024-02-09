@@ -3,6 +3,7 @@
 namespace App\Http\Implementations;
 
 use App\Models\AmDailyTimeRecord;
+use App\Models\Intern;
 use Illuminate\Http\Request;
 use App\Http\Services\AmDailyTimeRecordService;
 
@@ -25,6 +26,22 @@ class AmDailyTimeRecordServiceImpl implements AmDailyTimeRecordService
         $users_id = $request->userID;
         $arrival_am = date('H:i:s');
 
+        $checkIfAlreadyLogged = AmDailyTimeRecord::where('date', date('Y-m-d'))->where('users_id', $request->userID)->get();
+        if($checkIfAlreadyLogged->count() > 0){
+            return response()->json([
+                'success' => False,
+                'message' => 'You have already logged this morning'
+            ], 200);
+        }
+
+        $checkStatus = Intern::where('users_id', $request->userID)->first();
+        if($checkStatus->status == 1){
+            return response()->json([
+                'success' => False,
+                'message' => 'You are currently in work.'
+            ], 200);
+        }
+
         $res = AmDailyTimeRecord::create([
             'users_id' => $users_id,
             'arrival_am' => $arrival_am,
@@ -42,17 +59,40 @@ class AmDailyTimeRecordServiceImpl implements AmDailyTimeRecordService
                 'late_am' => $late_am
             ]);
         }
+
+        Intern::where('users_id', $request->userID)->update(['status' => 1]);
+
         if(!$res){
             return response()->json([
                 'success' => False
             ], 200);
         }
         return response()->json([
-            'success' => True
+            'success' => True,
+            'message' => 'Time In Recorded Successfully!'
         ], 200);
     }
 
     public function timeOutAM(Request $request){
+
+        $checkStatus = Intern::where('users_id', $request->userID)->first();
+        if($checkStatus->status == 0){
+            return response()->json([
+                'success' => False,
+                'message' => 'You are currently not in work.'
+            ], 200);
+        }
+
+        $checkIfAlreadyLogged = AmDailyTimeRecord::where('date', date('Y-m-d'))->where('users_id', $request->userID)->first();
+
+        if($checkIfAlreadyLogged->count() > 1 || $checkIfAlreadyLogged->departure_am != NULL){
+            return response()->json([
+                'success' => False,
+                'message' => 'You have already logged this morning.'
+            ], 200);
+        }
+
+
         $get = AmDailyTimeRecord::where('date', date('Y-m-d'))->where('users_id', $request->userID)->first();
 
         $current_time = strtotime(date('H:i:s'));
@@ -71,13 +111,16 @@ class AmDailyTimeRecordServiceImpl implements AmDailyTimeRecordService
             'departure_am' => $departure_am,
             'hours_worked_am' => $hours_worked_am
         ]);
+        Intern::where('users_id', $request->userID)->update(['status' => 0]);
         if(!$res){
             return response()->json([
-                'success' => False
+                'success' => False,
+                'message' => 'There was an error while logging your Time Out.'
             ], 200);
         }
         return response()->json([
-            'success' => True
+            'success' => True,
+            'message' => 'Time Out Recorded Successfully!'
         ], 200);
     }
 
