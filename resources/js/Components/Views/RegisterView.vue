@@ -235,12 +235,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     display: none;
 }
 
-/* For Firefox */
-input[type="date"] {
+  /* For Firefox */
+  input[type="date"] {
     appearance: none;
     -moz-appearance: none;
     -webkit-appearance: none;
-}
+  }
 
 .error-message {
     color: red;
@@ -263,6 +263,17 @@ input[type="date"] {
     padding: 1rem;
 }
 
+.input-group input {
+    background-color: #fff;
+    padding: 8px;
+    padding-right: 3rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    width: 300px;
+    border-radius: 0.5rem;
+}
+
+
 .form {
     background-color: #fff;
     display: block;
@@ -280,14 +291,20 @@ input[type="date"] {
     color: #000;
 }
 
-.input-group input {
-    background-color: #fff;
-    padding: 8px;
-    padding-right: 3rem;
-    font-size: 0.875rem;
-    line-height: 1.25rem;
-    width: 300px;
-    border-radius: 0.5rem;
+
+.form button {
+    outline: none;
+    border: 1px solid #e5e7eb;
+    margin: 8px 0;
+}
+
+.error-message {
+    color: red;
+    font-size: 0.75rem;
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    margin-left: 5%;
 }
 
 .submit {
