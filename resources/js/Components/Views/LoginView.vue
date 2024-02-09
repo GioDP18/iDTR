@@ -1,4 +1,5 @@
 <script setup>
+import store from '../../State/index.js'
 import axios from 'axios';
 import { ref } from 'vue';
 import { Field, Form, ErrorMessage } from 'vee-validate';
@@ -33,6 +34,7 @@ function requiredPassword(value) {
 }
 
 const handleLogin = async () => {
+    store.commit('setLoading', true);
     try {
     await axios.post('/api/auth/login', {
         username: username.value,
@@ -45,6 +47,9 @@ const handleLogin = async () => {
         localStorage.setItem('valid', true);
         localStorage.setItem('userID', response.data.user.id);
         router.push('/user/dashboard');
+    })
+    .finally(() => {
+        store.commit('setLoading', false)
     })
 
   } catch (error) {
@@ -106,5 +111,5 @@ const handleLogin = async () => {
         </div>
     </div>
 </template>
-  
+
 <style scoped></style>

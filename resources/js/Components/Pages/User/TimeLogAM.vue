@@ -1,4 +1,5 @@
 <script setup>
+import store from '../../../State/index.js'
 import axios from 'axios';
 import 'datatables.net-vue3';
 import 'datatables.net-bs5';
@@ -25,6 +26,7 @@ const getTimeDataAM = async () => {
 };
 
 const handleTimeInAM = async () => {
+    store.commit('setLoading', true)
     try {
         await axios.post('/api/auth/time-in-am', {
             userID: userID
@@ -45,6 +47,9 @@ const handleTimeInAM = async () => {
                 });
             }
         })
+        .finally(() => {
+            store.commit('setLoading', false)
+        })
         await getTimeDataAM();
     } catch (error) {
         console.error(error);
@@ -52,6 +57,7 @@ const handleTimeInAM = async () => {
 };
 
 const handleTimeOutAM = async () => {
+    store.commit('setLoading', true)
     try {
         await axios.post('/api/auth/time-out-am', {
             userID: userID
@@ -71,6 +77,9 @@ const handleTimeOutAM = async () => {
                     text: response.data.message,
                 });
             }
+        })
+        .finally(() => {
+            store.commit('setLoading', false)
         })
         await getTimeDataAM();
     } catch (error) {
