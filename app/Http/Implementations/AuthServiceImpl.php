@@ -10,7 +10,7 @@ use App\Http\Services\AuthService;
 use App\Models\Intern;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
-class AuthServiceImp implements AuthService
+class AuthServiceImpl implements AuthService
 {
     public function __construct(){
     }
@@ -56,17 +56,22 @@ class AuthServiceImp implements AuthService
             'username' => 'required|string|between:2,100',
             'password' => 'required|string|confirmed|min:6',
         ]);
+        $redirectLogin = Validator::make($request->all(), [
+            'username' => 'required|string',
+            'password' => 'required|string|min:6',
+        ]);
         if($validator->fails()){
             return response()->json($validator->errors()->toJson(), 400);
         }
         if($validator){
             $user = User::create([
-                'username' => $request->password,
+                'username' => $request->username,
                 'email' => $request->email,
                 'password' => bcrypt($request->password)
             ]);
             if($user){
                 Intern::create([
+                    'id' => $user->id,
                     'users_id' => $user->id,
                     'firstname' => $request->firstname,
                     'middlename' => $request->middlename,
@@ -77,12 +82,10 @@ class AuthServiceImp implements AuthService
                 ]);
             }
         }
-        
-        return response()->json([
-            'message' => 'User successfully registered',
-            'newId' => $user->id,
-            'user' => $user
-        ], 201);
+        if (! $token = auth()->attempt($redirectLogin->validated())) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+        return $this->createNewToken($token);
     }
 
     /**

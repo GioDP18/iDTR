@@ -1,14 +1,11 @@
 <script setup>
+import axios from 'axios';
 import { ref } from 'vue';
 import { Field, Form, ErrorMessage } from 'vee-validate';
-import { useRouter } from 'vue-router';
-
-const router = useRouter();
-
-const username = ref('');
-const password = ref('');
 
 const showPassword = ref(false);
+const username = ref('');
+const password = ref('');
 
 function togglePassword() {
     showPassword.value = !showPassword.value;
@@ -55,6 +52,25 @@ function requiredPassword(value) {
   return 'Please enter your password.';
 }
 
+const handleLogin = async () => {
+    try {
+    await axios.post('/api/auth/login', {
+        username: username.value,
+        password: password.value,
+    })
+    .then((response) => {
+        console.log(response);
+        console.log('MY TOKEN: ' + response.data.access_token);
+        localStorage.setItem('token', response.data.access_token);
+        localStorage.setItem('valid', true);
+        localStorage.setItem('userID', response.data.user.id);
+        router.push('/user/dashboard');
+    })
+
+  } catch (error) {
+    console.error('Error during registration:', error);
+  }
+}
 </script>
 
 <template>
@@ -71,7 +87,7 @@ function requiredPassword(value) {
         </div>
         <div class="login-container">
             <div class="login-form">
-                <form class="form" @submit.prevent="handleLogin">
+                <Form class="form" @submit.prevent="login" method="POST">
                     <p class="form-title">Sign in to your account</p>
                     <div class="social-icons">
                         <RouterLink to="/"><i class="fa-brands fa-google-plus-g"></i></RouterLink>
@@ -83,14 +99,14 @@ function requiredPassword(value) {
                         <div class="line"></div>
                     </div>
                     <div class="input-container">
-                        <Field type="text" name="username" :rules="requiredUsername" v-model="username" placeholder="Enter Username" />
+                        <Field type="text" name="username" :rules="requiredUsername" placeholder="Enter Username" />
                         <span>
                             <i class="fa-solid fa-user"></i>
                         </span>
                     </div>
                     <ErrorMessage class="error-message" name="username" />
                     <div class="input-container">
-                        <Field name="password" :rules="requiredPassword" v-model="password" :type="showPassword ? 'text' : 'password'"
+                        <Field v-model="password" name="password" :rules="requiredPassword" :type="showPassword ? 'text' : 'password'"
                             placeholder="Enter Password" />
                         <span id="password" @click="togglePassword">
                             <i :class="['fa-solid', showPassword ? 'fa-eye-slash' : 'fa-eye']"></i>
