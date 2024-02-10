@@ -50,7 +50,7 @@ h1 {
   margin: -75px 0 0 -75px;
   border-radius: 50%;
   border: 3px solid transparent;
-  border-top-color: #008cff;
+  border-top-color: #16a085;
   animation: spin 1.7s linear infinite;
   z-index: 11;
 }
@@ -77,7 +77,7 @@ h1 {
   bottom: 15px;
   border-radius: 50%;
   border: 3px solid transparent;
-  border-top-color: #00ff40;
+  border-top-color: #f9c922;
   animation: spin 1s linear infinite;
 }
 
@@ -118,8 +118,6 @@ h1 {
   right: 0;
 }
 
-/* Loaded styles */
-
 .loaded #loader-wrapper .loader-section.section-left {
   transform: translateX(-100%);
   transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1.000);
@@ -140,5 +138,4 @@ h1 {
   transform: translateY(-100%);
   transition: all 0.3s 1s ease-out;
 }
-    
 </style>

@@ -176,29 +176,4 @@ const initializeDataTables = () => {
     </div>
 </template>
 
-<style scoped>
-.log {
-    font-size: 17px;
-    border-radius: 12px;
-    color: rgb(218, 218, 218);
-    border: none;
-    padding: 2px;
-    font-weight: 700;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    transition: all 0.4s;
-}
-
-.log span {
-    border-radius: 10px;
-    padding: 5px 15px;
-    text-shadow: 0px 0px 20px #4b4b4b;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    color: inherit;
-    transition: all 0.4s;
-}
-</style>
+<style scoped></style>
