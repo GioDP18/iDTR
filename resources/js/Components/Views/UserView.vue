@@ -316,7 +316,6 @@ body {
     padding-top: 55px;
 }
 
-/* mobile navbar sidebar under lg breakpoint */
 @media (max-width: 992px) {
 
     .navbar-collapse.collapsing .navbar-nav {
