@@ -3,6 +3,7 @@ import { ref, onMounted } from 'vue';
 
 const activeTime = ref("");
 const currentDate = ref("");
+const greeting = ref("");
 
 const updateDateTime = () => {
     const now = new Date();
@@ -12,6 +13,14 @@ const updateDateTime = () => {
     const meridiem = hours >= 12 ? "PM" : "AM";
     hours = hours % 12 || 12;
     activeTime.value = `${hours}:${minutes} ${meridiem}`;
+
+    if (meridiem == "AM" && hours >= 1 && hours <= 12) {
+        greeting.value = "Morning";
+    } else if (meridiem == "PM" && hours >= 1 && hours <= 5) {
+        greeting.value = "Afternoon";
+    } else if (meridiem == "PM" && hours >= 6 && hours <= 11) {
+        greeting.value = "Evening";
+    }
 
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     currentDate.value = now.toLocaleDateString(undefined, options);
@@ -443,7 +452,7 @@ $(document).ready(function () {
                                         <div class="div-6">
                                             <div class="column-2">
                                                 <div class="div-7">
-                                                    <div class="greeting-text">Good Morning, Gio</div>
+                                                    <div class="greeting-text">Good {{ greeting }}, Gio</div>
                                                     <div class="date-text">{{ currentDate }}</div>
                                                     <div class="time-text">{{ activeTime }}</div>
                                                 </div>

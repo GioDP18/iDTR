@@ -8,7 +8,7 @@ const activeTime = ref("");
 const screenWidth = ref(window.innerWidth);
 
 const updateScreenWidth = () => {
-  screenWidth.value = window.innerWidth;
+    screenWidth.value = window.innerWidth;
 };
 
 const toggleSidebar = () => {
@@ -38,7 +38,7 @@ onMounted(() => {
     window.addEventListener('resize', updateScreenWidth);
 });
 onBeforeUnmount(() => {
-  window.removeEventListener('resize', updateScreenWidth);
+    window.removeEventListener('resize', updateScreenWidth);
 });
 </script>
 
@@ -59,6 +59,20 @@ onBeforeUnmount(() => {
                         <li class="d-inline d-lg-none">
                             <button @click="toggleMobileSidebar" class="close float-right">&times;</button>
                         </li>
+                        <div class="user">
+                            <div class="avatar-sm float-left mr-2">
+                                <img :src="'../storage/images/profile.jpg'" alt=".." class="avatar-img rounded-circle"
+                                    style="width: 20px; height: 20px;">
+                            </div>
+                            <div class="info">
+                                <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
+                                    <span>
+                                        <p class="text-secondary" style="font-size: 15px;">Gio O. Dela Pena</p>
+                                        <p class="user-level font-weight-bold text-secondary" style="font-size: 12px;">Intern</p>
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
                         <ul class="nav nav-primary">
                             <li :class="{ 'nav-item': true, 'active': $route.path === '/user/dashboard' }">
                                 <RouterLink to="/user/dashboard" class="collapsed nav-link text-secondary"
@@ -342,5 +356,15 @@ body {
 
 .nav-collapse {
     flex-direction: column !important;
+}
+
+.user {
+    display: flex;
+    align-items: center;
+}
+
+.user .info {
+    margin-left: 10px;
+    /* Adjust the margin as needed */
 }
 </style>
