@@ -6,7 +6,8 @@ import UserView from '../Components/Views/UserView.vue';
 import UserDashboard from '../Components/Pages/User/Dashboard.vue';
 import UserTimeLogAM from '../Components/Pages/User/TimeLogAM.vue';
 import UserTimeLogPM from '../Components/Pages/User/TimeLogPM.vue';
-
+import BreakTime from '../Components/Pages/User/BreakTime.vue';
+import Reports from '../Components/Pages/User/reports.vue';
 
 const routes = [
     {
@@ -34,6 +35,14 @@ const routes = [
             {
                 path : 'timeLog-pm',
                 component : UserTimeLogPM,
+            },
+            {
+                path : 'timeLogBreak',
+                component : BreakTime,
+            },
+            {
+                path : 'reports',
+                component : Reports,
             }
         ]
     },
