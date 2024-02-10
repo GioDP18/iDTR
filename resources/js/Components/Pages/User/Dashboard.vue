@@ -23,8 +23,7 @@ onMounted(() => {
 });
 import $ from 'jquery';
 
-
-	$(document).ready(function () {
+$(document).ready(function () {
     function c(passed_month, passed_year, calNum) {
         var calendar = calNum == 0 ? calendars.cal1 : calendars.cal2;
         makeWeek(calendar.weekline);
@@ -47,8 +46,8 @@ import $ from 'jquery';
                 var shownDate = calMonthArray[cell].day;
                 var iter_date = new Date(passed_year, passed_month, shownDate);
                 if (
-                (
-                (shownDate != today.getDate() && passed_month == today.getMonth()) || passed_month != today.getMonth()) && iter_date < today) {
+                    (
+                        (shownDate != today.getDate() && passed_month == today.getMonth()) || passed_month != today.getMonth()) && iter_date < today) {
                     var m = '<div class="past-date">';
                 } else {
                     var m = checkToday(iter_date) ? '<div class="today">' : "<div>";
@@ -78,14 +77,14 @@ import $ from 'jquery';
             if (firstClick && secondClick) {
                 thirdClicked = getClickedInfo(clicked, calendar);
                 var firstClickDateObj = new Date(firstClicked.year,
-                firstClicked.month,
-                firstClicked.date);
+                    firstClicked.month,
+                    firstClicked.date);
                 var secondClickDateObj = new Date(secondClicked.year,
-                secondClicked.month,
-                secondClicked.date);
+                    secondClicked.month,
+                    secondClicked.date);
                 var thirdClickDateObj = new Date(thirdClicked.year,
-                thirdClicked.month,
-                thirdClicked.date);
+                    thirdClicked.month,
+                    thirdClicked.date);
                 if (secondClickDateObj > thirdClickDateObj && thirdClickDateObj > firstClickDateObj) {
                     secondClicked = thirdClicked;
                     // then choose dates again from the start :)
@@ -118,11 +117,11 @@ import $ from 'jquery';
 
                 // what if second clicked date is before the first clicked?
                 var firstClickDateObj = new Date(firstClicked.year,
-                firstClicked.month,
-                firstClicked.date);
+                    firstClicked.month,
+                    firstClicked.date);
                 var secondClickDateObj = new Date(secondClicked.year,
-                secondClicked.month,
-                secondClicked.date);
+                    secondClicked.month,
+                    secondClicked.date);
 
                 if (firstClickDateObj > secondClickDateObj) {
 
@@ -148,7 +147,6 @@ import $ from 'jquery';
             }
             selectDates(selected);
         });
-
     }
 
     function selectDates(selected) {
@@ -235,9 +233,9 @@ import $ from 'jquery';
 
     var today;
     var year,
-    month,
-    nextMonth,
-    nextYear;
+        month,
+        nextMonth,
+        nextYear;
 
     var r = [];
     var i = [
@@ -279,23 +277,22 @@ import $ from 'jquery';
     var calendars = {
         "cal1": {
             "name": "first",
-                "calHeader": calHeader1,
-                "weekline": weekline1,
-                "datesBody": datesBody1
+            "calHeader": calHeader1,
+            "weekline": weekline1,
+            "datesBody": datesBody1
         },
-            "cal2": {
+        "cal2": {
             "name": "second",
-                "calHeader": calHeader2,
-                "weekline": weekline2,
-                "datesBody": datesBody2
+            "calHeader": calHeader2,
+            "weekline": weekline2,
+            "datesBody": datesBody2
         }
     }
 
-
     var clickedElement;
     var firstClicked,
-    secondClicked,
-    thirdClicked;
+        secondClicked,
+        thirdClicked;
     var firstClick = false;
     var secondClick = false;
     var selected = {};
@@ -329,16 +326,16 @@ import $ from 'jquery';
     function getClickedInfo(element, calendar) {
         var clickedInfo = {};
         var clickedCalendar,
-        clickedMonth,
-        clickedYear;
+            clickedMonth,
+            clickedYear;
         clickedCalendar = calendar.name;
         clickedMonth = clickedCalendar == "first" ? month : nextMonth;
         clickedYear = clickedCalendar == "first" ? year : nextYear;
         clickedInfo = {
             "calNum": clickedCalendar,
-                "date": parseInt(element.text()),
-                "month": clickedMonth,
-                "year": clickedYear
+            "date": parseInt(element.text()),
+            "month": clickedMonth,
+            "year": clickedYear
         }
         return clickedInfo;
     }
@@ -357,8 +354,8 @@ import $ from 'jquery';
                 selected[added_year] = {};
                 selected[added_year][added_month] = [];
                 for (var i = 1;
-                i <= secondClicked.date;
-                i++) {
+                    i <= secondClicked.date;
+                    i++) {
                     selected[added_year][added_month].push(i);
                 }
 
@@ -366,8 +363,8 @@ import $ from 'jquery';
                 while (added_month >= 0) {
                     selected[added_year][added_month] = [];
                     for (var i = 1;
-                    i <= getDaysInMonth(added_year, added_month);
-                    i++) {
+                        i <= getDaysInMonth(added_year, added_month);
+                        i++) {
                         selected[added_year][added_month].push(i);
                     }
                     added_month = added_month - 1;
@@ -394,8 +391,8 @@ import $ from 'jquery';
                 if (firstClicked.year == secondClicked.year) {
                     selected[added_year][added_month] = [];
                     for (var i = 1;
-                    i <= secondClicked.date;
-                    i++) {
+                        i <= secondClicked.date;
+                        i++) {
                         selected[added_year][added_month].push(i);
                     }
                     added_month = added_month - 1;
@@ -403,8 +400,8 @@ import $ from 'jquery';
                 while (added_month > firstClicked.month) {
                     selected[added_year][added_month] = [];
                     for (var i = 1;
-                    i <= getDaysInMonth(added_year, added_month);
-                    i++) {
+                        i <= getDaysInMonth(added_year, added_month);
+                        i++) {
                         selected[added_year][added_month].push(i);
                     }
                     added_month = added_month - 1;
@@ -413,8 +410,8 @@ import $ from 'jquery';
             }
 
             for (var i = firstClicked.date + 1;
-            i <= added_date;
-            i++) {
+                i <= added_date;
+                i++) {
                 selected[added_year][added_month].push(i);
             }
         }
@@ -497,7 +494,7 @@ import $ from 'jquery';
                                                 <i><font-awesome-icon :icon="['fas', 'less-than']" /></i>
                                             </button>
                                             <h2></h2>
-                                            <button class="switch-month switch-right"> 
+                                            <button class="switch-month switch-right">
                                                 <i><font-awesome-icon :icon="['fas', 'greater-than']" /></i>
                                             </button>
                                         </div>
@@ -1493,7 +1490,7 @@ import $ from 'jquery';
 }
 
 .switch-month:hover {
-color: #6082B6;
+    color: #6082B6;
 }
 
 /* Styling for the calendar weekdays row */
