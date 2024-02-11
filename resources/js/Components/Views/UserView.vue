@@ -47,6 +47,7 @@ onBeforeUnmount(() => {
         <div class="main-header">
             <div class="logo-header" data-background-color="blue" v-show="showSidebar">
                 <RouterLink to="/user/dashboard" class="logo text-light" style="font-weight: bold; font-size: 20px;">
+                    <img style="height: 35px;  margin-right: 10px;" src="../../../../public/images/logo-transparent.png" alt="">
                     SupSoftTech
                 </RouterLink>
                 <button class="navbar-toggler" type="button" @click="toggleMobileSidebar">
@@ -56,22 +57,16 @@ onBeforeUnmount(() => {
                 </button>
                 <div class="collapse navbar-collapse d-sm-none" :class="{ 'show': showMobileSidebar }" id="nav">
                     <ul class="navbar-nav bg-light m-0 ml-lg-auto p-3 p-lg-0">
-                        <li class="d-inline d-lg-none">
-                            <button @click="toggleMobileSidebar" class="close float-right">&times;</button>
-                        </li>
-                        <div class="user">
-                            <div class="avatar-sm float-left mr-2">
-                                <img :src="'../storage/images/profile.jpg'" alt=".." class="avatar-img rounded-circle"
-                                    style="width: 20px; height: 20px;">
-                            </div>
-                            <div class="info">
-                                <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
-                                    <span>
-                                        <p class="text-secondary" style="font-size: 15px;">Gio O. Dela Pena</p>
-                                        <p class="user-level font-weight-bold text-secondary" style="font-size: 12px;">Intern</p>
-                                    </span>
-                                </a>
-                            </div>
+                        <div class="info">
+                            <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
+                                <span style="display: flex; flex-direction: column; align-items: center;">
+                                    <img :src="'../storage/images/profile.jpg'" alt=".." class="avatar-img rounded-circle"
+                                        style="width: 20px; height: 20px; margin: 8px;">
+                                    <p class="text-secondary" style="font-size: 15px;">Gio O. Dela Pena</p>
+                                    <p class="user-level font-weight-bold text-secondary" style="font-size: 12px;">
+                                        Intern</p>
+                                </span>
+                            </a>
                         </div>
                         <ul class="nav nav-primary">
                             <li :class="{ 'nav-item': true, 'active': $route.path === '/user/dashboard' }">
