@@ -57,7 +57,7 @@
                 <div class="row mt--2">
                     <div class="col-md-12">
                         <div class="card full-height d-flex p-2"
-                            style="margin:0; height:auto; flex-direction:row; gap:17px; overflow-x:auto;">
+                            style="margin:0; height:auto; flex-direction:row; overflow-x:auto;">
                             <!-- WEEK 1 -->
                             <div class="weekly-report">
                                 <h5 class="text-center fw-bold mt-2">Week 1</h5>
