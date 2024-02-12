@@ -381,7 +381,8 @@
 
 .card.indgo.pointer {
     position: relative; /* Set parent container to relative positioning */
-    background: #1571e818;
+    /* background: #1571e80e; */
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 }
 
 .date-card .month {
@@ -536,6 +537,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: .7s;
 }
 
 .update:hover {
