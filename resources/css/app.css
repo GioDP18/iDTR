@@ -382,13 +382,8 @@
 }
 
 .card.indgo.pointer {
-    position: relative;
-    /* Set parent container to relative positioning */
-    background: rgba(21, 114, 232, 0.14);
-    border-radius: 16px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(10.8px);
-    -webkit-backdrop-filter: blur(10.8px);
+    position: relative; /* Set parent container to relative positioning */
+    background: #1571e818;
 }
 
 .date-card .month {
@@ -532,7 +527,7 @@
     border-radius: 5px;
     padding: 6px;
     position: absolute;
-    top: 10px;
+    top: 10px; 
     right: 0;
 }
 
