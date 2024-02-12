@@ -529,7 +529,68 @@ $(document).ready(function () {
                                 </div>
                             </div>
                             <div class="activity-card">
-                                <div class="div-74"></div>
+                                <div class="div-74">
+                                    <div class="tl-item active">
+                                        <div class="tl-dot b-warning"></div>
+                                        <div class="tl-content">
+                                            <div class="" style="font-size: 15px;">Time in - <span
+                                                    style="font-weight: bold; color: rgb(90, 88, 88);">Gio O. Dela Pena</span>
+                                            </div>
+                                            <div class="tl-date text-muted mt-1">
+                                                <span>02/05/23</span>
+                                                <span>10:00 am</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tl-item">
+                                        <div class="tl-dot b-primary"></div>
+                                        <div class="tl-content">
+                                            <div class="" style="font-size: 15px;">Time out - <span
+                                                    style="font-weight: bold; color: rgb(90, 88, 88);">Gio O. Dela Pena</span>
+                                            </div>
+                                            <div class="tl-date text-muted mt-1">
+                                                <span>02/05/23</span>
+                                                <span>10:00 am</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tl-item">
+                                        <div class="tl-dot b-danger"></div>
+                                        <div class="tl-content">
+                                            <div class="" style="font-size: 15px;">Time out - <span
+                                                    style="font-weight: bold; color: rgb(90, 88, 88);">Christian Kit V. Rotairo</span>
+                                            </div>
+                                            <div class="tl-date text-muted mt-1">
+                                                <span>02/05/23</span>
+                                                <span>10:00 am</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tl-item">
+                                        <div class="tl-dot b-warning"></div>
+                                        <div class="tl-content">
+                                            <div class="" style="font-size: 15px;">Time out - <span
+                                                    style="font-weight: bold; color: rgb(90, 88, 88);">Christian Kit V. Rotairo</span>
+                                            </div>
+                                            <div class="tl-date text-muted mt-1">
+                                                <span>02/05/23</span>
+                                                <span>10:00 am</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tl-item">
+                                        <div class="tl-dot b-danger"></div>
+                                        <div class="tl-content">
+                                            <div class="" style="font-size: 15px;">Time out - <span
+                                                    style="font-weight: bold; color: rgb(90, 88, 88);">Jhon Vincent Ramada</span>
+                                            </div>
+                                            <div class="tl-date text-muted mt-1">
+                                                <span>02/05/23</span>
+                                                <span>10:00 am</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -545,6 +606,101 @@ $(document).ready(function () {
 </template>
 
 <style scoped>
+.tl-item {
+    border-radius: 3px;
+    position: relative;
+    display: -ms-flexbox;
+    display: flex
+}
+
+.tl-item>* {
+    padding: 10px
+}
+
+.tl-item:last-child .tl-dot:after {
+    display: none
+}
+
+.tl-item.active .tl-dot:before {
+    border-color: #ec0000;
+    box-shadow: 0 0 0 4px rgba(255, 68, 68, 0.2)
+}
+
+.tl-item:last-child .tl-dot:after {
+    display: none
+}
+
+.tl-item.active .tl-dot:before {
+    border-color: #ec0000;
+    box-shadow: 0 0 0 4px rgba(255, 68, 68, 0.2)
+}
+
+.tl-dot {
+    position: relative;
+    border-color: #ec0000;
+}
+
+.tl-dot:after,
+.tl-dot:before {
+    content: '';
+    position: absolute;
+    border-color: inherit;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%)
+}
+
+.tl-dot:after {
+    width: 0;
+    height: auto;
+    top: 25px;
+    bottom: -15px;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-radius: 0
+}
+
+
+.tl-dot:after {
+    width: 0;
+    height: auto;
+    top: 25px;
+    bottom: -15px;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-radius: 0
+}
+
+.tl-content p:last-child {
+    margin-bottom: 0
+}
+
+.tl-date {
+    font-size: .85em;
+    margin-top: 2px;
+    min-width: 150px;
+    max-width: 150px;
+}
+
+.b-warning {
+    border-color: #727272 !important;
+}
+
+.b-primary {
+    border-color: #ec0000;
+}
+
+.b-danger {
+    border-color: #f54394 !important;
+}
+
 .div-2 {
     width: 100%;
 }
@@ -1309,6 +1465,7 @@ $(document).ready(function () {
     max-width: 100%;
     height: 376px;
     margin: 0 auto;
+    padding: 30px;
 }
 
 @media (max-width: 991px) {
