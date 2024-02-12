@@ -195,7 +195,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <h5 class="text-center fw-bold mt-1">Week 1</h5>
                             </div>
 
                             <!-- WEEK 2 -->
@@ -336,7 +335,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <h5 class="text-center fw-bold mt-1">Week 2</h5>
                             </div>
 
                             <!-- WEEK 3 -->
@@ -477,7 +475,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <h5 class="text-center fw-bold mt-1">Week 3</h5>
                             </div>
 
                             <!-- WEEK 4 -->
@@ -618,7 +615,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <h5 class="text-center fw-bold mt-1">Week 4</h5>
                             </div>
                         </div>
                     </div>
