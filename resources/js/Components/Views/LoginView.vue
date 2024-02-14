@@ -1,4 +1,5 @@
 <script setup>
+import store from '../../State/index.js'
 import axios from 'axios';
 import { ref } from 'vue';
 import { Field, Form, ErrorMessage } from 'vee-validate';
@@ -28,6 +29,9 @@ const login = async () => {
         localStorage.setItem('valid', true);
         localStorage.setItem('userID', response.data.user.id);
         router.push('/user/dashboard');
+    })
+    .finally(() => {
+        store.commit('setLoading', false)
     })
 
   } catch (error) {
@@ -89,5 +93,5 @@ const login = async () => {
         </div>
     </div>
 </template>
-  
+
 <style scoped></style>

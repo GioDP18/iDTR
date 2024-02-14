@@ -1,4 +1,5 @@
 <script setup>
+import store from '../../State/index.js'
 import axios from 'axios';
 import { ref } from 'vue';
 import { Form, Field, ErrorMessage } from 'vee-validate';
@@ -72,30 +73,35 @@ function validateConfirmPassword(value) {
 
 
 const handleRegister = async () => {
-  try {
-    await axios.post('/api/auth/register', {
-        firstname: firstname.value,
-        middlename: middlename.value,
-        lastname: lastname.value,
-        gender: gender.value,
-        birthdate: birthdate.value,
-        username: username.value,
-        email: email.value,
-        password: password.value,
-        password_confirmation: password_confirmation.value,
-    })
-    .then((response) => {
-        console.log(response);
-        console.log('MY TOKEN: ' + response.data.access_token);
-        localStorage.setItem('token', response.data.access_token);
-        localStorage.setItem('valid', true);
-        localStorage.setItem('userID', response.data.user.id);
-        router.push('/user/dashboard');
-    })
+    store.commit('setLoading', true)
+    try {
+        await axios.post('/api/auth/register', {
+            firstname: firstname.value,
+            middlename: middlename.value,
+            lastname: lastname.value,
+            gender: gender.value,
+            birthdate: birthdate.value,
+            username: username.value,
+            email: email.value,
+            password: password.value,
+            password_confirmation: password_confirmation.value,
+        })
+            .then((response) => {
+                console.log(response);
+                console.log('MY TOKEN: ' + response.data.access_token);
+                localStorage.setItem('token', response.data.access_token);
+                localStorage.setItem('valid', true);
+                localStorage.setItem('userID', response.data.user.id);
+                router.push('/user/dashboard');
+            })
+            .finally(() => {
+                store.commit('setLoading', false)
+            })
 
-  } catch (error) {
-    console.error('Error during registration:', error);
-  }
+
+    } catch (error) {
+        console.error('Error during registration:', error);
+    }
 };
 </script>
 <template>
@@ -108,23 +114,23 @@ const handleRegister = async () => {
                         <form class="form" @submit.prevent="handleRegister" style="position:relative;">
                             <p class="form-title">Register your Account</p>
                             <div class="input-group flex-nowrap mt-4">
-                                <Field v-model="firstname" name="firstname" :rules="validateName" type="text" class="form-control"
-                                    placeholder="Fistname" />
+                                <Field v-model="firstname" name="firstname" :rules="validateName" type="text"
+                                    class="form-control" placeholder="Fistname" />
                             </div>
                             <ErrorMessage class="error-message" name="firstname" />
                             <div class="input-group flex-nowrap mt-4">
-                                <Field v-model="middlename" name="middlename" :rules="validateName" type="text" class="form-control"
-                                    placeholder="Middlename" />
+                                <Field v-model="middlename" name="middlename" :rules="validateName" type="text"
+                                    class="form-control" placeholder="Middlename" />
                             </div>
                             <ErrorMessage class="error-message" name="middlename" />
                             <div class="input-group flex-nowrap mt-3">
-                                <Field v-model="lastname" name="lastname" :rules="validateName" type="text" class="form-control"
-                                    placeholder="Lastname" />
+                                <Field v-model="lastname" name="lastname" :rules="validateName" type="text"
+                                    class="form-control" placeholder="Lastname" />
                             </div>
                             <ErrorMessage class="error-message" name="lastname" />
                             <div class="input-group flex-nowrap mt-3">
-                                <Field v-model="username" name="username" :rules="validateName" type="text" class="form-control"
-                                    placeholder="Username" />
+                                <Field v-model="username" name="username" :rules="validateName" type="text"
+                                    class="form-control" placeholder="Username" />
                                 <span class="input-group-text">
                                     <i class="fa-solid fa-user"></i>
                                 </span>
@@ -132,20 +138,20 @@ const handleRegister = async () => {
                             <ErrorMessage class="error-message" name="username" />
                             <div class="mt-3 d-flex justify-content-around">
                                 <div class="form-check form-check-inline">
-                                    <Field v-model="gender" class="form-check-input" :rules="validateName" type="radio" name="gender"
-                                        id="inlineRadio1" value="male" />
+                                    <Field v-model="gender" class="form-check-input" :rules="validateName" type="radio"
+                                        name="gender" id="inlineRadio1" value="male" />
                                     <label class="form-check-label" for="inlineRadio1">Male</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <Field v-model="gender" class="form-check-input" :rules="validateName" type="radio" name="gender"
-                                        id="inlineRadio2" value="female" />
+                                    <Field v-model="gender" class="form-check-input" :rules="validateName" type="radio"
+                                        name="gender" id="inlineRadio2" value="female" />
                                     <label class="form-check-label" for="inlineRadio2">Female</label>
                                 </div>
                             </div>
                             <ErrorMessage class="error-message" name="gender" />
                             <div class="input-group flex-nowrap mt-3">
-                                <Field v-model="birthdate" name="birthdate" :rules="validateName" type="date" class="form-control"
-                                    placeholder="" />
+                                <Field v-model="birthdate" name="birthdate" :rules="validateName" type="date"
+                                    class="form-control" placeholder="" />
                                 <span class="input-group-text">
                                     <i class="fa-solid fa-calendar"></i>
                                 </span>
@@ -160,7 +166,7 @@ const handleRegister = async () => {
                             </div>
                             <ErrorMessage class="error-message" name="email" />
                             <div class="input-group flex-nowrap mt-3">
-                                <Field v-model="password" name="password"  :rules="validatePassword"
+                                <Field v-model="password" name="password" :rules="validatePassword"
                                     :type="showPassword ? 'text' : 'password'" placeholder="Password"
                                     class="form-control" />
                                 <span class="input-group-text" style="cursor:pointer;" @click="togglePassword">
@@ -169,9 +175,9 @@ const handleRegister = async () => {
                             </div>
                             <ErrorMessage class="error-message" name="password" />
                             <div class="input-group flex-nowrap mt-3">
-                                <Field v-model="password_confirmation" name="password_confirmation" :rules="validateConfirmPassword"
-                                    :type="showConfirmPassword ? 'text' : 'password'" placeholder="Confirm Password"
-                                    class="form-control" />
+                                <Field v-model="password_confirmation" name="password_confirmation"
+                                    :rules="validateConfirmPassword" :type="showConfirmPassword ? 'text' : 'password'"
+                                    placeholder="Confirm Password" class="form-control" />
                                 <span class="input-group-text" style="cursor:pointer;" @click="toggleConfirmPassword">
                                     <i :class="['fa-solid', showConfirmPassword ? 'fa-eye-slash' : 'fa-eye']"></i>
                                 </span>
@@ -224,10 +230,10 @@ span i {
     height: 1rem;
 }
 
-  /* For modern browsers */
-  input[type="date"]::-webkit-calendar-picker-indicator {
+/* For modern browsers */
+input[type="date"]::-webkit-calendar-picker-indicator {
     display: none;
-  }
+}
 
   /* For Firefox */
   input[type="date"] {
@@ -257,6 +263,17 @@ span i {
     padding: 1rem;
 }
 
+.input-group input {
+    background-color: #fff;
+    padding: 8px;
+    padding-right: 3rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    width: 300px;
+    border-radius: 0.5rem;
+}
+
+
 .form {
     background-color: #fff;
     display: block;
@@ -274,14 +291,20 @@ span i {
     color: #000;
 }
 
-.input-group input {
-    background-color: #fff;
-    padding: 8px;
-    padding-right: 3rem;
-    font-size: 0.875rem;
-    line-height: 1.25rem;
-    width: 300px;
-    border-radius: 0.5rem;
+
+.form button {
+    outline: none;
+    border: 1px solid #e5e7eb;
+    margin: 8px 0;
+}
+
+.error-message {
+    color: red;
+    font-size: 0.75rem;
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    margin-left: 5%;
 }
 
 .submit {
