@@ -30,9 +30,9 @@ class PmDailyTimeRecordController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function getTimePM(Request $request)
+    public function fetchTimePM(Request $request)
     {
-        return $this->pmDailyTimeRecordService->getTimePM($request);
+        return $this->pmDailyTimeRecordService->fetchTimePM($request);
     }
 
 

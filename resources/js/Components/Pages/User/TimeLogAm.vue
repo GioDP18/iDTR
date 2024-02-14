@@ -28,7 +28,7 @@ const getTimeDataAM = async () => {
 const handleTimeInAM = async () => {
     store.commit('setLoading', true)
     try {
-        await axios.post('http://127.0.0.1:8000/api/auth/time-in-am', {
+        await axios.post('/api/auth/time-in-am', {
             userID: userID
         })
         .then((response) => {
