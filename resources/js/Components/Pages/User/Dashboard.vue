@@ -534,7 +534,8 @@ $(document).ready(function () {
                                         <div class="tl-dot b-warning"></div>
                                         <div class="tl-content">
                                             <div class="" style="font-size: 15px;">Time in - <span
-                                                    style="font-weight: bold; color: rgb(90, 88, 88);">Gio O. Dela Pena</span>
+                                                    style="font-weight: bold; color: rgb(90, 88, 88);">Gio O. Dela
+                                                    Pena</span>
                                             </div>
                                             <div class="tl-date text-muted mt-1">
                                                 <span>02/05/23</span>
@@ -546,7 +547,8 @@ $(document).ready(function () {
                                         <div class="tl-dot b-primary"></div>
                                         <div class="tl-content">
                                             <div class="" style="font-size: 15px;">Time out - <span
-                                                    style="font-weight: bold; color: rgb(90, 88, 88);">Gio O. Dela Pena</span>
+                                                    style="font-weight: bold; color: rgb(90, 88, 88);">Gio O. Dela
+                                                    Pena</span>
                                             </div>
                                             <div class="tl-date text-muted mt-1">
                                                 <span>02/05/23</span>
@@ -558,7 +560,8 @@ $(document).ready(function () {
                                         <div class="tl-dot b-danger"></div>
                                         <div class="tl-content">
                                             <div class="" style="font-size: 15px;">Time out - <span
-                                                    style="font-weight: bold; color: rgb(90, 88, 88);">Christian Kit V. Rotairo</span>
+                                                    style="font-weight: bold; color: rgb(90, 88, 88);">Christian Kit V.
+                                                    Rotairo</span>
                                             </div>
                                             <div class="tl-date text-muted mt-1">
                                                 <span>02/05/23</span>
@@ -570,7 +573,8 @@ $(document).ready(function () {
                                         <div class="tl-dot b-warning"></div>
                                         <div class="tl-content">
                                             <div class="" style="font-size: 15px;">Time out - <span
-                                                    style="font-weight: bold; color: rgb(90, 88, 88);">Christian Kit V. Rotairo</span>
+                                                    style="font-weight: bold; color: rgb(90, 88, 88);">Christian Kit V.
+                                                    Rotairo</span>
                                             </div>
                                             <div class="tl-date text-muted mt-1">
                                                 <span>02/05/23</span>
@@ -582,7 +586,8 @@ $(document).ready(function () {
                                         <div class="tl-dot b-danger"></div>
                                         <div class="tl-content">
                                             <div class="" style="font-size: 15px;">Time out - <span
-                                                    style="font-weight: bold; color: rgb(90, 88, 88);">Jhon Vincent Ramada</span>
+                                                    style="font-weight: bold; color: rgb(90, 88, 88);">Jhon Vincent
+                                                    Ramada</span>
                                             </div>
                                             <div class="tl-date text-muted mt-1">
                                                 <span>02/05/23</span>
@@ -1710,5 +1715,4 @@ $(document).ready(function () {
 /* Styling for blank date cells */
 .calendar_content .blank {
     visibility: hidden;
-}
-</style>
+}</style>
