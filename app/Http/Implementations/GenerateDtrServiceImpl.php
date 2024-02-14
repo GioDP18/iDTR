@@ -33,8 +33,9 @@ class GenerateDtrServiceImpl Implements GenerateDtrService
         $am_time = User::find($request->userID)->am_daily_time_record;
 
         $i=0;
+        $num=1;
         $startDate = Carbon::parse($request->start_date); // Assuming you have a start_date in your request
-        $endDate = $startDate->copy()->addDays(29);
+        $endDate = Carbon::parse($request->end_date);// Assuming you have a end_date in your request
 
         $worksheet->setCellValue('B5', $user->firstname. ' '. $user->middlename. ' '. $user->lastname);
         $worksheet->setCellValue('B7', 'For the month of '. $startDate->format('F'). ' - ' .$endDate->format('F'));
@@ -49,6 +50,8 @@ class GenerateDtrServiceImpl Implements GenerateDtrService
             $work_hours_pm = 0;
             $work_minutes_am = 0;
             $work_minutes_pm = 0;
+            $worksheet->insertNewRowBefore(13 + $i, 1);
+            $worksheet->setCellValue('B' . (12 + $i), $num);
             foreach ($am_time as $record){
                 if ($record->date == $dateString) {
                     $work_hours_am = Carbon::parse($record->hours_worked_am)->format('H');
@@ -67,11 +70,10 @@ class GenerateDtrServiceImpl Implements GenerateDtrService
             $total_hours_this_day = $work_hours_pm + $work_hours_am;
             $total_minutes_this_day = $work_minutes_pm + $work_minutes_am;
             $worksheet->fromArray([$total_hours_this_day, $total_minutes_this_day], null, 'G' . (12 + $i));
-            
-            
 
             $startDate->addDay();
             $i++;
+            $num++;
 
         }
 
