@@ -1,8 +1,9 @@
 <script setup>
+import store from '../../../State/index.js'
+import axios from 'axios';
 import 'datatables.net-vue3';
 import 'datatables.net-bs5';
-import axios from 'axios';
-import { ref,onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import moment from 'moment';
 
 const timeRecord = ref([]);
@@ -13,47 +14,78 @@ onMounted(async () => {
     initializeDataTables();
 });
 
-const getTimeDataPM = async () =>{
+const getTimeDataPM = async () => {
     try {
         const response = await axios.post('http://127.0.0.1:8000/api/auth/get-time-record-pm', {
             userID: userID
-        }); 
-        
+        });
         timeRecord.value = response.data.recordPM;
-        
-    } catch(error) {
-        console.error(error)
+    } catch (error) {
+        console.error(error);
     }
-    
-}
+};
 
-const handleTimeIn = async () =>{
-    await axios.post('/api/auth/time-in-pm', {
-        userID: userID
-    })
-    .then(response => {
-        console.log(response.data)
-    })
-    .catch(error => {
-        console.log(error.message)
-    })
-    await getTimeDataPM();
-}
-const handleTimeOut = async () =>{
-    
-    await axios.post('/api/auth/time-out-pm', {
-        userID: userID
-    })
-    .then(response => {
-        
-        console.log(response.data)
-    })
-    .catch(error => {
-        console.log(error.message)
-    })
-    await getTimeDataPM();
-    
-}
+const handleTimeInPM = async () => {
+    store.commit('setLoading', true)
+    try {
+        await axios.post('/api/auth/time-in-pm', {
+            userID: userID
+        })
+        .then((response) => {
+            // console.log(response);
+            if(response.data.success){
+                swal({
+                    icon: "success",
+                    text: response.data.message,
+                });
+            }
+            else{
+                swal({
+                    icon: "error",
+                    title: "Oops...",
+                    text: response.data.message,
+                });
+            }
+        })
+        .finally(() => {
+            store.commit('setLoading', false)
+        })
+        await getTimeDataPM();
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+const handleTimeOutPM = async () => {
+    store.commit('setLoading', true)
+    try {
+        await axios.post('/api/auth/time-out-pm', {
+            userID: userID
+        })
+        .then((response) => {
+            // console.log(response);
+            if(response.data.success){
+                swal({
+                    icon: "success",
+                    text: response.data.message,
+                });
+            }
+            else{
+                swal({
+                    icon: "error",
+                    title: "Oops...",
+                    text: response.data.message,
+                });
+            }
+        })
+        .finally(() => {
+            store.commit('setLoading', false)
+        })
+        await getTimeDataPM();
+    } catch (error) {
+        console.error(error);
+    }
+};
 
 const formatTime = (timeString) => {
   try {
@@ -74,12 +106,12 @@ const formatDate = (dateString) => {
     return 'Invalid Date';
   }
 };
+
 const initializeDataTables = () => {
     $(document).ready(function () {
         $('#dailyTimeLog').DataTable();
     });
 }
-
 
 </script>
 
@@ -94,12 +126,12 @@ const initializeDataTables = () => {
                         </div>
                         <div class="d-flex" style="gap:7px;">
                             <div>
-                                <button class="log bg-success" @click="handleTimeIn">
+                                <button class="log bg-success" @click="handleTimeInPM">
                                     <span><i><font-awesome-icon :icon="['fas', 'clock']" /></i> Time-In</span>
                                 </button>
                             </div>
                             <div>
-                                <button class="log bg-danger" @click="handleTimeOut">
+                                <button class="log bg-danger" @click="handleTimeOutPM">
                                     <span><i><font-awesome-icon :icon="['fas', 'clock']" /></i> Time-Out</span>
                                 </button>
                             </div>
@@ -107,6 +139,7 @@ const initializeDataTables = () => {
                     </div>
                 </div>
             </div>
+
             <div class="page-inner mt--5">
                 <div class="card bg-light">
                     <div class="card-body">
@@ -121,15 +154,14 @@ const initializeDataTables = () => {
                                         <th>Number of Hours Worked</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody >
                                     <tr v-for="record in timeRecord" :key="record.id">
-                                        <td>{{ formatDate(record.date) }}</td>
-                                        <td>{{ formatTime(record.arrival_pm) }}</td>
-                                        <td>{{ record.departure_pm ? formatTime(record.departure_pm) : '' }}</td>
-                                        <td>{{ record.late_pm }}</td>
-                                        <td>{{ record.hours_worked_pm }}</td>
+                                        <th>{{ formatDate(record.date) }}</th>
+                                        <th>{{ formatTime(record.arrival_pm) }}</th>
+                                        <th>{{ record.departure_pm ? formatTime(record.departure_pm) : '' }}</th>
+                                        <th>{{ record.late_pm }}</th>
+                                        <th>{{ record.hours_worked_pm }}</th>
                                     </tr>
-                                    
                                 </tbody>
                             </table>
                         </div>
