@@ -13,12 +13,16 @@ const updateDateTime = () => {
     const meridiem = hours >= 12 ? "PM" : "AM";
     hours = hours % 12 || 12;
     activeTime.value = `${hours}:${minutes} ${meridiem}`;
+    console.log(hours + meridiem);
+    
 
     if (meridiem == "AM" && hours >= 1 && hours <= 12) {
-        greeting.value = "Morning";
-    } else if (meridiem == "PM" && hours >= 1 && hours <= 5) {
+        greeting.value = "Morning"
+    }
+    else if (meridiem == "PM" && hours >= 1) {
         greeting.value = "Afternoon";
-    } else if (meridiem == "PM" && hours >= 6 && hours <= 11) {
+    }
+    else if (meridiem == "PM" && hours >= 6) {
         greeting.value = "Evening";
     }
 
