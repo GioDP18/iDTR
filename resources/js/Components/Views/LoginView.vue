@@ -15,26 +15,8 @@ function togglePassword() {
     showPassword.value = !showPassword.value;
 }
 
-function login() {
-    //Login function
-}
 
-function requiredUsername(value) {
-  if (value && value.trim()) {
-    return true;
-  }
-  return 'Please enter your username.';
-}
-
-function requiredPassword(value) {
-  if (value && value.trim()) {
-    return true;
-  }
-  return 'Please enter your password.';
-}
-
-const handleLogin = async () => {
-    store.commit('setLoading', true);
+const login = async () => {
     try {
     await axios.post('/api/auth/login', {
         username: username.value,
@@ -72,7 +54,7 @@ const handleLogin = async () => {
         </div>
         <div class="login-container">
             <div class="login-form">
-                <form class="form" @submit.prevent="handleLogin" method="POST">
+                <form class="form" @submit.prevent="login" method="POST">
                     <p class="form-title">Sign in to your account</p>
                     <div class="social-icons">
                         <RouterLink to="/"><i class="fa-brands fa-google-plus-g"></i></RouterLink>
@@ -84,7 +66,7 @@ const handleLogin = async () => {
                         <div class="line"></div>
                     </div>
                     <div class="input-container">
-                        <Field v-model="username" type="text" name="username" :rules="requiredUsername" placeholder="Enter Username" />
+                        <Field type="text" name="username" v-model="username" :rules="requiredUsername" placeholder="Enter Username" />
                         <span>
                             <i class="fa-solid fa-user"></i>
                         </span>

@@ -183,8 +183,9 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
+        'Jwt' => Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
         'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
+        'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
     ])->toArray(),
 
 ];
