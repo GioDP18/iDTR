@@ -106,7 +106,7 @@ h1 {
   top: 0;
   width: 51%;
   height: 100%;
-  background: #222;
+  background: transparent;
   z-index: 10;
 }
 
@@ -140,5 +140,5 @@ h1 {
   transform: translateY(-100%);
   transition: all 0.3s 1s ease-out;
 }
-    
+
 </style>

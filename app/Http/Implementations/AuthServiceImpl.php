@@ -14,7 +14,7 @@ class AuthServiceImpl implements AuthService
 {
     public function __construct(){
     }
-    
+
     /**
      * Perform the login authentication
      *

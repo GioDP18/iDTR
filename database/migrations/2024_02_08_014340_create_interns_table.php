@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('gender');
             $table->string('birthdate');
             $table->string('email');
-            $table->integer('status')->defaul(0);
-            $table->integer('breatetime_status')->defaul(0);
+            $table->integer('status')->default(0);
+            $table->integer('breatetime_status')->default(0);
             $table->string('avatar')->nullable();
             $table->timestamps();
         });
