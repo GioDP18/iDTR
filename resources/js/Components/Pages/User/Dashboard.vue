@@ -458,7 +458,7 @@ $(document).ready(function () {
                                                 <div class="div-7">
                                                     <div class="greeting-text">Good {{ greeting }}, Gio</div>
                                                     <div class="date-text">{{ currentDate }}</div>
-                                                    <div class="time-text">{{ activeTime }}</div>
+                                                    <div class="time-text sticky-top">{{ activeTime }}</div>
                                                 </div>
                                             </div>
                                             <div class="column-3">
@@ -721,6 +721,14 @@ $(document).ready(function () {
     }
 }
 
+@media (max-width: 991px) {
+    .img {
+        margin-left: 25px;
+        width: 170px;
+        height: 170px;
+    }
+}
+
 .div-3 {
     gap: 20px;
     display: flex;
@@ -734,6 +742,14 @@ $(document).ready(function () {
     }
 }
 
+.div-74{
+    overflow: hidden;
+}
+
+.div-74:hover{
+    overflow-y: auto;
+    cursor: pointer;
+}
 .column {
     display: flex;
     flex-direction: column;
@@ -1019,14 +1035,17 @@ $(document).ready(function () {
     flex-direction: column;
     line-height: normal;
     width: 33%;
-    margin-left: 20px;
 }
 
 @media (max-width: 991px) {
     .column-6 {
         width: 100%;
+        flex-wrap: wrap;
+        margin-top: 40px;
     }
 }
+
+
 
 .calendar-card {
     border-radius: 15px 15px 15px 15px;
