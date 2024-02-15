@@ -117,13 +117,6 @@ onBeforeUnmount(() => {
                                 </RouterLink>
                             </li>
                         </ul>
-                        <li :class="{ 'nav-item': true, 'active': $route.path === '/user/logout' }"  style="padding-top: 100%;">
-                            <RouterLink to="/user/logout" class="collapsed nav-link text-secondary" aria-expanded="false">
-                                <i><font-awesome-icon style="height:15px; margin-right: 8px;"
-                                        :icon="['fas', 'power-off']" /></i>
-                                <span v-if="showMobileSidebar" style="font-size: 15px;">Logout</span>
-                            </RouterLink>
-                        </li>
                     </ul>
                 </div>
             </div>
@@ -240,12 +233,6 @@ onBeforeUnmount(() => {
                         <RouterLink to="/user/reports">
                             <i><font-awesome-icon :icon="['fas', 'pen-to-square']" /></i>
                             <p><span v-if="showSidebar">Reports</span></p>
-                        </RouterLink>
-                    </li>
-                    <li class="nav-item" active-class="active" style="padding-top: 100%;">
-                        <RouterLink to="/user/reports">
-                            <i><font-awesome-icon :icon="['fas', 'power-off']" /></i>
-                            <p>Logout</p>
                         </RouterLink>
                     </li>
                 </ul>
