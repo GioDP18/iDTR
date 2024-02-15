@@ -47,7 +47,8 @@ onBeforeUnmount(() => {
         <div class="main-header">
             <div class="logo-header" data-background-color="blue" v-show="showSidebar">
                 <RouterLink to="/user/dashboard" class="logo text-light" style="font-weight: bold; font-size: 20px;">
-                    <img style="height: 35px;  margin-right: 0px;" src="../../../../public/images/logo-transparent.png" alt="">
+                    <img style="height: 35px;  margin-right: 0px;" src="../../../../public/images/logo-transparent.png"
+                        alt="">
                     iDTR System
                 </RouterLink>
                 <button class="navbar-toggler" type="button" @click="toggleMobileSidebar">
@@ -116,6 +117,13 @@ onBeforeUnmount(() => {
                                 </RouterLink>
                             </li>
                         </ul>
+                        <li :class="{ 'nav-item': true, 'active': $route.path === '/user/logout' }"  style="padding-top: 100%;">
+                            <RouterLink to="/user/logout" class="collapsed nav-link text-secondary" aria-expanded="false">
+                                <i><font-awesome-icon style="height:15px; margin-right: 8px;"
+                                        :icon="['fas', 'power-off']" /></i>
+                                <span v-if="showMobileSidebar" style="font-size: 15px;">Logout</span>
+                            </RouterLink>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -232,6 +240,12 @@ onBeforeUnmount(() => {
                         <RouterLink to="/user/reports">
                             <i><font-awesome-icon :icon="['fas', 'pen-to-square']" /></i>
                             <p><span v-if="showSidebar">Reports</span></p>
+                        </RouterLink>
+                    </li>
+                    <li class="nav-item" active-class="active" style="padding-top: 100%;">
+                        <RouterLink to="/user/reports">
+                            <i><font-awesome-icon :icon="['fas', 'power-off']" /></i>
+                            <p>Logout</p>
                         </RouterLink>
                     </li>
                 </ul>

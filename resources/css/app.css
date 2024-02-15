@@ -314,6 +314,35 @@
     transition: all 0.4s;
 }
 
+.duration .selection {
+  margin-bottom: 1em;
+  text-align: center;
+}
+
+.duration .selection label {
+  display: inline-block;
+  width:8em;
+  border-radius: 6px;
+  padding: 0.5em;
+  cursor: pointer;
+  border: 1px solid #1571e8ad;
+  color: #000000 !important;
+}
+
+.duration .selection label:hover {
+  background-color: #1571e8ad;
+}
+
+.duration .selection input[type=radio] {
+  display: none;
+}
+
+.duration .selection input[type=radio]:checked ~ label {
+  background-color: #1571e8ad;
+  color: #ffffff !important;
+  font-weight: 500;
+}
+
 .create-report-btn {
     --bezier: cubic-bezier(0.22, 0.61, 0.36, 1);
     --edge-light: hsla(0, 0%, 50%, 0.8);
