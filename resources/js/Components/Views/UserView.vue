@@ -32,10 +32,22 @@ const updateActiveTime = () => {
     activeTime.value = `${hours}:${minutes} ${meridiem}`;
 };
 
+const initializeHamburgers = () => {
+    const hamburgers = document.querySelectorAll(".hamburger");
+    if (hamburgers.length > 0) {
+        hamburgers.forEach(hamburger => {
+            hamburger.addEventListener("click", function () {
+                this.classList.toggle("is-active");
+            }, false);
+        });
+    }
+};
+
 onMounted(() => {
     updateActiveTime();
     setInterval(updateActiveTime, 1000);
     window.addEventListener('resize', updateScreenWidth);
+    initializeHamburgers();
 });
 onBeforeUnmount(() => {
     window.removeEventListener('resize', updateScreenWidth);
@@ -45,84 +57,105 @@ onBeforeUnmount(() => {
 <template>
     <div id="body-pd">
         <div class="main-header">
-            <div class="logo-header" data-background-color="blue" v-show="showSidebar">
-                <RouterLink to="/user/dashboard" class="logo text-light" style="font-weight: bold; font-size: 20px;">
-                    <img style="height: 35px;  margin-right: 0px;" src="../../../../public/images/logo-transparent.png" alt="">
-                    iDTR System
-                </RouterLink>
-                <button class="navbar-toggler" type="button" @click="toggleMobileSidebar">
-                    <span class="navbar-toggler-icon">
-                        <i><font-awesome-icon :icon="['fas', 'bars']" /></i>
-                    </span>
-                </button>
+            <div class="logo-header" style="height: 70px;" data-background-color="blue" v-show="showSidebar">
+                <div class="nav-container">
+                    <div class="logo-container">
+                        <RouterLink to="/user/dashboard" class="logo text-light"
+                            style="font-weight: bold; font-size: 20px; display: flex; align-items: center;">
+                            <img style="height: 35px; margin-right: 10px;"
+                                src="../../../../public/images/logo-transparent.png" alt="">
+                            iDTR System
+                        </RouterLink>
+                    </div>
+                    <div class="bars-container">
+                        <button class="hamburger hamburger--collapse d-sm-none sticky-top" type="button"
+                            @click="toggleMobileSidebar">
+                            <span class="hamburger-box">
+                                <span class="hamburger-inner"></span>
+                            </span>
+                        </button>
+                    </div>
+                </div>
                 <div class="collapse navbar-collapse d-sm-none" :class="{ 'show': showMobileSidebar }" id="nav">
-                    <ul class="navbar-nav bg-light m-0 ml-lg-auto p-3 p-lg-0">
-                        <div class="info">
-                            <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
-                                <span style="display: flex; flex-direction: column; align-items: center;">
-                                    <img :src="'../storage/images/profile.jpg'" alt=".." class="avatar-img rounded-circle"
-                                        style="width: 20px; height: 20px; margin: 8px;">
-                                    <p class="text-secondary" style="font-size: 15px;">Gio O. Dela Pena</p>
-                                    <p class="user-level font-weight-bold text-secondary" style="font-size: 12px;">
-                                        Intern</p>
-                                </span>
-                            </a>
+                    <ul class="navbar-nav bg-light m-0 ml-lg-auto p-0 p-lg-0">
+                        <div class="logo-header" style="height: 70px;" data-background-color="blue">
                         </div>
-                        <ul class="nav nav-primary">
-                            <li :class="{ 'nav-item': true, 'active': $route.path === '/user/dashboard' }">
-                                <RouterLink to="/user/dashboard" class="collapsed nav-link text-secondary"
-                                    aria-expanded="false">
-                                    <i><font-awesome-icon style="height:15px; margin-right: 8px;"
-                                            :icon="['fas', 'chart-line']" /></i>
-                                    <span v-if="showMobileSidebar" style="font-size: 15px;">Dashboard</span>
-                                </RouterLink>
-                            </li>
-                            <li v-show="showMobileSidebar">
-                                <h4 class="text-section" style="font-size: 14px; color: rgb(172, 167, 167);">Monitoring</h4>
-                            </li>
-                            <li :class="{ 'nav-item': true, 'active': $route.path.startsWith('/user/timeLog') }">
-                                <a class="text-secondary" href="#" @click="toggleTimeLog" :aria-expanded="timeLogExpanded">
-                                    <i><font-awesome-icon style="height:15px; margin-right: 8px;"
-                                            :icon="['fas', 'clock']" /></i>
-                                    <span v-if="showMobileSidebar" style="font-size: 15px;">Time Log</span>
-                                    <span class="caret" style="margin-left: 20px;"></span>
+                        <div class="p-3">
+                            <div class="info">
+                                <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
+                                    <span style="display: flex; flex-direction: column; align-items: center;">
+                                        <img :src="'../storage/images/profile.jpg'" alt=".."
+                                            class="avatar-img rounded-circle"
+                                            style="width: 20px; height: 20px; margin: 8px;">
+                                        <p class="text-secondary" style="font-size: 15px;">Gio O. Dela Pena</p>
+                                        <p class="user-level font-weight-bold text-secondary" style="font-size: 12px;">
+                                            Intern</p>
+                                    </span>
                                 </a>
-                                <div class="collapse" :class="{ 'show': timeLogExpanded }" id="timeLog">
-                                    <ul class="nav nav-collapse" style="font-size: 15px;">
-                                        <li :class="{ 'active': $route.path === '/user/timeLog-am' }">
-                                            <RouterLink to="/user/timeLog-am">
-                                                <span class="sub-item text-secondary">AM</span>
-                                            </RouterLink>
-                                        </li>
-                                        <li :class="{ 'active': $route.path === '/user/timeLog-pm' }">
-                                            <RouterLink to="/user/timeLog-pm">
-                                                <span class="sub-item text-secondary">PM</span>
-                                            </RouterLink>
-                                        </li>
-                                        <li :class="{ 'active': $route.path === '/user/timeLogBreak' }">
-                                            <RouterLink to="/user/timeLogBreak">
-                                                <span class="sub-item text-secondary">Break Time</span>
-                                            </RouterLink>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                            <li :class="{ 'nav-item': true, 'active': $route.path === '/user/reports' }">
-                                <RouterLink to="/user/reports" class="collapsed nav-link text-secondary"
-                                    aria-expanded="false">
-                                    <i><font-awesome-icon style="height:15px; margin-right: 8px;"
-                                            :icon="['fas', 'pen-to-square']" /></i>
-                                    <span v-if="showMobileSidebar" style="font-size: 15px;">Reports</span>
-                                </RouterLink>
-                            </li>
-                        </ul>
+                            </div>
+                            <ul class="nav nav-primary">
+                                <li :class="{ 'nav-item': true, 'active': $route.path === '/user/dashboard' }">
+                                    <RouterLink to="/user/dashboard" class="collapsed nav-link text-secondary"
+                                        aria-expanded="false">
+                                        <i><font-awesome-icon style="height:15px; margin-right: 8px;"
+                                                :icon="['fas', 'chart-line']" /></i>
+                                        <span v-if="showMobileSidebar" style="font-size: 15px;">Dashboard</span>
+                                    </RouterLink>
+                                </li>
+                                <li v-show="showMobileSidebar">
+                                    <h4 class="text-section" style="font-size: 14px; color: rgb(172, 167, 167);">Monitoring
+                                    </h4>
+                                </li>
+                                <li :class="{ 'nav-item': true, 'active': $route.path.startsWith('/user/timeLog') }">
+                                    <a class="text-secondary" href="#" @click="toggleTimeLog"
+                                        :aria-expanded="timeLogExpanded">
+                                        <i><font-awesome-icon style="height:15px; margin-right: 8px;"
+                                                :icon="['fas', 'clock']" /></i>
+                                        <span v-if="showMobileSidebar" style="font-size: 15px;">Time Log</span>
+                                        <span class="caret" style="margin-left: 20px;"></span>
+                                    </a>
+                                    <div class="collapse" :class="{ 'show': timeLogExpanded }" id="timeLog">
+                                        <ul class="nav nav-collapse" style="font-size: 15px;">
+                                            <li :class="{ 'active': $route.path === '/user/timeLog-am' }">
+                                                <RouterLink to="/user/timeLog-am">
+                                                    <span class="sub-item text-secondary">AM</span>
+                                                </RouterLink>
+                                            </li>
+                                            <li :class="{ 'active': $route.path === '/user/timeLog-pm' }">
+                                                <RouterLink to="/user/timeLog-pm">
+                                                    <span class="sub-item text-secondary">PM</span>
+                                                </RouterLink>
+                                            </li>
+                                            <li :class="{ 'active': $route.path === '/user/timeLogBreak' }">
+                                                <RouterLink to="/user/timeLogBreak">
+                                                    <span class="sub-item text-secondary">Break Time</span>
+                                                </RouterLink>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li :class="{ 'nav-item': true, 'active': $route.path === '/user/reports' }">
+                                    <RouterLink to="/user/reports" class="collapsed nav-link text-secondary"
+                                        aria-expanded="false">
+                                        <i><font-awesome-icon style="height:15px; margin-right: 8px;"
+                                                :icon="['fas', 'pen-to-square']" /></i>
+                                        <span v-if="showMobileSidebar" style="font-size: 15px;">Reports</span>
+                                    </RouterLink>
+                                </li>
+                            </ul>
+                        </div>
                     </ul>
                 </div>
             </div>
             <nav class="navbar navbar-header navbar-expand-lg" v-show="screenWidth > 992" data-background-color="blue2">
                 <div class="navheadbar">
-                    <button class="btn btn-toggle toggle-sidebar" @click="toggleSidebar">
+                    <!-- <button class="btn btn-toggle toggle-sidebar" @click="toggleSidebar">
                         <i><font-awesome-icon :icon="['fas', 'bars']" /></i>
+                    </button> -->
+                    <button class="hamburger  hamburger--collapse sticky-top" type="button" @click="toggleSidebar">
+                        <span class="hamburger-box">
+                            <span class="hamburger-inner"></span>
+                        </span>
                     </button>
                 </div>
                 <div class="container-fluid">
@@ -349,6 +382,13 @@ body {
     }
 }
 
+@media (max-width: 991px) {
+    .logo {
+        margin-top: -37px;
+        margin-left: -60px;
+    }
+}
+
 .nav-collapse {
     flex-direction: column !important;
 }
@@ -362,4 +402,15 @@ body {
     margin-left: 10px;
     /* Adjust the margin as needed */
 }
-</style>
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.bars-container {
+    margin-right: 10px;
+    /* Adjust the margin as needed */
+}</style>

@@ -22,6 +22,8 @@
     @vite('resources/css/demo.css')
     @vite('resources/css/fonts.css')
     @vite('resources/css/fonts.min.css')
+    @vite('resources/css/hamburgers.css')
+
 </head>
 
 <body>

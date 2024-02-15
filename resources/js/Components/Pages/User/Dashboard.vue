@@ -14,7 +14,7 @@ const updateDateTime = () => {
     hours = hours % 12 || 12;
     activeTime.value = `${hours}:${minutes} ${meridiem}`;
     console.log(hours + meridiem);
-    
+
 
     if (meridiem == "AM" && hours >= 1 && hours <= 12) {
         greeting.value = "Morning"
@@ -458,7 +458,7 @@ $(document).ready(function () {
                                                 <div class="div-7">
                                                     <div class="greeting-text">Good {{ greeting }}, Gio</div>
                                                     <div class="date-text">{{ currentDate }}</div>
-                                                    <div class="time-text sticky-top">{{ activeTime }}</div>
+                                                    <div class="time-text">{{ activeTime }}</div>
                                                 </div>
                                             </div>
                                             <div class="column-3">
@@ -531,6 +531,9 @@ $(document).ready(function () {
                                         <p style="width:2rem; height:1rem; background-color:#00ba00;"></p>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="div-69">
+                                <div class="d-sm-none" style="font-family: Inter, sans-serif;">Activity Logs</div>
                             </div>
                             <div class="activity-card">
                                 <div class="div-74">
@@ -742,14 +745,15 @@ $(document).ready(function () {
     }
 }
 
-.div-74{
+.div-74 {
     overflow: hidden;
 }
 
-.div-74:hover{
+.div-74:hover {
     overflow-y: auto;
     cursor: pointer;
 }
+
 .column {
     display: flex;
     flex-direction: column;
@@ -939,6 +943,12 @@ $(document).ready(function () {
     .div-13 {
         margin-top: 24px;
         padding: 0 20px;
+    }
+}
+
+@media (max-width: 991px) {
+    .div-71 {
+        display: none;
     }
 }
 
@@ -1738,4 +1748,5 @@ $(document).ready(function () {
 /* Styling for blank date cells */
 .calendar_content .blank {
     visibility: hidden;
-}</style>
+}
+</style>
