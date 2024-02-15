@@ -11,12 +11,60 @@
                         <div>
                             <h2 class="text-white pb-2 fw-bold">Reports</h2>
                         </div>
-                        <div>
+                        <div class="d-flex gap-3">
+                            <button class="create-report-btn" data-bs-toggle="modal"
+                                data-bs-target="#generateDTR"><i><font-awesome-icon
+                                        :icon="['fas', 'file']" /></i> Generate DTR </button>
+
                             <button class="create-report-btn" data-bs-toggle="modal"
                                 data-bs-target="#createNewReport"><i><font-awesome-icon
                                         :icon="['fas', 'pen-to-square']" /></i> Create New Report </button>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <!-- Modal to Generate DTR -->
+            <div class="modal fade" id="generateDTR" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <form action="">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="staticBackdropLabel">
+                                    <i><font-awesome-icon
+                                        :icon="['fas', 'file']" /></i> Generate DTR Excel</h1>
+                            </div>
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                    <label for="reportTitle" class="form-label">File Name</label>
+                                    <input type="text" class="form-control" id="reportTitle"
+                                        placeholder="What's your title?">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Set Date Range</label>
+                                    <div class="d-flex">
+                                        <div class="col-6">
+                                            <label for="reportContent" class="form-label">Start</label>
+                                            <input type="date" class="form-control" id="reportContent">
+                                        </div>
+                                        <div class="col-6">
+                                            <label for="reportContent" class="form-label">End</label>
+                                            <input type="date" class="form-control" id="reportContent">
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn" style="background-color:#1572E8; color:white;"
+                                    @click="saveNewReport">Save</button>
+                                <button type="button" class="btn" id="closeCreateModal"
+                                    data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </form>
+
                 </div>
             </div>
 
