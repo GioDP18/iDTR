@@ -19,7 +19,7 @@ const updateDateTime = () => {
     if (meridiem == "AM" && hours >= 1 && hours <= 12) {
         greeting.value = "Morning"
     }
-    else if (meridiem == "PM" && hours >= 1) {
+    else if (meridiem == "PM" && hours >= 1 && hours <= 5) {
         greeting.value = "Afternoon";
     }
     else if (meridiem == "PM" && hours >= 6) {
