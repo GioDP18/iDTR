@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PmDailyTimeRecordController;
+use App\Http\Controllers\GenerateDtrController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -38,4 +39,6 @@ Route::group([
     Route::post('/time-out-am', [AmDailyTimeRecordController::class, 'timeOutAM']);
     Route::post('/get-time-record-am', [AmDailyTimeRecordController::class, 'fetchTimeAM']);
 
+    // API Endponts for Generating Dtr
+    Route::post('/generate', [GenerateDtrController::class, 'generate']);
 });

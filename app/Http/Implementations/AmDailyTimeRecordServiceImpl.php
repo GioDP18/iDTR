@@ -85,7 +85,7 @@ class AmDailyTimeRecordServiceImpl implements AmDailyTimeRecordService
 
         $checkIfAlreadyLogged = AmDailyTimeRecord::where('date', date('Y-m-d'))->where('users_id', $request->userID)->first();
 
-        if($checkIfAlreadyLogged->count() > 1 || $checkIfAlreadyLogged->departure_am != NULL){
+        if($checkIfAlreadyLogged->departure_am != NULL){
             return response()->json([
                 'success' => False,
                 'message' => 'You have already logged this morning.'

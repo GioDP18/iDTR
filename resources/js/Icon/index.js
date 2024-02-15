@@ -1,16 +1,17 @@
 import { library } from '@fortawesome/fontawesome-svg-core'
 
 /* import specific icons */
-import { 
+import {
     faBars,
-    faChartLine, 
-    faClock, 
-    faHourglassEnd, 
-    faHourglassStart, 
+    faChartLine,
+    faClock,
+    faHourglassEnd,
+    faHourglassStart,
     faPenToSquare,
     faGreaterThan,
     faLessThan,
-    faPowerOff
+    faPowerOff,
+    faFile
 } from '@fortawesome/free-solid-svg-icons'
 
 /* add icons to the library */
@@ -23,5 +24,6 @@ library.add(
     faHourglassEnd,
     faGreaterThan,
     faLessThan,
-    faPowerOff
+    faPowerOff,
+    faFile
 )
