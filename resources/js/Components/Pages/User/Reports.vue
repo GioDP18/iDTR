@@ -1,4 +1,53 @@
 <script setup>
+import store from '../../../State/index.js';
+import axios from 'axios';
+import { ref } from 'vue';
+import moment from 'moment'
+
+const fileName = ref('');
+const start_date = ref('');
+const end_date = ref('');
+const userID = localStorage.getItem('userID');
+
+
+const handleGenerate = async () => {
+    store.commit('setLoading', true)
+    let formattedStartDate = moment(start_date.value).format('YYYY-MM-DD');
+    let formattedEndDate = moment(end_date.value).format('YYYY-MM-DD');
+
+    try {
+        await axios.post('http://127.0.0.1:8000/api/auth/generate', {
+            userID: userID,
+            fileName: fileName.value,
+            start_date: formattedStartDate,
+            end_date: formattedEndDate,
+        })
+        .then((response) => {
+            if(response.data.success){
+                swal({
+                    icon: "success",
+                    text: response.data.message,
+                });
+            }
+            else{
+                swal({
+                    icon: "error",
+                    title: "Oops...",
+                    text: response.data.message,
+                });
+            }
+        })
+        .finally(() => {
+            store.commit('setLoading', false)
+        })
+    } catch (error) {
+        swal({
+            icon: "error",
+            title: "Oops...",
+            text: error,
+        });
+    }
+}
 </script>
 
 <template>
@@ -11,12 +60,59 @@
                         <div>
                             <h2 class="text-white pb-2 fw-bold">Reports</h2>
                         </div>
-                        <div>
+                        <div class="d-flex gap-3">
+                            <button class="create-report-btn" data-bs-toggle="modal"
+                                data-bs-target="#generateDTR"><i><font-awesome-icon
+                                        :icon="['fas', 'file']" /></i> Generate DTR </button>
+
                             <button class="create-report-btn" data-bs-toggle="modal"
                                 data-bs-target="#createNewReport"><i><font-awesome-icon
                                         :icon="['fas', 'pen-to-square']" /></i> Create New Report </button>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <!-- Modal to Generate DTR -->
+            <div class="modal fade" id="generateDTR" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <form @submit.prevent="handleGenerate">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="staticBackdropLabel">
+                                    <i><font-awesome-icon
+                                        :icon="['fas', 'file']" /></i> Generate DTR Excel</h1>
+                            </div>
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                    <label for="reportTitle" class="form-label">File Name</label>
+                                    <input type="text" v-model="fileName" class="form-control" id="reportTitle"
+                                        placeholder="What's your title?">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Set Date Range</label>
+                                    <div class="d-flex">
+                                        <div class="col-6">
+                                            <label for="reportContent" class="form-label">Start</label>
+                                            <input type="date" v-model="start_date" class="form-control" id="reportContent">
+                                        </div>
+                                        <div class="col-6">
+                                            <label for="reportContent" class="form-label">End</label>
+                                            <input type="date" v-model="end_date" class="form-control" id="reportContent">
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn" style="background-color:#1572E8; color:white;" >Save</button>
+                                <button type="button" class="btn" id="closeCreateModal"
+                                    data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </form>
+
                 </div>
             </div>
 

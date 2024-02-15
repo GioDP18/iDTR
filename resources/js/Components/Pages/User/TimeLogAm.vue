@@ -32,7 +32,6 @@ const handleTimeInAM = async () => {
             userID: userID
         })
         .then((response) => {
-            // console.log(response);
             if(response.data.success){
                 swal({
                     icon: "success",
