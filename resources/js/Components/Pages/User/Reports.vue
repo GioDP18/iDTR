@@ -1,5 +1,5 @@
 <script setup>
-import store from '../../../State/index.js'
+import store from '../../../State/index.js';
 import axios from 'axios';
 import { ref } from 'vue';
 import moment from 'moment'
@@ -10,16 +10,15 @@ const end_date = ref('');
 const userID = localStorage.getItem('userID');
 
 
-
 const handleGenerate = async () => {
     store.commit('setLoading', true)
-
     let formattedStartDate = moment(start_date.value).format('YYYY-MM-DD');
     let formattedEndDate = moment(end_date.value).format('YYYY-MM-DD');
 
     try {
         await axios.post('http://127.0.0.1:8000/api/auth/generate', {
             userID: userID,
+            fileName: fileName.value,
             start_date: formattedStartDate,
             end_date: formattedEndDate,
         })
@@ -42,7 +41,11 @@ const handleGenerate = async () => {
             store.commit('setLoading', false)
         })
     } catch (error) {
-        console.log(error);
+        swal({
+            icon: "error",
+            title: "Oops...",
+            text: error,
+        });
     }
 }
 </script>
