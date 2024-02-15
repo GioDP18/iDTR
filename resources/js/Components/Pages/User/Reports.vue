@@ -1,4 +1,50 @@
 <script setup>
+import store from '../../../State/index.js'
+import axios from 'axios';
+import { ref } from 'vue';
+import moment from 'moment'
+
+const fileName = ref('');
+const start_date = ref('');
+const end_date = ref('');
+const userID = localStorage.getItem('userID');
+
+
+
+const handleGenerate = async () => {
+    store.commit('setLoading', true)
+
+    let formattedStartDate = moment(start_date.value).format('YYYY-MM-DD');
+    let formattedEndDate = moment(end_date.value).format('YYYY-MM-DD');
+
+    try {
+        await axios.post('http://127.0.0.1:8000/api/auth/generate', {
+            userID: userID,
+            start_date: formattedStartDate,
+            end_date: formattedEndDate,
+        })
+        .then((response) => {
+            if(response.data.success){
+                swal({
+                    icon: "success",
+                    text: response.data.message,
+                });
+            }
+            else{
+                swal({
+                    icon: "error",
+                    title: "Oops...",
+                    text: response.data.message,
+                });
+            }
+        })
+        .finally(() => {
+            store.commit('setLoading', false)
+        })
+    } catch (error) {
+        console.log(error);
+    }
+}
 </script>
 
 <template>
@@ -28,7 +74,7 @@
             <div class="modal fade" id="generateDTR" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
                 aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog">
-                    <form action="">
+                    <form @submit.prevent="handleGenerate">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h1 class="modal-title fs-5" id="staticBackdropLabel">
@@ -38,7 +84,7 @@
                             <div class="modal-body">
                                 <div class="mb-3">
                                     <label for="reportTitle" class="form-label">File Name</label>
-                                    <input type="text" class="form-control" id="reportTitle"
+                                    <input type="text" v-model="fileName" class="form-control" id="reportTitle"
                                         placeholder="What's your title?">
                                 </div>
                                 <div class="mb-3">
@@ -46,19 +92,18 @@
                                     <div class="d-flex">
                                         <div class="col-6">
                                             <label for="reportContent" class="form-label">Start</label>
-                                            <input type="date" class="form-control" id="reportContent">
+                                            <input type="date" v-model="start_date" class="form-control" id="reportContent">
                                         </div>
                                         <div class="col-6">
                                             <label for="reportContent" class="form-label">End</label>
-                                            <input type="date" class="form-control" id="reportContent">
+                                            <input type="date" v-model="end_date" class="form-control" id="reportContent">
                                         </div>
                                     </div>
 
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="submit" class="btn" style="background-color:#1572E8; color:white;"
-                                    @click="saveNewReport">Save</button>
+                                <button type="submit" class="btn" style="background-color:#1572E8; color:white;" >Save</button>
                                 <button type="button" class="btn" id="closeCreateModal"
                                     data-bs-dismiss="modal">Close</button>
                             </div>
