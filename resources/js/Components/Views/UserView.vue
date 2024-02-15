@@ -47,7 +47,8 @@ onBeforeUnmount(() => {
         <div class="main-header">
             <div class="logo-header" data-background-color="blue" v-show="showSidebar">
                 <RouterLink to="/user/dashboard" class="logo text-light" style="font-weight: bold; font-size: 20px;">
-                    <img style="height: 35px;  margin-right: 0px;" src="../../../../public/images/logo-transparent.png" alt="">
+                    <img style="height: 35px;  margin-right: 0px;" src="../../../../public/images/logo-transparent.png"
+                        alt="">
                     iDTR System
                 </RouterLink>
                 <button class="navbar-toggler" type="button" @click="toggleMobileSidebar">
