@@ -66,4 +66,9 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasMany(AmDailyTimeRecord::class, 'users_id');
     }
+
+    public function report()
+    {
+        return $this->hasMany(Report::class, 'users_id');
+    }
 }

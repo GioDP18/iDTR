@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PmDailyTimeRecordController;
 use App\Http\Controllers\GenerateDtrController;
+use App\Http\Controllers\ReportController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -41,4 +42,9 @@ Route::group([
 
     // API Endponts for Generating Dtr
     Route::post('/generate', [GenerateDtrController::class, 'generate']);
+
+    // API Endponts for Report
+    Route::post('/get-report', [ReportController::class, 'allReport']);
+    Route::post('/create-report', [ReportController::class, 'createReport']);
+    Route::post('/update-report', [ReportController::class, 'updateReport']);
 });
