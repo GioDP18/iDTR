@@ -26,7 +26,10 @@ class ReportServiceImpl implements ReportService
             'title' =>  $request->title,
             'content' => $request->content,
         ]);
-        return response()->json(['success'=> 'Successfully created report']);
+        return response()->json([
+            'success'=> true,
+            'message'=> 'Successfully created report'
+        ]);
     }
 
     public function updateReport(Request $request){
@@ -38,6 +41,9 @@ class ReportServiceImpl implements ReportService
 
         $report->update($request->all());
 
-        return response()->json(['success'=> 'Successfully update report']);
+        return response()->json([
+            'success'=> true,
+            'message'=> 'Successfully updated report'
+        ]);
     }
 }
