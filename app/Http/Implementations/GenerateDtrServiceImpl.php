@@ -79,11 +79,11 @@ class GenerateDtrServiceImpl implements GenerateDtrService
         }
 
         $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
-        $fileName = 'iDtr_result - '. $user->firstname. ' ' . $user->lastname .'.xlsx';
+        $fileName = $request->fileName .'.xlsx';
         $filePath = public_path('templates\\' . $fileName);
         $writer->save($filePath);
 
-        
+
         $data = [
             'name' => $user->firstname,
             'email' => $mail->email,

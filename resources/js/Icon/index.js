@@ -10,6 +10,7 @@ import {
     faPenToSquare,
     faGreaterThan,
     faLessThan,
+    faPowerOff,
     faFile
 } from '@fortawesome/free-solid-svg-icons'
 
@@ -23,5 +24,6 @@ library.add(
     faHourglassEnd,
     faGreaterThan,
     faLessThan,
+    faPowerOff,
     faFile
 )

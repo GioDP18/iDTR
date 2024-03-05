@@ -9,6 +9,7 @@
         "axios": "^1.6.7",
         "bourbon": "^7.3.0",
         "laravel-vite-plugin": "^1.0.0",
+        "node-bourbon": "^4.2.8",
         "sass": "^1.70.0",
         "vite": "^5.0.0"
     },
