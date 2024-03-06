@@ -85,7 +85,10 @@ class AuthServiceImpl implements AuthService
         if (! $token = auth()->attempt($redirectLogin->validated())) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
-        return $this->createNewToken($token);
+        return response()->json([
+            'success'=> true,
+            'message'=> 'Successfully Created You may now login'
+        ]);;
     }
 
     /**
