@@ -139,6 +139,16 @@ const user = async () => {
                             </li>
                         </ul>
                     </ul>
+                    <div class="fixed-bottom mb-3" style="width: 250px;"> 
+                        <ul class="nav">
+                            <li class="nav-item">
+                                <RouterLink to="/user/logout" class="nav-link" style="color: #af0000;">
+                                    <i><font-awesome-icon style="height:15px; margin-right: 8px;" :icon="['fas', 'power-off']" /></i>
+                                    <span v-if="showMobileSidebar" style="font-size: 15px;">Logout</span>
+                                </RouterLink>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
             <nav class="navbar navbar-header navbar-expand-lg" v-show="screenWidth > 992" data-background-color="blue2">
@@ -256,6 +266,16 @@ const user = async () => {
                             <p><span v-if="showSidebar">Reports</span></p>
                         </RouterLink>
                     </li>
+                    <div class="fixed-bottom mb-3" style="width: 250px;"> <!-- Apply Bootstrap's fixed-bottom class and add margin -->
+                        <ul class="nav">
+                            <li class="nav-item">
+                                <RouterLink to="/user/logout" class="nav-link" style="color: #af0000;">
+                                    <i><font-awesome-icon style="color: #af0000;" :icon="['fas', 'power-off']" /></i>
+                                    <span>Logout</span>
+                                </RouterLink>
+                            </li>
+                        </ul>
+                    </div>
                 </ul>
             </div>
         </div>
