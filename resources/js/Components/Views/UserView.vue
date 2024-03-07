@@ -1,11 +1,15 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue';
+import axios from 'axios';
+import store from '../../State/index.js';
 
 const timeLogExpanded = ref(false);
 const showSidebar = ref(true);
 const showMobileSidebar = ref(false);
 const activeTime = ref("");
 const screenWidth = ref(window.innerWidth);
+const userID = localStorage.getItem("userID");
+const userObjects = ref([]);
 
 const updateScreenWidth = () => {
     screenWidth.value = window.innerWidth;
@@ -33,6 +37,7 @@ const updateActiveTime = () => {
 };
 
 onMounted(() => {
+    user();
     updateActiveTime();
     setInterval(updateActiveTime, 1000);
     window.addEventListener('resize', updateScreenWidth);
@@ -40,6 +45,22 @@ onMounted(() => {
 onBeforeUnmount(() => {
     window.removeEventListener('resize', updateScreenWidth);
 });
+
+const user = async () => {
+    try {
+    await axios.get(`/api/auth/user/${userID}`)
+    .then((response) => {
+        console.log(response.data);
+        userObjects.value = response.data;
+    })
+    .finally(() => {
+        store.commit('setLoading', false)
+    })
+
+  } catch (error) {
+    console.error('Error during registration:', error);
+  }
+}
 </script>
 
 <template>
@@ -58,12 +79,12 @@ onBeforeUnmount(() => {
                 </button>
                 <div class="collapse navbar-collapse d-sm-none" :class="{ 'show': showMobileSidebar }" id="nav">
                     <ul class="navbar-nav bg-light m-0 ml-lg-auto p-3 p-lg-0">
-                        <div class="info">
+                        <div v-for="user in userObjects" class="info">
                             <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
                                 <span style="display: flex; flex-direction: column; align-items: center;">
                                     <img :src="'../storage/images/profile.jpg'" alt=".." class="avatar-img rounded-circle"
                                         style="width: 20px; height: 20px; margin: 8px;">
-                                    <p class="text-secondary" style="font-size: 15px;">Gio O. Dela Pena</p>
+                                    <p class="text-secondary" style="font-size: 15px;">{{ user.firstname }}</p>
                                     <p class="user-level font-weight-bold text-secondary" style="font-size: 12px;">
                                         Intern</p>
                                 </span>
@@ -182,7 +203,7 @@ onBeforeUnmount(() => {
                 </div>
             </nav>
         </div>
-        <div class="sidebar sidebar-style-2" :class="{ 'minimized': !showSidebar }">
+        <div v-for="user in userObjects" class="sidebar sidebar-style-2" :class="{ 'minimized': !showSidebar }">
             <div class="sidebar-wrapper scrollbar scrollbar-inner"
                 :style="{ overflow: timeLogExpanded ? 'hidden' : 'auto' }">
                 <div class="user" v-show="showSidebar || !showSidebar">
@@ -192,7 +213,7 @@ onBeforeUnmount(() => {
                     <div class="info">
                         <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
                             <span>
-                                <span v-if="showSidebar">Gio O. Dela Pena</span>
+                                <span v-if="showSidebar">{{ user.firstname }}</span>
                                 <span class="user-level">Intern</span>
                             </span>
                         </a>

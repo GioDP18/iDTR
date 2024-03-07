@@ -1,14 +1,96 @@
 <script setup>
-import DataTable from 'datatables.net-vue3';
-import DataTablesCore from 'datatables.net-bs5';
+import 'datatables.net-vue3';
+import 'datatables.net-bs5';
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
+import store from '../../../State/index.js';
+import moment from 'moment';
 
-DataTable.use(DataTablesCore);
 
-const data = [
-    ["January 1, 2001", "12:33 PM", "5:33 PM", "5:33 PM"],
-    ["January 1, 2001", "12:33 PM", "5:33 PM", "5:33 PM"],
-    ["January 1, 2001", "12:33 PM", "5:33 PM", "5:33 PM"],
-];
+const breakObjects = ref([]);
+const userID = localStorage.getItem('userID');
+const break_type = ref('');
+const time_period = ref('');
+const duration = ref('');
+
+onMounted(async () => {
+    await breaks();
+    initializeDataTables();
+});
+
+const breaks = async () => {
+    try {
+        const response = await axios.get(`/api/auth/break/${userID}`)
+        breakObjects.value = response.data.break;
+        
+    } catch (error) {
+        console.error('Error during fetch:', error);
+    }
+}
+
+const HandleCreateBreak = async () => {
+    store.commit('setLoading', true)
+    try {
+        await axios.post('/api/auth/create-break', {
+            userID: userID,
+            break_type: break_type.value,
+            time_period: time_period.value,
+            duration: duration.value,
+        })
+        .then((response) => {
+            console.log(response.data.message);
+            if(response.data.success){
+                swal({
+                    icon: "success",
+                    text: response.data.message,
+                    
+                }).then(() => {
+                    window.location.href = 'timeLogBreak';
+                });
+                
+            }
+            else{
+                swal({
+                    icon: "error",
+                    title: "Oops...",
+                    text: response.data.message,
+                });
+            }
+        })
+        .finally(() => {
+            store.commit('setLoading', false)
+        })
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+const formatTime = (timeString) => {
+  try {
+    const formattedTime = moment(timeString, 'HH:mm:ss').format('hh:mm A');
+    return formattedTime;
+  } catch (error) {
+    console.error(error);
+    return 'Invalid Time';
+  }
+};
+
+const formatDate = (dateString) => {
+  try {
+    const formattedDate = moment(dateString).format('MMM D, YYYY');
+    return formattedDate;
+  } catch (error) {
+    console.error(error);
+    return 'Invalid Date';
+  }
+};
+
+const initializeDataTables = () => {
+    $(document).ready(function () {
+        $('#dailyTimeLog').DataTable();
+    });
+}
+
 
 </script>
 
@@ -35,7 +117,7 @@ const data = [
                 <div class="card bg-light">
                     <div class="card-body">
                         <div class="table-responsive">
-                            <DataTable :data="data" id="dailyTimeLog" class="table table-striped table-hover" width="100%;">
+                            <table id="dailyTimeLog" class="table table-striped table-hover" width="100%;">
                                 <thead>
                                     <tr>
                                         <th>Date</th>
@@ -45,11 +127,14 @@ const data = [
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td class="text-center" colspan="6">No Time Log.</td>
+                                    <tr v-for="time in breakObjects" :key="time.id">
+                                        <th>{{ formatDate(time.date) }}</th>
+                                        <th>{{ formatTime(time.date) }}</th>
+                                        <th>{{ time.time_ended ? formatTime(time.time_ended) : '' }}</th>
+                                        <th>{{ time.duration }}</th>
                                     </tr>
                                 </tbody>
-                            </DataTable>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -59,7 +144,7 @@ const data = [
         <div class="modal fade" id="createBreakTime" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
             aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog">
-                <form action="">
+                <form @submit.prevent="HandleCreateBreak">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h1 class="modal-title fs-5" id="staticBackdropLabel"><i><font-awesome-icon
@@ -69,18 +154,31 @@ const data = [
                         <div class="modal-body">
                             <div class="mb-3">
                                 <label for="reportTitle" class="form-label">Break Type</label>
-                                <input type="text" class="form-control" id="reportTitle" placeholder="Break Type">
+                                <input v-model="break_type" type="text" class="form-control" id="reportTitle" placeholder="Break Type">
                             </div>
-                            <div class="mb-3">
+                            <div class="mb-2">
                                 <label for="gender" class="form-label">Duration</label>
                                 <div class="d-flex align-items-center duration">
                                     <div class="selection mr-3">
-                                        <input id="minutes" name="duration" type="radio" value="00:30:00">
+                                        <input v-model="duration" id="minutes" name="duration" type="radio" value="00:30:00">
                                         <label for="minutes">30 Minutes</label>
                                     </div>
                                     <div class="selection">
-                                        <input id="hour" name="duration" type="radio" value="01:00:00">
+                                        <input v-model="duration" id="hour" name="duration" type="radio" value="01:00:00">
                                         <label for="hour">1 Hour</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="gender" class="form-label">Time Period</label>
+                                <div class="d-flex align-items-center duration">
+                                    <div class="selection mr-3">
+                                        <input v-model="time_period" id="AM" name="time_period" type="radio" value="AM">
+                                        <label for="AM">AM</label>
+                                    </div>
+                                    <div class="selection">
+                                        <input v-model="time_period" id="PM" name="time_period" type="radio" value="PM">
+                                        <label for="PM">PM</label>
                                     </div>
                                 </div>
                             </div>

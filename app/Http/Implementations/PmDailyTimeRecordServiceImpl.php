@@ -22,7 +22,7 @@ class PmDailyTimeRecordServiceImpl implements PmDailyTimeRecordService
     public function timeInPM(Request $request){
 
         $current_time = strtotime(date('H:i:s'));
-        $late_time = strtotime('08:00:00');
+        $late_time = strtotime('13:00:00');
         $users_id = $request->userID;
         $arrival_pm = date('H:i:s');
 
@@ -85,7 +85,7 @@ class PmDailyTimeRecordServiceImpl implements PmDailyTimeRecordService
 
         $checkIfAlreadyLogged = PmDailyTimeRecord::where('date', date('Y-m-d'))->where('users_id', $request->userID)->first();
 
-        if($checkIfAlreadyLogged->count() > 1 || $checkIfAlreadyLogged->departure_pm != NULL){
+        if($checkIfAlreadyLogged->departure_pm != NULL){
             return response()->json([
                 'success' => False,
                 'message' => 'You have already logged this afternoon.'
