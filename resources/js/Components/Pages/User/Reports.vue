@@ -73,8 +73,9 @@ const HandleCreateReport = async () => {
                 swal({
                     icon: "success",
                     text: response.data.message,
+                }).then(() => {
+                    window.location.href = 'reports';
                 });
-                router.push('reports')
             }
             else{
                 swal({
@@ -107,6 +108,8 @@ const HandleUpdateReport = async (reportId, title, content) => {
                 swal({
                     icon: "success",
                     text: response.data.message,
+                }).then(() => {
+                    window.location.href = 'reports';
                 });
             }
             else{
@@ -272,7 +275,7 @@ const truncateText = (text, limit) => {
                     <div class="col-md-12">
                         <div class="card full-height d-flex p-2"
                             style="margin:0; height:auto; flex-direction:row; overflow-x:auto;">
-                            <template v-for="weekIndex in Math.ceil(reportObjects.length / 5)">
+                            <template v-if="reportObjects.length > 0" v-for="weekIndex in Math.ceil(reportObjects.length / 5)">
                                 <div class="weekly-report">
                                     <h5 class="text-center fw-bold mt-2">Week {{ weekIndex }}</h5>
                                     <div v-for="(report, index) in reportObjects.slice((weekIndex - 1) * 5, weekIndex * 5)" :key="report.id" class="card-body" style="margin: -.5rem 0">
@@ -302,6 +305,9 @@ const truncateText = (text, limit) => {
                                         </div>
                                     </div>
                                 </div>
+                            </template>
+                            <template v-else>
+                                <p>no reports yet</p>
                             </template>
                         </div>
                     </div>

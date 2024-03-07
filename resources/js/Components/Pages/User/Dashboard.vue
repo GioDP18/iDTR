@@ -1,9 +1,13 @@
 <script setup>
 import { ref, onMounted } from 'vue';
+import axios from 'axios';
+import store from '../../../State/index.js';
 
 const activeTime = ref("");
 const currentDate = ref("");
 const greeting = ref("");
+const userObjects = ref([]);
+const userID = localStorage.getItem("userID");
 
 const updateDateTime = () => {
     const now = new Date();
@@ -31,9 +35,27 @@ const updateDateTime = () => {
 };
 
 onMounted(() => {
+    user();
     updateDateTime();
     setInterval(updateDateTime, 1000);
 });
+
+const user = async () => {
+    try {
+    await axios.get(`/api/auth/user/${userID}`)
+    .then((response) => {
+        console.log(response.data);
+        userObjects.value = response.data;
+    })
+    .finally(() => {
+        store.commit('setLoading', false)
+    })
+
+  } catch (error) {
+    console.error('Error during registration:', error);
+  }
+}
+ 
 import $ from 'jquery';
 
 $(document).ready(function () {
@@ -455,8 +477,8 @@ $(document).ready(function () {
                                     <div class="header-greeting">
                                         <div class="div-6">
                                             <div class="column-2">
-                                                <div class="div-7">
-                                                    <div class="greeting-text">Good {{ greeting }}, Gio</div>
+                                                <div v-for="user in userObjects" :key="user.id" class="div-7">
+                                                    <div class="greeting-text">Good {{ greeting }}, {{ user.firstname }}</div>
                                                     <div class="date-text">{{ currentDate }}</div>
                                                     <div class="time-text sticky-top">{{ activeTime }}</div>
                                                 </div>

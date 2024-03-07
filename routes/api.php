@@ -7,6 +7,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PmDailyTimeRecordController;
 use App\Http\Controllers\GenerateDtrController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\BreakTimeRecordController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -40,11 +42,19 @@ Route::group([
     Route::post('/time-out-am', [AmDailyTimeRecordController::class, 'timeOutAM']);
     Route::post('/get-time-record-am', [AmDailyTimeRecordController::class, 'fetchTimeAM']);
 
-    // API Endponts for Generating Dtr
+    // API Endpoints for Generating Dtr
     Route::post('/generate', [GenerateDtrController::class, 'generate']);
 
-    // API Endponts for Report
+    // API Endpoints for Report
     Route::post('/get-report', [ReportController::class, 'allReport']);
     Route::post('/create-report', [ReportController::class, 'createReport']);
     Route::post('/update-report', [ReportController::class, 'updateReport']);
+
+    // Api Endpoints for User
+    Route::get('/user/{userID}', [UserController::class, 'user']);
+
+    // Api Endpoints for Break Time
+    Route::get('/break/{userID}', [BreakTimeRecordController::class, 'allBreakTime']);
+    Route::post('/create-break', [BreakTimeRecordController::class, 'addBreakTime']);
+
 });
