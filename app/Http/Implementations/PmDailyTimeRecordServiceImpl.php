@@ -22,7 +22,7 @@ class PmDailyTimeRecordServiceImpl implements PmDailyTimeRecordService
     public function timeInPM(Request $request){
 
         $current_time = strtotime(date('H:i:s'));
-        $late_time = strtotime('08:00:00');
+        $late_time = strtotime('13:00:00');
         $users_id = $request->userID;
         $arrival_pm = date('H:i:s');
 

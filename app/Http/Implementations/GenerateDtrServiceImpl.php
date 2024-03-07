@@ -32,7 +32,7 @@ class GenerateDtrServiceImpl implements GenerateDtrService
         $user = User::find($request->userID)->intern;
         $pm_time = User::find($request->userID)->pm_daily_time_record;
         $am_time = User::find($request->userID)->am_daily_time_record;
-
+        $mail = User::find($request->userID);
         $i = 0;
         $num = 1;
         $startDate = Carbon::parse($request->start_date); // Assuming you have a start_date in your request
@@ -85,8 +85,8 @@ class GenerateDtrServiceImpl implements GenerateDtrService
 
 
         $data = [
-            'name' => "Gio Dela Peña",
-            'email' => "giolagariza@gmail.com"
+            'name' => $user->firstname,
+            'email' => $mail->email,
         ];
         Mail::send(new DTRGenerated($data, $filePath));
 
