@@ -22,5 +22,13 @@ class Intern extends Model
         'gender',
         'birthdate',
         'email',
+        'status',
+        'breatetime_status',
+        'avatar',
+        'target_hours',
+        'completed_hours',
+        'remaining_hours',
+        'total_hours_worked_am',
+        'total_hours_worked_pm',
     ];
 }

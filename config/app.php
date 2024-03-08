@@ -17,7 +17,7 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
-   
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment
@@ -183,9 +183,9 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        'Jwt' => Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
-        'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
+        // 'Jwt' => Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
+        'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
     ])->toArray(),
 
 ];

@@ -22,13 +22,13 @@ class AuthServiceImpl implements AuthService
      * @return createNewToken
      */
     public function login(Request $request){
-        
+
         $request->validate([
             'username' => 'required|exists:users',
             'password' => 'required|string|min:6',
         ]);
-        
-        
+
+
         $token = JWTAuth::attempt([
             "username" => $request->username,
             "password" => $request->password
@@ -79,6 +79,7 @@ class AuthServiceImpl implements AuthService
                     'gender' => $request->gender,
                     'birthdate' => $request->birthdate,
                     'email' => $request->email,
+                    'target_hours' => $request->target_hours,
                 ]);
             }
         }
@@ -131,7 +132,10 @@ class AuthServiceImpl implements AuthService
      */
     public function logout() {
         auth()->logout();
-        return response()->json(['message' => 'User successfully signed out']);
+        return response()->json([
+            'success' => true,
+            'message' => 'User successfully signed out'
+        ]);
     }
 
 

@@ -2,7 +2,9 @@
 import { ref, onMounted, onBeforeUnmount } from 'vue';
 import axios from 'axios';
 import store from '../../State/index.js';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const timeLogExpanded = ref(false);
 const showSidebar = ref(true);
 const showMobileSidebar = ref(false);
@@ -60,6 +62,32 @@ const user = async () => {
   } catch (error) {
     console.error('Error during registration:', error);
   }
+}
+
+const handleLogout = async () => {
+    try{
+        const token = localStorage.getItem('token');
+        const headers = { Authorization: `Bearer ${token}` };
+
+        await axios.post('/api/auth/logout', {}, { headers })
+        .then((response) => {
+            if(response.data.success){
+                localStorage.removeItem('token');
+                localStorage.setItem('valid', false);
+                router.push({ name : 'login' })
+            }
+            else{
+                swal({
+                    icon: "error",
+                    title: "Oops...",
+                    text: response.data.message,
+                });
+            }
+        })
+    }
+    catch (error) {
+        console.error('Error during logout:', error);
+    }
 }
 </script>
 
@@ -139,13 +167,13 @@ const user = async () => {
                             </li>
                         </ul>
                     </ul>
-                    <div class="fixed-bottom mb-3" style="width: 250px;"> 
+                    <div class="fixed-bottom mb-3" style="width: 250px;">
                         <ul class="nav">
                             <li class="nav-item">
-                                <RouterLink to="/user/logout" class="nav-link" style="color: #af0000;">
+                                <button @click="handleLogout" class="nav-link" style="color: #af0000;">
                                     <i><font-awesome-icon style="height:15px; margin-right: 8px;" :icon="['fas', 'power-off']" /></i>
                                     <span v-if="showMobileSidebar" style="font-size: 15px;">Logout</span>
-                                </RouterLink>
+                                </button>
                             </li>
                         </ul>
                     </div>
@@ -269,10 +297,10 @@ const user = async () => {
                     <div class="fixed-bottom mb-3" style="width: 250px;"> <!-- Apply Bootstrap's fixed-bottom class and add margin -->
                         <ul class="nav">
                             <li class="nav-item">
-                                <RouterLink to="/user/logout" class="nav-link" style="color: #af0000;">
+                                <button @click="handleLogout" class="nav-link" style="color: #af0000;">
                                     <i><font-awesome-icon style="color: #af0000;" :icon="['fas', 'power-off']" /></i>
                                     <span>Logout</span>
-                                </RouterLink>
+                                </button>
                             </li>
                         </ul>
                     </div>

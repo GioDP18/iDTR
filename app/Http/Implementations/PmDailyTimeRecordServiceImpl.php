@@ -2,6 +2,7 @@
 
 namespace App\Http\Implementations;
 
+use App\Http\Traits\UpdateTimeRecordTrait;
 use App\Models\PmDailyTimeRecord;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -10,6 +11,8 @@ use App\Models\Intern;
 
 class PmDailyTimeRecordServiceImpl implements PmDailyTimeRecordService
 {
+    use UpdateTimeRecordTrait;
+
     /**
      * Create a new AuthController instance.
      *
@@ -111,13 +114,17 @@ class PmDailyTimeRecordServiceImpl implements PmDailyTimeRecordService
             'departure_pm' => $departure_pm,
             'hours_worked_pm' => $hours_worked_pm
         ]);
-        Intern::where('users_id', $request->userID)->update(['status' => 0]);
+        Intern::where('users_id', $request->userID)->update([
+            'status' => 0,
+            'total_hours_worked_am' => $hours_worked_pm
+        ]);
         if(!$res){
             return response()->json([
                 'success' => False,
                 'message' => 'There was an error while logging your Time Out.'
             ], 200);
         }
+        $this->updateRecord($request->userID);
         return response()->json([
             'success' => True,
             'message' => 'Time Out Recorded Successfully!'

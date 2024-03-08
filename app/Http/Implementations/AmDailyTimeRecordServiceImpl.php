@@ -6,10 +6,12 @@ use App\Models\AmDailyTimeRecord;
 use App\Models\Intern;
 use Illuminate\Http\Request;
 use App\Http\Services\AmDailyTimeRecordService;
-
+use App\Http\Traits\UpdateTimeRecordTrait;
 
 class AmDailyTimeRecordServiceImpl implements AmDailyTimeRecordService
 {
+    use UpdateTimeRecordTrait;
+
     /**
      * Create a new AuthController instance.
      *
@@ -18,6 +20,7 @@ class AmDailyTimeRecordServiceImpl implements AmDailyTimeRecordService
     public function __construct() {
         date_default_timezone_set('Asia/Manila');
     }
+
 
     public function timeInAM(Request $request){
 
@@ -111,13 +114,17 @@ class AmDailyTimeRecordServiceImpl implements AmDailyTimeRecordService
             'departure_am' => $departure_am,
             'hours_worked_am' => $hours_worked_am
         ]);
-        Intern::where('users_id', $request->userID)->update(['status' => 0]);
+        Intern::where('users_id', $request->userID)->update([
+            'status' => 0,
+            'total_hours_worked_am' => $hours_worked_am
+        ]);
         if(!$res){
             return response()->json([
                 'success' => False,
                 'message' => 'There was an error while logging your Time Out.'
             ], 200);
         }
+        $this->updateRecord($request->userID);
         return response()->json([
             'success' => True,
             'message' => 'Time Out Recorded Successfully!'

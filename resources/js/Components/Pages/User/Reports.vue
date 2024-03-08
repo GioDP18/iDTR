@@ -74,7 +74,7 @@ const HandleCreateReport = async () => {
                     icon: "success",
                     text: response.data.message,
                 }).then(() => {
-                    window.location.href = 'reports';
+                    HandleGetReports()
                 });
             }
             else{
@@ -100,7 +100,7 @@ const HandleUpdateReport = async (reportId, title, content) => {
             reportID: reportId,
             title: title,
             content: content
-            
+
         })
         .then((response) => {
             console.log(response.data.message);
@@ -108,9 +108,7 @@ const HandleUpdateReport = async (reportId, title, content) => {
                 swal({
                     icon: "success",
                     text: response.data.message,
-                }).then(() => {
-                    window.location.href = 'reports';
-                });
+                })
             }
             else{
                 swal({
@@ -166,7 +164,7 @@ const truncateText = (text, limit) => {
     if (text.length <= limit) {
         return text;
     } else {
-        return text.slice(0, limit) + '..'; 
+        return text.slice(0, limit) + '..';
     }
 };
 

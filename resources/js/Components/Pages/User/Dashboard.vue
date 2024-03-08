@@ -2,12 +2,40 @@
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import store from '../../../State/index.js';
+import $ from 'jquery';
 
+const completedHours = ref('');
+const remainingHours = ref('');
+// const dashboardData = ref([]);
 const activeTime = ref("");
 const currentDate = ref("");
 const greeting = ref("");
 const userObjects = ref([]);
 const userID = localStorage.getItem("userID");
+
+onMounted(() => {
+    user();
+    updateDateTime();
+    // getDashboard();
+    setInterval(updateDateTime, 1000);
+});
+
+const getDashboard = async () => {
+    try {
+        await axios.get(`/api/auth/dashboard/${userID}`)
+        .then((response) => {
+            // console.log(response.data)
+            // dashboardData.value = response.data;
+            console.log(response.data.info.completed_hours);
+            console.log(response.data.info.remaining_hours);
+            completedHours.value = response.data.completed_hours;
+            remainingHours.value = response.data.remaining_hours;
+        })
+    }
+    catch (error) {
+        console.log(error);
+    }
+}
 
 const updateDateTime = () => {
     const now = new Date();
@@ -34,29 +62,31 @@ const updateDateTime = () => {
     currentDate.value = now.toLocaleDateString(undefined, options);
 };
 
-onMounted(() => {
-    user();
-    updateDateTime();
-    setInterval(updateDateTime, 1000);
-});
-
 const user = async () => {
     try {
-    await axios.get(`/api/auth/user/${userID}`)
-    .then((response) => {
-        console.log(response.data);
-        userObjects.value = response.data;
-    })
-    .finally(() => {
-        store.commit('setLoading', false)
-    })
+        await axios.get(`/api/auth/user/${userID}`)
+        .then((response) => {
+            console.log(response.data);
+            userObjects.value = response.data;
+            completedHours.value = response.data.user.completed_hours;
+            remainingHours.value = response.data.user.remaining_hours;
+        })
+        .finally(() => {
+            store.commit('setLoading', false)
+        })
 
-  } catch (error) {
-    console.error('Error during registration:', error);
-  }
+    } catch (error) {
+        console.error('Error during registration:', error);
+    }
 }
- 
-import $ from 'jquery';
+
+function formatHours(time) {
+    let [hours, minutes, seconds] = time.split(':');
+    hours = parseInt(hours, 10).toString();
+    minutes = parseInt(minutes, 10).toString();
+    seconds = parseInt(seconds, 10).toString();
+    return `${hours}H ${minutes}M ${seconds}S`;
+}
 
 $(document).ready(function () {
     function c(passed_month, passed_year, calNum) {
@@ -501,7 +531,7 @@ $(document).ready(function () {
                                                     </div>
                                                     <div class="div-14">
                                                         <div class="hour-text">Completed Hours</div>
-                                                        <div class="hour-time">6H 45M 13S</div>
+                                                        <div class="hour-time">{{ formatHours(completedHours) }}</div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -513,7 +543,7 @@ $(document).ready(function () {
                                                     </div>
                                                     <div class="div-18">
                                                         <div class="hour-text">Remaining Hours</div>
-                                                        <div class="hour-time">6H 45M 13S</div>
+                                                        <div class="hour-time">{{ formatHours(remainingHours) }}</div>
                                                     </div>
                                                 </div>
                                             </div>

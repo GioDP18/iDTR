@@ -9,7 +9,7 @@ class UserController extends Controller
 {
     public function __construct(public UserService $userService)
     {
-        
+
     }
 
     public function user($userID)
@@ -20,5 +20,10 @@ class UserController extends Controller
     public function updateUser(Request $request)
     {
         return $this->userService->updateUser($request);
+    }
+
+    public function dashboard($id)
+    {
+        return $this->userService->dashboard($id);
     }
 }

@@ -17,26 +17,27 @@ function togglePassword() {
 
 
 const login = async () => {
+    store.commit('setLoading', true)
     try {
-    await axios.post('/api/auth/login', {
-        username: username.value,
-        password: password.value,
-    })
-    .then((response) => {
-        console.log(response);
-        console.log('MY TOKEN: ' + response.data.access_token);
-        localStorage.setItem('token', response.data.access_token);
-        localStorage.setItem('valid', true);
-        localStorage.setItem('userID', response.data.user.id);
-        router.push('/user/dashboard');
-    })
-    .finally(() => {
-        store.commit('setLoading', false)
-    })
+        await axios.post('/api/auth/login', {
+            username: username.value,
+            password: password.value,
+        })
+        .then((response) => {
+            console.log(response);
+            console.log('MY TOKEN: ' + response.data.access_token);
+            localStorage.setItem('token', response.data.access_token);
+            localStorage.setItem('valid', true);
+            localStorage.setItem('userID', response.data.user.id);
+            router.push('/user/dashboard');
+        })
+        .finally(() => {
+            store.commit('setLoading', false)
+        })
 
-  } catch (error) {
-    console.error('Error during registration:', error);
-  }
+    } catch (error) {
+        console.error('Error during registration:', error);
+    }
 }
 </script>
 

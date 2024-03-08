@@ -16,6 +16,7 @@ const middlename = ref('');
 const lastname = ref('');
 const gender = ref('');
 const birthdate = ref('');
+const target_hours = ref(null);
 const username = ref('');
 const email = ref('');
 const password = ref('');
@@ -80,6 +81,7 @@ const handleRegister = async () => {
         gender: gender.value,
         birthdate: birthdate.value,
         username: username.value,
+        target_hours: target_hours.value,
         email: email.value,
         password: password.value,
         password_confirmation: password_confirmation.value,
@@ -170,6 +172,14 @@ const handleRegister = async () => {
                                 </span>
                             </div>
                             <ErrorMessage class="error-message" name="birthdate" />
+                            <div class="input-group flex-nowrap mt-3">
+                                <Field name="target_hours" :rules="validateName" type="text" class="form-control"
+                                    placeholder="HHH:MM:SS" v-model="target_hours"/>
+                                <span class="input-group-text">
+                                    <i class="fa-solid fa-calendar"></i>
+                                </span>
+                            </div>
+                            <ErrorMessage class="error-message" name="target_hours" />
                             <div class="input-group flex-nowrap mt-3">
                                 <Field v-model="email" name="email" :rules="validateEmail" type="email" class="form-control"
                                     placeholder="name@example.com"/>
