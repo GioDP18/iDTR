@@ -112,8 +112,7 @@ const handleLogout = async () => {
                         <div v-for="user in userObjects" class="info">
                             <RouterLink to="updateProfile" aria-expanded="true">
                                 <span style="display: flex; flex-direction: column; align-items: center;">
-                                    <img :src="`../storage/${avatar}`" alt=".."
-                                        class="avatar-img rounded-circle"
+                                    <img :src="`../storage/${avatar}`" alt=".." class="avatar-img rounded-circle"
                                         style="width: 20px; height: 20px; margin: 8px;">
                                     <p class="text-secondary" style="font-size: 15px;">{{ user.firstname }}</p>
                                     <p class="user-level font-weight-bold text-secondary" style="font-size: 12px;">
@@ -260,10 +259,12 @@ const handleLogout = async () => {
                         <!-- Apply Bootstrap's fixed-bottom class and add margin -->
                         <ul class="nav">
                             <li class="nav-item">
-                                <button @click="handleLogout" class="nav-link" style="color: #af0000;">
-                                    <i><font-awesome-icon style="color: #af0000;" :icon="['fas', 'power-off']" /></i>
-                                    <span>Logout</span>
-                                </button>
+                                <RouterLink to="" @click="handleLogout" class="nav-link"
+                                    style="color: #af0000; width: 100%; text-align: start; font-weight: bold;">
+                                    <i><font-awesome-icon style="color: #af0000; margin-right: 15px;"
+                                            :icon="['fas', 'power-off']" /></i>
+                                    <span v-if="showSidebar">Logout</span>
+                                </RouterLink>
                             </li>
                         </ul>
                     </div>

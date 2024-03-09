@@ -23,16 +23,16 @@ onMounted(() => {
 const getProfileInfo = async () => {
     try {
         await axios.get(`/api/auth/profile/${userID}`)
-        .then((response) => {
-            firstname.value = response.data.profile_info.intern.firstname;
-            middlename.value = response.data.profile_info.intern.middlename;
-            lastname.value = response.data.profile_info.intern.lastname;
-            gender.value = response.data.profile_info.intern.gender;
-            birthdate.value = response.data.profile_info.intern.birthdate;
-            email.value = response.data.profile_info.intern.email;
-            avatar.value = "../storage/"+response.data.profile_info.intern.avatar;
-            username.value = response.data.profile_info.username;
-        })
+            .then((response) => {
+                firstname.value = response.data.profile_info.intern.firstname;
+                middlename.value = response.data.profile_info.intern.middlename;
+                lastname.value = response.data.profile_info.intern.lastname;
+                gender.value = response.data.profile_info.intern.gender;
+                birthdate.value = response.data.profile_info.intern.birthdate;
+                email.value = response.data.profile_info.intern.email;
+                avatar.value = "../storage/" + response.data.profile_info.intern.avatar;
+                username.value = response.data.profile_info.username;
+            })
     } catch (error) {
         console.error('Error: ', error);
     }
@@ -141,11 +141,13 @@ const handleChangeAvatar = (event) => {
                             <p>Gender</p>
                             <div class="d-flex align-items-center duration" style="width: 70%; margin-bottom: -25px;">
                                 <div class="selection mr-3">
-                                    <input v-model="gender" id="male" name="male" type="radio" value="male" :selected="gender === 'Male' ? 'selected' : ''">
+                                    <input v-model="gender" id="male" name="male" type="radio" value="male"
+                                        :selected="gender === 'Male' ? 'selected' : ''">
                                     <label for="male">MALE</label>
                                 </div>
                                 <div class="selection">
-                                    <input v-model="gender" id="female" name="female" type="radio" value="female" :selected="gender === 'Female' ? 'selected' : ''">
+                                    <input v-model="gender" id="female" name="female" type="radio" value="female"
+                                        :selected="gender === 'Female' ? 'selected' : ''">
                                     <label for="female">FEMALE</label>
                                 </div>
                             </div>
@@ -216,19 +218,23 @@ const handleChangeAvatar = (event) => {
 }
 
 .image-container img {
-    width: 30%;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-image: url("../../../../../public/images/user.png");
+    background-size: cover;
 }
 
 .image-file {
     display: flex;
     width: 70%;
     align-items: center;
+    gap: 60px
 }
 
 .image-file input {
     border: 1px solid #535353;
-    width: 100%;
-    margin-left: -200px;
+    width: 505px;
     border-radius: 6px;
 }
 
@@ -299,11 +305,13 @@ const handleChangeAvatar = (event) => {
     .image-file {
         display: flex;
         flex-direction: column;
+        gap: 0;
+        margin-left: -70px;
     }
 
     .image-file input {
         width: 100%;
-        margin-left: -150px;
+        margin-left: -10px;
         margin-top: 15px;
     }
 
