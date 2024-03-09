@@ -50,40 +50,40 @@ onBeforeUnmount(() => {
 
 const user = async () => {
     try {
-    await axios.get(`/api/auth/user/${userID}`)
-    .then((response) => {
-        console.log(response.data);
-        userObjects.value = response.data;
-    })
-    .finally(() => {
-        store.commit('setLoading', false)
-    })
+        await axios.get(`/api/auth/user/${userID}`)
+            .then((response) => {
+                console.log(response.data);
+                userObjects.value = response.data;
+            })
+            .finally(() => {
+                store.commit('setLoading', false)
+            })
 
-  } catch (error) {
-    console.error('Error during registration:', error);
-  }
+    } catch (error) {
+        console.error('Error during registration:', error);
+    }
 }
 
 const handleLogout = async () => {
-    try{
+    try {
         const token = localStorage.getItem('token');
         const headers = { Authorization: `Bearer ${token}` };
 
         await axios.post('/api/auth/logout', {}, { headers })
-        .then((response) => {
-            if(response.data.success){
-                localStorage.removeItem('token');
-                localStorage.setItem('valid', false);
-                router.push({ name : 'login' })
-            }
-            else{
-                swal({
-                    icon: "error",
-                    title: "Oops...",
-                    text: response.data.message,
-                });
-            }
-        })
+            .then((response) => {
+                if (response.data.success) {
+                    localStorage.removeItem('token');
+                    localStorage.setItem('valid', false);
+                    router.push({ name: 'login' })
+                }
+                else {
+                    swal({
+                        icon: "error",
+                        title: "Oops...",
+                        text: response.data.message,
+                    });
+                }
+            })
     }
     catch (error) {
         console.error('Error during logout:', error);
@@ -108,15 +108,16 @@ const handleLogout = async () => {
                 <div class="collapse navbar-collapse d-sm-none" :class="{ 'show': showMobileSidebar }" id="nav">
                     <ul class="navbar-nav bg-light m-0 ml-lg-auto p-3 p-lg-0">
                         <div v-for="user in userObjects" class="info">
-                            <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
+                            <RouterLink to="updateProfile" aria-expanded="true">
                                 <span style="display: flex; flex-direction: column; align-items: center;">
-                                    <img :src="'../storage/images/profile.jpg'" alt=".." class="avatar-img rounded-circle"
+                                    <img :src="'../storage/images/profile.jpg'" alt=".."
+                                        class="avatar-img rounded-circle"
                                         style="width: 20px; height: 20px; margin: 8px;">
                                     <p class="text-secondary" style="font-size: 15px;">{{ user.firstname }}</p>
                                     <p class="user-level font-weight-bold text-secondary" style="font-size: 12px;">
                                         Intern</p>
                                 </span>
-                            </a>
+                            </RouterLink>
                         </div>
                         <ul class="nav nav-primary">
                             <li :class="{ 'nav-item': true, 'active': $route.path === '/user/dashboard' }">
@@ -128,10 +129,12 @@ const handleLogout = async () => {
                                 </RouterLink>
                             </li>
                             <li v-show="showMobileSidebar">
-                                <h4 class="text-section" style="font-size: 14px; color: rgb(172, 167, 167);">Monitoring</h4>
+                                <h4 class="text-section" style="font-size: 14px; color: rgb(172, 167, 167);">Monitoring
+                                </h4>
                             </li>
                             <li :class="{ 'nav-item': true, 'active': $route.path.startsWith('/user/timeLog') }">
-                                <a class="text-secondary" href="#" @click="toggleTimeLog" :aria-expanded="timeLogExpanded">
+                                <a class="text-secondary" href="#" @click="toggleTimeLog"
+                                    :aria-expanded="timeLogExpanded">
                                     <i><font-awesome-icon style="height:15px; margin-right: 8px;"
                                             :icon="['fas', 'clock']" /></i>
                                     <span v-if="showMobileSidebar" style="font-size: 15px;">Time Log</span>
@@ -171,7 +174,8 @@ const handleLogout = async () => {
                         <ul class="nav">
                             <li class="nav-item">
                                 <button @click="handleLogout" class="nav-link" style="color: #af0000;">
-                                    <i><font-awesome-icon style="height:15px; margin-right: 8px;" :icon="['fas', 'power-off']" /></i>
+                                    <i><font-awesome-icon style="height:15px; margin-right: 8px;"
+                                            :icon="['fas', 'power-off']" /></i>
                                     <span v-if="showMobileSidebar" style="font-size: 15px;">Logout</span>
                                 </button>
                             </li>
@@ -194,9 +198,11 @@ const handleLogout = async () => {
                             </a>
                         </li>
                         <li class="nav-item dropdown hidden-caret">
-                            <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false">
+                            <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"
+                                aria-expanded="false">
                                 <div class="avatar-sm">
-                                    <img :src="'../storage/images/profile.jpg'" alt="..." class="avatar-img rounded-circle">
+                                    <img :src="'../storage/images/profile.jpg'" alt="..."
+                                        class="avatar-img rounded-circle">
                                 </div>
                             </a>
                             <ul class="dropdown-menu dropdown-user animated fadeIn">
@@ -239,12 +245,12 @@ const handleLogout = async () => {
                         <img :src="'../storage/images/profile.jpg'" alt="..." class="avatar-img rounded-circle">
                     </div>
                     <div class="info">
-                        <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
+                        <RouterLink to="updateProfile" aria-expanded="true">
                             <span>
                                 <span v-if="showSidebar">{{ user.firstname }}</span>
                                 <span class="user-level">Intern</span>
                             </span>
-                        </a>
+                        </RouterLink>
                         <div class="clearfix"></div>
                     </div>
                 </div>
@@ -294,7 +300,8 @@ const handleLogout = async () => {
                             <p><span v-if="showSidebar">Reports</span></p>
                         </RouterLink>
                     </li>
-                    <div class="fixed-bottom mb-3" style="width: 250px;"> <!-- Apply Bootstrap's fixed-bottom class and add margin -->
+                    <div class="fixed-bottom mb-3" style="width: 250px;">
+                        <!-- Apply Bootstrap's fixed-bottom class and add margin -->
                         <ul class="nav">
                             <li class="nav-item">
                                 <button @click="handleLogout" class="nav-link" style="color: #af0000;">
