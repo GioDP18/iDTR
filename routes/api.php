@@ -52,6 +52,8 @@ Route::group([
 
     // Api Endpoints for User
     Route::get('/user/{userID}', [UserController::class, 'user']);
+    Route::get('/profile/{id}', [UserController::class, 'profileInfo']);
+    Route::post('/update-profile', [UserController::class, 'updateProfile']);
 
     // Api Endpoints for Break Time
     Route::get('/break/{userID}', [BreakTimeRecordController::class, 'allBreakTime']);

@@ -37,6 +37,7 @@ const login = async () => {
 
     } catch (error) {
         console.error('Error during registration:', error);
+        store.commit('setLoginError', "Invaid credentials. Please try again.")
     }
 }
 </script>
@@ -66,6 +67,7 @@ const login = async () => {
                         <p>or</p>
                         <div class="line"></div>
                     </div>
+                    <small v-if="store.state.loginError" style="color:red"><i class="fa-solid fa-circle-exclamation"></i> Invalid Credentials. Please try again.</small>
                     <div class="input-container">
                         <Field type="text" name="username" v-model="username" :rules="requiredUsername" placeholder="Enter Username" />
                         <span>

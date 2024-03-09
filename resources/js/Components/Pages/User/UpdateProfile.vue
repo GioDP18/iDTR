@@ -53,30 +53,30 @@ const updateProfile = async () => {
             username: username.value,
             current_password: current_password.value,
             new_password: new_password.value
-        }, {
+        },{
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
         })
-            .then((response) => {
-                if (response.data.success) {
-                    swal({
-                        icon: "success",
-                        text: response.data.message,
-                    });
-                    current_password.value = '';
-                    new_password.value = '';
-                }
-                else {
-                    swal({
-                        icon: "error",
-                        text: response.data.message,
-                    });
-                }
-            })
-            .finally(() => {
-                store.commit('setLoading', false)
-            })
+        .then((response) => {
+            if(response.data.success){
+                swal({
+                    icon: "success",
+                    text: response.data.message,
+                });
+                current_password.value = '';
+                new_password.value = '';
+            }
+            else{
+                swal({
+                    icon: "error",
+                    text: response.data.message,
+                });
+            }
+        })
+        .finally(() => {
+            store.commit('setLoading', false)
+        })
     } catch (error) {
         console.error('Error: ', error);
     }
