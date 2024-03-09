@@ -203,11 +203,11 @@
 
     .text-content {
         position: absolute;
-        width: 30%
+        width: 30%;
     }
 
     .login-form {
-        max-width: 50%;
+        max-width: 10%;
         width: 100%;
     }
 
@@ -220,6 +220,10 @@
         width: 100%;
         justify-content: end;
         box-shadow: 4px #000;
+    }
+
+    .form {
+        width: 100%;
     }
 
     .form>.input-container>input {
@@ -315,32 +319,32 @@
 }
 
 .duration .selection {
-  margin-bottom: 1em;
-  text-align: center;
+    margin-bottom: 1em;
+    text-align: center;
 }
 
 .duration .selection label {
-  display: inline-block;
-  width:8em;
-  border-radius: 6px;
-  padding: 0.5em;
-  cursor: pointer;
-  border: 1px solid #1571e8ad;
-  color: #000000 !important;
+    display: inline-block;
+    width: 8em;
+    border-radius: 6px;
+    padding: 0.5em;
+    cursor: pointer;
+    border: 1px solid #1571e8ad;
+    color: #000000 !important;
 }
 
 .duration .selection label:hover {
-  background-color: #1571e8ad;
+    background-color: #1571e8ad;
 }
 
 .duration .selection input[type=radio] {
-  display: none;
+    display: none;
 }
 
-.duration .selection input[type=radio]:checked ~ label {
-  background-color: #1571e8ad;
-  color: #ffffff !important;
-  font-weight: 500;
+.duration .selection input[type=radio]:checked~label {
+    background-color: #1571e8ad;
+    color: #ffffff !important;
+    font-weight: 500;
 }
 
 .create-report-btn {
@@ -409,7 +413,8 @@
 }
 
 .card.indgo.pointer {
-    position: relative; /* Set parent container to relative positioning */
+    position: relative;
+    /* Set parent container to relative positioning */
     box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
 }
 
@@ -660,13 +665,13 @@
     padding-bottom: 50px;
     width: 80%;
     max-width: 978px;
-  }
+}
 
-  h1 {
+h1 {
     font-size: 40px;
-  }
+}
 
-  #loader-wrapper {
+#loader-wrapper {
     position: fixed;
     top: 0;
     left: 0;
@@ -674,13 +679,13 @@
     height: 100%;
     z-index: 10;
     overflow: hidden;
-  }
+}
 
-  #loader-wrapper .no-js {
+#loader-wrapper .no-js {
     display: none;
-  }
+}
 
-  #loader {
+#loader {
     display: block;
     position: relative;
     left: 50%;
@@ -693,9 +698,9 @@
     border-top-color: #16a085;
     animation: spin 1.7s linear infinite;
     z-index: 11;
-  }
+}
 
-  #loader:before {
+#loader:before {
     content: "";
     position: absolute;
     top: 5px;
@@ -706,9 +711,9 @@
     border: 3px solid transparent;
     border-top-color: #e74c3c;
     animation: spin-reverse .6s linear infinite;
-  }
+}
 
-  #loader:after {
+#loader:after {
     content: "";
     position: absolute;
     top: 15px;
@@ -719,62 +724,62 @@
     border: 3px solid transparent;
     border-top-color: #f9c922;
     animation: spin 1s linear infinite;
-  }
+}
 
-  @keyframes spin {
+@keyframes spin {
     0% {
-      transform: rotate(0deg);
+        transform: rotate(0deg);
     }
 
     100% {
-      transform: rotate(360deg);
+        transform: rotate(360deg);
     }
-  }
+}
 
-  @keyframes spin-reverse {
+@keyframes spin-reverse {
     0% {
-      transform: rotate(0deg);
+        transform: rotate(0deg);
     }
 
     100% {
-      transform: rotate(-360deg);
+        transform: rotate(-360deg);
     }
-  }
+}
 
-  #loader-wrapper .loader-section {
+#loader-wrapper .loader-section {
     position: fixed;
     top: 0;
     width: 51%;
     height: 100%;
     background: transparent;
     z-index: 10;
-  }
+}
 
-  #loader-wrapper .loader-section.section-left {
+#loader-wrapper .loader-section.section-left {
     left: 0;
-  }
+}
 
-  #loader-wrapper .loader-section.section-right {
+#loader-wrapper .loader-section.section-right {
     right: 0;
-  }
+}
 
-  .loaded #loader-wrapper .loader-section.section-left {
+.loaded #loader-wrapper .loader-section.section-left {
     transform: translateX(-100%);
     transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1.000);
-  }
+}
 
-  .loaded #loader-wrapper .loader-section.section-right {
+.loaded #loader-wrapper .loader-section.section-right {
     transform: translateX(100%);
     transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1.000);
-  }
+}
 
-  .loaded #loader {
+.loaded #loader {
     opacity: 0;
     transition: all 0.3s ease-out;
-  }
+}
 
-  .loaded #loader-wrapper {
+.loaded #loader-wrapper {
     visibility: hidden;
     transform: translateY(-100%);
     transition: all 0.3s 1s ease-out;
-  }
+}
