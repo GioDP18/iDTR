@@ -7,11 +7,12 @@ use App\Models\PmDailyTimeRecord;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Http\Services\PmDailyTimeRecordService;
+use App\Http\Traits\AuditLogTrait;
 use App\Models\Intern;
 
 class PmDailyTimeRecordServiceImpl implements PmDailyTimeRecordService
 {
-    use UpdateTimeRecordTrait;
+    use UpdateTimeRecordTrait, AuditLogTrait;
 
     /**
      * Create a new AuthController instance.
@@ -70,6 +71,7 @@ class PmDailyTimeRecordServiceImpl implements PmDailyTimeRecordService
                 'success' => False
             ], 200);
         }
+        $this->auditLog($checkStatus->id, 'Time In');
         return response()->json([
             'success' => True,
             'message' => 'Time In Recorded Successfully!'
@@ -125,6 +127,7 @@ class PmDailyTimeRecordServiceImpl implements PmDailyTimeRecordService
             ], 200);
         }
         $this->updateRecord($request->userID);
+        $this->auditLog($checkStatus->id, 'Time Out');
         return response()->json([
             'success' => True,
             'message' => 'Time Out Recorded Successfully!'

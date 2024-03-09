@@ -23,11 +23,11 @@ return new class extends Migration
             $table->integer('status')->default(0);
             $table->integer('breatetime_status')->default(0);
             $table->string('avatar')->nullable();
-            $table->time('target_hours');
-            $table->time('completed_hours')->nullable();
-            $table->time('remaining_hours')->nullable();
-            $table->time('total_hours_worked_am')->nullable();
-            $table->time('total_hours_worked_pm')->nullable();
+            $table->time('target_hours')->default('00:00:00');
+            $table->time('completed_hours')->default('00:00:00');
+            $table->time('remaining_hours')->default('00:00:00');
+            $table->time('total_hours_worked_am')->default('00:00:00');
+            $table->time('total_hours_worked_pm')->default('00:00:00');
             $table->timestamps();
         });
     }

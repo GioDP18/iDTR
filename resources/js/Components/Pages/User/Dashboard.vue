@@ -3,39 +3,24 @@ import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import store from '../../../State/index.js';
 import $ from 'jquery';
+import moment from 'moment';
 
+const status = ref(null);
 const completedHours = ref('');
 const remainingHours = ref('');
-// const dashboardData = ref([]);
 const activeTime = ref("");
 const currentDate = ref("");
 const greeting = ref("");
 const userObjects = ref([]);
+const activities = ref([]);
 const userID = localStorage.getItem("userID");
 
 onMounted(() => {
     user();
     updateDateTime();
-    // getDashboard();
+    getActivityLog();
     setInterval(updateDateTime, 1000);
 });
-
-const getDashboard = async () => {
-    try {
-        await axios.get(`/api/auth/dashboard/${userID}`)
-        .then((response) => {
-            // console.log(response.data)
-            // dashboardData.value = response.data;
-            console.log(response.data.info.completed_hours);
-            console.log(response.data.info.remaining_hours);
-            completedHours.value = response.data.completed_hours;
-            remainingHours.value = response.data.remaining_hours;
-        })
-    }
-    catch (error) {
-        console.log(error);
-    }
-}
 
 const updateDateTime = () => {
     const now = new Date();
@@ -45,7 +30,7 @@ const updateDateTime = () => {
     const meridiem = hours >= 12 ? "PM" : "AM";
     hours = hours % 12 || 12;
     activeTime.value = `${hours}:${minutes} ${meridiem}`;
-    console.log(hours + meridiem);
+    // console.log(hours + meridiem);
 
 
     if (meridiem == "AM" && hours >= 1 && hours <= 12) {
@@ -68,6 +53,7 @@ const user = async () => {
         .then((response) => {
             console.log(response.data);
             userObjects.value = response.data;
+            status.value = response.data.user.status;
             completedHours.value = response.data.user.completed_hours;
             remainingHours.value = response.data.user.remaining_hours;
         })
@@ -80,6 +66,19 @@ const user = async () => {
     }
 }
 
+const getActivityLog = async () => {
+    try {
+        await axios.get(`/api/auth/activity-log`)
+        .then((response) => {
+            console.log(response.data.log);
+            activities.value = response.data.log;
+            console.log(activities.value);
+        })
+    } catch (error) {
+        console.error('Error during registration:', error);
+    }
+}
+
 function formatHours(time) {
     let [hours, minutes, seconds] = time.split(':');
     hours = parseInt(hours, 10).toString();
@@ -87,6 +86,26 @@ function formatHours(time) {
     seconds = parseInt(seconds, 10).toString();
     return `${hours}H ${minutes}M ${seconds}S`;
 }
+
+const formatTime = (timeString) => {
+  try {
+    const formattedTime = moment(timeString, 'HH:mm:ss').format('hh:mm A');
+    return formattedTime;
+  } catch (error) {
+    console.error(error);
+    return 'Invalid Time';
+  }
+};
+
+const formatDate = (dateString) => {
+  try {
+    const formattedDate = moment(dateString).format('MMM D, YYYY');
+    return formattedDate;
+  } catch (error) {
+    console.error(error);
+    return 'Invalid Date';
+  }
+};
 
 $(document).ready(function () {
     function c(passed_month, passed_year, calNum) {
@@ -579,75 +598,22 @@ $(document).ready(function () {
                             <div class="activity-card">
                                 <div class="div-74">
                                     <div class="d-flex" style="align-items:center; margin-left:4.5rem;">
-                                        <!-- <p style="width:2rem; height:1rem; background-color:#ef2121;"></p> -->
-                                        <p style="width:2rem; height:1rem; background-color:#00ba00;"></p>
+                                        <p :style="{ width:'2rem', height:'1rem', backgroundColor:status == 1 ? '#00ba00' : '#ef2121' }"></p>
                                     </div>
                                 </div>
                             </div>
                             <div class="activity-card">
                                 <div class="div-74">
-                                    <div class="tl-item active">
+                                    <div class="tl-item active" v-for="activity in activities">
                                         <div class="tl-dot b-warning"></div>
                                         <div class="tl-content">
-                                            <div class="" style="font-size: 15px;">Time in - <span
-                                                    style="font-weight: bold; color: rgb(90, 88, 88);">Gio O. Dela
-                                                    Pena</span>
+                                            <div class="" style="font-size: 15px;">{{ activity.activity }} - <span
+                                                    style="font-weight: bold; color: rgb(90, 88, 88);">
+                                                    {{ activity.interns.firstname }} {{ activity.interns.middlename }} {{ activity.interns.lastname }}</span>
                                             </div>
                                             <div class="tl-date text-muted mt-1">
-                                                <span>02/05/23</span>
-                                                <span>10:00 am</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="tl-item">
-                                        <div class="tl-dot b-primary"></div>
-                                        <div class="tl-content">
-                                            <div class="" style="font-size: 15px;">Time out - <span
-                                                    style="font-weight: bold; color: rgb(90, 88, 88);">Gio O. Dela
-                                                    Pena</span>
-                                            </div>
-                                            <div class="tl-date text-muted mt-1">
-                                                <span>02/05/23</span>
-                                                <span>10:00 am</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="tl-item">
-                                        <div class="tl-dot b-danger"></div>
-                                        <div class="tl-content">
-                                            <div class="" style="font-size: 15px;">Time out - <span
-                                                    style="font-weight: bold; color: rgb(90, 88, 88);">Christian Kit V.
-                                                    Rotairo</span>
-                                            </div>
-                                            <div class="tl-date text-muted mt-1">
-                                                <span>02/05/23</span>
-                                                <span>10:00 am</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="tl-item">
-                                        <div class="tl-dot b-warning"></div>
-                                        <div class="tl-content">
-                                            <div class="" style="font-size: 15px;">Time out - <span
-                                                    style="font-weight: bold; color: rgb(90, 88, 88);">Christian Kit V.
-                                                    Rotairo</span>
-                                            </div>
-                                            <div class="tl-date text-muted mt-1">
-                                                <span>02/05/23</span>
-                                                <span>10:00 am</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="tl-item">
-                                        <div class="tl-dot b-danger"></div>
-                                        <div class="tl-content">
-                                            <div class="" style="font-size: 15px;">Time out - <span
-                                                    style="font-weight: bold; color: rgb(90, 88, 88);">Jhon Vincent
-                                                    Ramada</span>
-                                            </div>
-                                            <div class="tl-date text-muted mt-1">
-                                                <span>02/05/23</span>
-                                                <span>10:00 am</span>
+                                                <span>{{ formatTime(activity.created_at) }} | </span>
+                                                <span>{{ formatDate(activity.created_at) }}</span>
                                             </div>
                                         </div>
                                     </div>

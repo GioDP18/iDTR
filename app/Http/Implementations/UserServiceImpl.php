@@ -5,6 +5,7 @@ namespace App\Http\Implementations;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Http\Services\UserService;
+use App\Models\AuditLog;
 use App\Models\Intern;
 use Mockery\Generator\StringManipulation\Pass\Pass;
 
@@ -37,6 +38,15 @@ class UserServiceImpl implements UserService
 
         return response()->json([
             'info' => $info
+        ]);
+    }
+
+    public function activityLog()
+    {
+        $log = AuditLog::with('interns')->get();
+
+        return response()->json([
+            'log' => $log
         ]);
     }
 }

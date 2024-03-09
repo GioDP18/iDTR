@@ -6,11 +6,12 @@ use App\Models\AmDailyTimeRecord;
 use App\Models\Intern;
 use Illuminate\Http\Request;
 use App\Http\Services\AmDailyTimeRecordService;
+use App\Http\Traits\AuditLogTrait;
 use App\Http\Traits\UpdateTimeRecordTrait;
 
 class AmDailyTimeRecordServiceImpl implements AmDailyTimeRecordService
 {
-    use UpdateTimeRecordTrait;
+    use UpdateTimeRecordTrait, AuditLogTrait;
 
     /**
      * Create a new AuthController instance.
@@ -70,6 +71,7 @@ class AmDailyTimeRecordServiceImpl implements AmDailyTimeRecordService
                 'success' => False
             ], 200);
         }
+        $this->auditLog($checkStatus->id, 'Time In');
         return response()->json([
             'success' => True,
             'message' => 'Time In Recorded Successfully!'
@@ -125,6 +127,7 @@ class AmDailyTimeRecordServiceImpl implements AmDailyTimeRecordService
             ], 200);
         }
         $this->updateRecord($request->userID);
+        $this->auditLog($checkStatus->id, 'Time Out');
         return response()->json([
             'success' => True,
             'message' => 'Time Out Recorded Successfully!'

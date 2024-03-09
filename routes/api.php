@@ -59,5 +59,6 @@ Route::group([
 
     // Api for dashboard
     Route::get('/dashboard/{id}', [UserController::class, 'dashboard']);
+    Route::get('/activity-log', [UserController::class, 'activityLog']);
 
 });

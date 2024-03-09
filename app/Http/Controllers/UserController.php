@@ -26,4 +26,9 @@ class UserController extends Controller
     {
         return $this->userService->dashboard($id);
     }
+
+    public function activityLog()
+    {
+        return $this->userService->activityLog();
+    }
 }

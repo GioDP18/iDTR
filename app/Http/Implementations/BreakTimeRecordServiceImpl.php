@@ -2,6 +2,7 @@
 
 namespace App\Http\Implementations;
 
+use App\Http\Traits\AuditLogTrait;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\BreakTimeRecord;
@@ -12,6 +13,8 @@ use DateInterval;
 
 class BreakTimeRecordServiceImpl implements BreakTimeRecordService
 {
+    use AuditLogTrait;
+
     public function __construct(){
         date_default_timezone_set('Asia/Manila');
     }
@@ -24,7 +27,7 @@ class BreakTimeRecordServiceImpl implements BreakTimeRecordService
             'break' => $break,
         ]);
     }
-    
+
     public function addBreakTime(Request $request)
     {
         $current_time = new DateTime();
@@ -60,7 +63,7 @@ class BreakTimeRecordServiceImpl implements BreakTimeRecordService
                 'message' => 'You have already had a break this Afternoon.'
             ], 200);
         }
-        
+
         BreakTimeRecord::create([
             'users_id' => $request->userID,
             'break_type' => $request->break_type,
@@ -70,6 +73,7 @@ class BreakTimeRecordServiceImpl implements BreakTimeRecordService
             'duration' => $request->duration,
             'date' => date('Y-m-d')
         ]);
+        // $this->auditLog($request->userID, $request->break_type);
         return response()->json([
             'success' => True,
             'message' => 'Break Time Recorded Successfully!'

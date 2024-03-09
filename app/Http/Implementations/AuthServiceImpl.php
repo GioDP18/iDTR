@@ -80,6 +80,8 @@ class AuthServiceImpl implements AuthService
                     'birthdate' => $request->birthdate,
                     'email' => $request->email,
                     'target_hours' => $request->target_hours,
+                    'remaining_hours' => $request->target_hours,
+                    'completed_hours' => '00:00:00'
                 ]);
             }
         }

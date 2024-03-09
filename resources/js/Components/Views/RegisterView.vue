@@ -73,43 +73,44 @@ function validateConfirmPassword(value) {
 }
 
 const handleRegister = async () => {
+    store.commit('setLoading', true)
     try {
-    await axios.post('/api/auth/register', {
-        firstname: firstname.value,
-        middlename: middlename.value,
-        lastname: lastname.value,
-        gender: gender.value,
-        birthdate: birthdate.value,
-        username: username.value,
-        target_hours: target_hours.value,
-        email: email.value,
-        password: password.value,
-        password_confirmation: password_confirmation.value,
+        await axios.post('/api/auth/register', {
+            firstname: firstname.value,
+            middlename: middlename.value,
+            lastname: lastname.value,
+            gender: gender.value,
+            birthdate: birthdate.value,
+            username: username.value,
+            target_hours: target_hours.value,
+            email: email.value,
+            password: password.value,
+            password_confirmation: password_confirmation.value,
 
-    })
-    .then((response) => {
-        if(response.data.success){
-                swal({
-                    icon: "success",
-                    text: response.data.message,
-                });
-                router.push('/')
-            }
-            else{
-                swal({
-                    icon: "error",
-                    title: "Oops...",
-                    text: response.data.message,
-                });
-            }
-    })
-    .finally(() => {
-        store.commit('setLoading', false)
-    })
+        })
+        .then((response) => {
+            if(response.data.success){
+                    swal({
+                        icon: "success",
+                        text: response.data.message,
+                    });
+                    router.push('/')
+                }
+                else{
+                    swal({
+                        icon: "error",
+                        title: "Oops...",
+                        text: response.data.message,
+                    });
+                }
+        })
+        .finally(() => {
+            store.commit('setLoading', false)
+        })
 
-  } catch (error) {
-    console.error('Error during registration:', error);
-  }
+    } catch (error) {
+        console.error('Error during registration:', error);
+    }
 }
 </script>
 <template>

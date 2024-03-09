@@ -20,8 +20,8 @@ trait UpdateTimeRecordTrait {
         $update = Intern::where('users_id', $id)->update([
             'completed_hours' => $completed_hours,
             'remaining_hours' => $remaining_hours,
-            'total_hours_worked_am' => NULL,
-            'total_hours_worked_pm' => NULL,
+            'total_hours_worked_am' => '00:00:00',
+            'total_hours_worked_pm' => '00:00:00',
         ]);
 
         return $update ? true : false;

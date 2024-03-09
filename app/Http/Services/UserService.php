@@ -13,4 +13,6 @@ interface UserService {
     public function updateUser(Request $request);
 
     public function dashboard($id);
+
+    public function activityLog();
 }

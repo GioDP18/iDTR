@@ -31,4 +31,8 @@ class Intern extends Model
         'total_hours_worked_am',
         'total_hours_worked_pm',
     ];
+
+    public function logs(){
+        return $this->hasMany(AuditLog::class);
+    }
 }
