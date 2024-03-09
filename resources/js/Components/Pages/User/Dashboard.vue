@@ -15,6 +15,7 @@ const userObjects = ref([]);
 const activities = ref([]);
 const userID = localStorage.getItem("userID");
 
+
 onMounted(() => {
     user();
     updateDateTime();
@@ -51,18 +52,14 @@ const user = async () => {
     try {
         await axios.get(`/api/auth/user/${userID}`)
         .then((response) => {
-            console.log(response.data);
+            // console.log(response.data);
             userObjects.value = response.data;
             status.value = response.data.user.status;
             completedHours.value = response.data.user.completed_hours;
             remainingHours.value = response.data.user.remaining_hours;
         })
-        .finally(() => {
-            store.commit('setLoading', false)
-        })
-
     } catch (error) {
-        console.error('Error during registration:', error);
+        console.error('Error: ', error);
     }
 }
 

@@ -10,7 +10,9 @@ interface UserService {
 
     public function user($userID);
 
-    public function updateUser(Request $request);
+    public function profileInfo($userID);
+
+    public function updateProfile(Request $request);
 
     public function dashboard($id);
 

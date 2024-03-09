@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('email');
             $table->integer('status')->default(0);
             $table->integer('break_time_status')->default(0);
-            $table->string('avatar')->nullable();
+            $table->string('avatar')->nullable();   
             $table->time('target_hours')->default('00:00:00');
             $table->time('completed_hours')->default('00:00:00');
             $table->time('remaining_hours')->default('00:00:00');
