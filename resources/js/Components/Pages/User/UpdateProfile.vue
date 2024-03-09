@@ -2,6 +2,18 @@
 import { ref, onMounted } from 'vue';
 
 const gender = ref('');
+const selectedImage = ref(null);
+
+const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = () => {
+            selectedImage.value = reader.result;
+        };
+        reader.readAsDataURL(file);
+    };
+};
 </script>
 
 <template>
@@ -16,9 +28,9 @@ const gender = ref('');
                         <p>Avatar</p>
                         <div class="image-file">
                             <div class="image-container">
-                                <img src="../../../../../public/images/user.png" alt="">
+                                <img :src="selectedImage" alt="">
                             </div>
-                            <input type="file">
+                            <input type="file" @change="handleFileChange">
                         </div>
                     </div>
                     <hr>
@@ -119,8 +131,15 @@ const gender = ref('');
     font-weight: bold;
 }
 
+.image-container {
+    width: 18%;
+    margin-right: 70px;
+}
+
 .image-container img {
-    width: 30%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 .image-file {
@@ -131,8 +150,7 @@ const gender = ref('');
 
 .image-file input {
     border: 1px solid #535353;
-    width: 100%;
-    margin-left: -200px;
+    width: 65%;
     border-radius: 6px;
 }
 
@@ -200,6 +218,14 @@ const gender = ref('');
         width: 80%;
     }
 
+    .avatar-container {
+        gap: 0;
+    }
+
+    .image-container {
+        width: 30%;
+    }
+
     .image-file {
         display: flex;
         flex-direction: column;
@@ -207,7 +233,7 @@ const gender = ref('');
 
     .image-file input {
         width: 100%;
-        margin-left: -150px;
+        margin-left: -50px;
         margin-top: 15px;
     }
 
