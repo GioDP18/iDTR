@@ -17,9 +17,14 @@ class UserController extends Controller
         return $this->userService->user($userID);
     }
 
-    public function updateUser(Request $request)
+    public function profileInfo($userID)
     {
-        return $this->userService->updateUser($request);
+        return $this->userService->profileInfo($userID);
+    }
+
+    public function updateProfile(Request $request)
+    {
+        return $this->userService->updateProfile($request);
     }
 
     public function dashboard($id)
