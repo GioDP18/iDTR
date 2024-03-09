@@ -5,6 +5,7 @@ import store from '../../State/index.js';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
+const avatar = ref('');
 const timeLogExpanded = ref(false);
 const showSidebar = ref(true);
 const showMobileSidebar = ref(false);
@@ -54,6 +55,7 @@ const user = async () => {
             .then((response) => {
                 console.log(response.data);
                 userObjects.value = response.data;
+                avatar.value = response.data.user.avatar;
             })
             .finally(() => {
                 store.commit('setLoading', false)
@@ -110,8 +112,7 @@ const handleLogout = async () => {
                         <div v-for="user in userObjects" class="info">
                             <RouterLink to="updateProfile" aria-expanded="true">
                                 <span style="display: flex; flex-direction: column; align-items: center;">
-                                    <img :src="'../storage/images/profile.jpg'" alt=".."
-                                        class="avatar-img rounded-circle"
+                                    <img :src="`../storage/${avatar}`" alt=".." class="avatar-img rounded-circle"
                                         style="width: 20px; height: 20px; margin: 8px;">
                                     <p class="text-secondary" style="font-size: 15px;">{{ user.firstname }}</p>
                                     <p class="user-level font-weight-bold text-secondary" style="font-size: 12px;">
@@ -189,52 +190,6 @@ const handleLogout = async () => {
                         <i><font-awesome-icon :icon="['fas', 'bars']" /></i>
                     </button>
                 </div>
-                <div class="container-fluid">
-                    <ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
-                        <li class="nav-item toggle-nav-search hidden-caret">
-                            <a class="nav-link" data-toggle="collapse" href="#search-nav" role="button"
-                                aria-expanded="false" aria-controls="search-nav">
-                                <i class="fa fa-search"></i>
-                            </a>
-                        </li>
-                        <li class="nav-item dropdown hidden-caret">
-                            <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"
-                                aria-expanded="false">
-                                <div class="avatar-sm">
-                                    <img :src="'../storage/images/profile.jpg'" alt="..."
-                                        class="avatar-img rounded-circle">
-                                </div>
-                            </a>
-                            <ul class="dropdown-menu dropdown-user animated fadeIn">
-                                <div class="dropdown-user-scroll scrollbar-outer">
-                                    <li>
-                                        <div class="user-box">
-                                            <div class="avatar-lg"><img :src="'../storage/images/profile.jpg'"
-                                                    alt="image profile" class="avatar-img rounded"></div>
-                                            <div class="u-text">
-                                                <h4>
-                                                    <span v-if="showSidebar">Gio O. Dela Pena</span>
-                                                </h4>
-                                                <p class="text-muted">
-                                                    <span v-if="showSidebar">giolagariza@gmail.com</span>
-                                                </p><a href="profile.html" class="btn btn-xs btn-secondary btn-sm">View
-                                                    Profile</a>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#">Account Setting</a>
-                                        <div class="dropdown-divider"></div>
-                                        <form action="../backend/authentication.php" method="POST">
-                                            <button type="submit" name="logout" class="dropdown-item">Logout</button>
-                                        </form>
-                                    </li>
-                                </div>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
             </nav>
         </div>
         <div v-for="user in userObjects" class="sidebar sidebar-style-2" :class="{ 'minimized': !showSidebar }">
@@ -242,7 +197,7 @@ const handleLogout = async () => {
                 :style="{ overflow: timeLogExpanded ? 'hidden' : 'auto' }">
                 <div class="user" v-show="showSidebar || !showSidebar">
                     <div class="avatar-sm float-left mr-2">
-                        <img :src="'../storage/images/profile.jpg'" alt="..." class="avatar-img rounded-circle">
+                        <img :src="`../storage/${avatar}`" alt="..." class="avatar-img rounded-circle">
                     </div>
                     <div class="info">
                         <RouterLink to="updateProfile" aria-expanded="true">
@@ -304,10 +259,12 @@ const handleLogout = async () => {
                         <!-- Apply Bootstrap's fixed-bottom class and add margin -->
                         <ul class="nav">
                             <li class="nav-item">
-                                <button @click="handleLogout" class="nav-link" style="color: #af0000;">
-                                    <i><font-awesome-icon style="color: #af0000;" :icon="['fas', 'power-off']" /></i>
-                                    <span>Logout</span>
-                                </button>
+                                <RouterLink to="" @click="handleLogout" class="nav-link"
+                                    style="color: #af0000; width: 100%; text-align: start; font-weight: bold;">
+                                    <i><font-awesome-icon style="color: #af0000; margin-right: 15px;"
+                                            :icon="['fas', 'power-off']" /></i>
+                                    <span v-if="showSidebar">Logout</span>
+                                </RouterLink>
                             </li>
                         </ul>
                     </div>
