@@ -1,19 +1,103 @@
 <script setup>
+import axios from "axios";
+import store from '../../../State/index.js';
 import { ref, onMounted } from 'vue';
 
+const userID = localStorage.getItem('userID');
+const firstname = ref('');
+const middlename = ref('');
+const lastname = ref('');
 const gender = ref('');
-const selectedImage = ref(null);
+const birthdate = ref('');
+const email = ref('');
+const avatar = ref('');
+const new_avatar = ref(null);
+const username = ref('');
+const current_password = ref('');
+const new_password = ref('');
 
-const handleFileChange = (event) => {
+onMounted(() => {
+    getProfileInfo();
+});
+
+const getProfileInfo = async () => {
+    try {
+        await axios.get(`/api/auth/profile/${userID}`)
+            .then((response) => {
+                firstname.value = response.data.profile_info.intern.firstname;
+                middlename.value = response.data.profile_info.intern.middlename;
+                lastname.value = response.data.profile_info.intern.lastname;
+                gender.value = response.data.profile_info.intern.gender;
+                birthdate.value = response.data.profile_info.intern.birthdate;
+                email.value = response.data.profile_info.intern.email;
+                avatar.value = "../storage/" + response.data.profile_info.intern.avatar;
+                username.value = response.data.profile_info.username;
+            })
+    } catch (error) {
+        console.error('Error: ', error);
+    }
+}
+
+const updateProfile = async () => {
+    store.commit('setLoading', true)
+    try {
+        await axios.post(`/api/auth/update-profile`, {
+            id: userID,
+            firstname: firstname.value,
+            middlename: middlename.value,
+            lastname: lastname.value,
+            gender: gender.value,
+            birthdate: birthdate.value,
+            email: email.value,
+            avatar: new_avatar.value,
+            username: username.value,
+            current_password: current_password.value,
+            new_password: new_password.value
+        }, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+            .then((response) => {
+                if (response.data.success) {
+                    swal({
+                        icon: "success",
+                        text: response.data.message,
+                    });
+                    current_password.value = '';
+                    new_password.value = '';
+                }
+                else {
+                    swal({
+                        icon: "error",
+                        text: response.data.message,
+                    });
+                }
+            })
+            .finally(() => {
+                store.commit('setLoading', false)
+            })
+    } catch (error) {
+        console.error('Error: ', error);
+    }
+}
+
+const handleChangeAvatar = (event) => {
     const file = event.target.files[0];
+    new_avatar.value = file;
+
     if (file) {
         const reader = new FileReader();
-        reader.onload = () => {
-            selectedImage.value = reader.result;
-        };
+        reader.onload = (event) => {
+            const imageDataUrl = event.target.result;
+            avatar.value = imageDataUrl;
+        }
+        reader.onerror = (error) => {
+            console.error(error);
+        }
         reader.readAsDataURL(file);
-    };
-};
+    }
+}
 </script>
 
 <template>
@@ -23,14 +107,14 @@ const handleFileChange = (event) => {
                 <h3>Profile Setting</h3>
                 <p>Update your profile here</p>
                 <hr>
-                <form action="">
+                <form action="" @submit.prevent="updateProfile">
                     <div class="avatar-container">
                         <p>Avatar</p>
                         <div class="image-file">
                             <div class="image-container">
-                                <img :src="selectedImage" alt="">
+                                <img :src="avatar" alt="">
                             </div>
-                            <input type="file" @change="handleFileChange">
+                            <input type="file" @change="handleChangeAvatar">
                         </div>
                     </div>
                     <hr>
@@ -38,30 +122,32 @@ const handleFileChange = (event) => {
                         <div class="input-fields">
                             <p>Firstname</p>
                             <div class="update-input-container">
-                                <input class="update-input" type="text">
+                                <input class="update-input pl-2" v-model="firstname" type="text">
                             </div>
                         </div>
                         <div class="input-fields">
                             <p>Middlename</p>
                             <div class="update-input-container">
-                                <input class="update-input" type="text">
+                                <input class="update-input pl-2" v-model="middlename" type="text">
                             </div>
                         </div>
                         <div class="input-fields">
                             <p>Lastname</p>
                             <div class="update-input-container">
-                                <input class="update-input" type="text">
+                                <input class="update-input pl-2" v-model="lastname" type="text">
                             </div>
                         </div>
                         <div class="input-fields">
                             <p>Gender</p>
                             <div class="d-flex align-items-center duration" style="width: 70%; margin-bottom: -25px;">
                                 <div class="selection mr-3">
-                                    <input v-model="gender" id="male" name="male" type="radio" value="male">
+                                    <input v-model="gender" id="male" name="male" type="radio" value="male"
+                                        :selected="gender === 'Male' ? 'selected' : ''">
                                     <label for="male">MALE</label>
                                 </div>
                                 <div class="selection">
-                                    <input v-model="gender" id="female" name="female" type="radio" value="female">
+                                    <input v-model="gender" id="female" name="female" type="radio" value="female"
+                                        :selected="gender === 'Female' ? 'selected' : ''">
                                     <label for="female">FEMALE</label>
                                 </div>
                             </div>
@@ -69,7 +155,7 @@ const handleFileChange = (event) => {
                         <div class="input-fields">
                             <p>Birthdate</p>
                             <div class="update-input-container">
-                                <input class="update-input" type="date">
+                                <input class="update-input pl-2" v-model="birthdate" type="date">
                             </div>
                         </div>
                     </div>
@@ -83,25 +169,25 @@ const handleFileChange = (event) => {
                         <div class="input-fields">
                             <p>Email</p>
                             <div class="update-input-container">
-                                <input class="update-input" type="email">
+                                <input class="update-input pl-2" v-model="email" type="email">
                             </div>
                         </div>
                         <div class="input-fields">
                             <p>Username</p>
                             <div class="update-input-container">
-                                <input class="update-input" type="text">
+                                <input class="update-input pl-2" v-model="username" type="text">
                             </div>
                         </div>
                         <div class="input-fields">
                             <p>Current Password</p>
                             <div class="update-input-container">
-                                <input class="update-input" type="text">
+                                <input class="update-input pl-2" v-model="current_password" type="text">
                             </div>
                         </div>
                         <div class="input-fields">
                             <p>New Password</p>
                             <div class="update-input-container">
-                                <input class="update-input" type="text">
+                                <input class="update-input pl-2" v-model="new_password" type="text">
                             </div>
                         </div>
                     </div>
@@ -131,26 +217,24 @@ const handleFileChange = (event) => {
     font-weight: bold;
 }
 
-.image-container {
-    width: 18%;
-    margin-right: 70px;
-}
-
 .image-container img {
-    width: 100%;
-    margin: 0;
-    padding: 0;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-image: url("../../../../../public/images/user.png");
+    background-size: cover;
 }
 
 .image-file {
     display: flex;
     width: 70%;
     align-items: center;
+    gap: 60px
 }
 
 .image-file input {
     border: 1px solid #535353;
-    width: 65%;
+    width: 505px;
     border-radius: 6px;
 }
 
@@ -218,22 +302,16 @@ const handleFileChange = (event) => {
         width: 80%;
     }
 
-    .avatar-container {
-        gap: 0;
-    }
-
-    .image-container {
-        width: 30%;
-    }
-
     .image-file {
         display: flex;
         flex-direction: column;
+        gap: 0;
+        margin-left: -70px;
     }
 
     .image-file input {
         width: 100%;
-        margin-left: -50px;
+        margin-left: -10px;
         margin-top: 15px;
     }
 
