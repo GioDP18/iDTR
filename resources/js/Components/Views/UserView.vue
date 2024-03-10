@@ -67,6 +67,7 @@ const user = async () => {
 }
 
 const handleLogout = async () => {
+    store.commit('setLoading', true);
     try {
         const token = localStorage.getItem('token');
         const headers = { Authorization: `Bearer ${token}` };
@@ -85,6 +86,9 @@ const handleLogout = async () => {
                         text: response.data.message,
                     });
                 }
+            })
+            .finally(() => {
+                store.commit('setLoading', false);
             })
     }
     catch (error) {
