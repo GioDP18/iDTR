@@ -29,6 +29,12 @@ class AmDailyTimeRecordServiceImpl implements AmDailyTimeRecordService
         $late_time = strtotime('08:00:00');
         $users_id = $request->userID;
         $arrival_am = date('H:i:s');
+        if(date('H:i:s') > '12:00:00'){
+            return response()->json([
+             'success' => False,
+             'message' => "It's already PM."
+            ]);
+        }
 
         $checkIfAlreadyLogged = AmDailyTimeRecord::where('date', date('Y-m-d'))->where('users_id', $request->userID)->get();
         if($checkIfAlreadyLogged->count() > 0){

@@ -29,6 +29,12 @@ class PmDailyTimeRecordServiceImpl implements PmDailyTimeRecordService
         $late_time = strtotime('13:00:00');
         $users_id = $request->userID;
         $arrival_pm = date('H:i:s');
+        if(date('H:i:s') < '12:00:00'){
+            return response()->json([
+             'success' => false,
+             'message' => "It's still AM."
+            ]);
+        }
 
         $checkIfAlreadyLogged = PmDailyTimeRecord::where('date', date('Y-m-d'))->where('users_id', $request->userID)->get();
         if($checkIfAlreadyLogged->count() > 0){
