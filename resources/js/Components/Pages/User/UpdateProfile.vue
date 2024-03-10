@@ -66,6 +66,9 @@ const updateProfile = async () => {
                 });
                 current_password.value = '';
                 new_password.value = '';
+                setTimeout(() => {
+                    window.location.reload();
+                }, 3000)
             }
             else{
                 swal({
